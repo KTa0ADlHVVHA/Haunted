@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cwdnorjyklkci"
+path="res://.godot/imported/Windows_Black.dialogue-f8c66bd93f68f113370f87b08d0a38ce.tres"
+
+[deps]
+
+source_file="res://Dialogue/Windows_Black.dialogue"
+dest_files=["res://.godot/imported/Windows_Black.dialogue-f8c66bd93f68f113370f87b08d0a38ce.tres"]
+
+[params]
+
+defaults=true

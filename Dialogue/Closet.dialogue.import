@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://l4eqrgelfr1t"
+path="res://.godot/imported/Closet.dialogue-d553c4780f1f96048d4d0c245d4e6d71.tres"
+
+[deps]
+
+source_file="res://Dialogue/Closet.dialogue"
+dest_files=["res://.godot/imported/Closet.dialogue-d553c4780f1f96048d4d0c245d4e6d71.tres"]
+
+[params]
+
+defaults=true

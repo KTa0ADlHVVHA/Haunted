@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dxh785jqfiu37"
+path="res://.godot/imported/Carpet.dialogue-e54853292814ec94dbe820f56c144c20.tres"
+
+[deps]
+
+source_file="res://Dialogue/Carpet.dialogue"
+dest_files=["res://.godot/imported/Carpet.dialogue-e54853292814ec94dbe820f56c144c20.tres"]
+
+[params]
+
+defaults=true
