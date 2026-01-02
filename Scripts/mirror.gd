@@ -62,7 +62,7 @@ func _process(_delta):
 	else:
 		reflection_sprite.flip_h = ps.flip_h
 
-	reflection_sprite.position = Vector2(-22.139, 262.766)
+	reflection_sprite.position = Vector2(7.398, 15.214)
 
 
 

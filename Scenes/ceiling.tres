@@ -1,66 +1,7 @@
-[gd_resource type="TileSet" load_steps=11 format=3 uid="uid://d1xep0pwq5663"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://d1xep0pwq5663"]
 
 [ext_resource type="Texture2D" uid="uid://cnl0lait4xuq6" path="res://Pixel art/Ceiling (2).png" id="1_3fddq"]
 [ext_resource type="Texture2D" uid="uid://bd6vffcsw6yht" path="res://Pixel art/Ceiling (2 extras).png" id="2_xp32l"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wmu2j"]
-load_path = "res://.godot/imported/Ceiling .png-3485e64476dd2d40e7e5317e37d4a4ff.ctex"
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wwspf"]
-texture = SubResource("CompressedTexture2D_wmu2j")
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, 3.956892, 8, 3.5971737, -3.5971746, -0.17985916, -3.2374573, -3.5971756, -3.5971746, -3.7770329, 8, -8, 8)
-1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -3.4173155, 4.6763268, -3.7770329, 3.5971737, -3.5971746, -0.17985916, -3.2374573, -3.5971756, -3.5971746, -3.7770329, 8, -8, 8)
-2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -3.7770329, 5.036045, -3.7770329, 3.5971737, -3.5971746, -0.17985916, -3.2374573, -3.5971756, -3.5971746, -4.856186, -3.4173155, -8, -3.4173155)
-3:0/0 = 0
-3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, 3.956892, 8, 3.5971737, -3.5971746, -0.17985916, -3.2374573, -3.5971756, -3.5971746, -4.4964685, -3.4173155, -8, -3.4173155)
-0:1/0 = 0
-0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, 3.956892, 8, 3.5971737, -3.5971746, -0.17985916, -3.2374573, -3.5971756, -3.5971746, -3.7770329, 8, -8, 8)
-1:1/0 = 0
-1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -3.7770329, 8, -8, 8)
-1:1/0/physics_layer_0/polygon_1/points = PackedVector2Array(-4.136751, -8, -3.5971746, 8, -8, 8, -8, -8)
-3:1/0 = 0
-3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(3.2374573, -8, 8, -8, 8, 8, 3.956892, 8, 3.5971737, -3.5971746, 3.2374573, -3.5971737, 3.5971737, -3.7770329, 3.2374573, -5.036044, 3.057598, -6.4749136)
-0:2/0 = 0
-0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, 3.956892, 8, 3.5971737, -3.5971746, -0.17985916, -3.2374573, -3.5971756, -3.5971746, -3.7770329, 8, -8, 8)
-1:2/0 = 0
-1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(3.956892, 8, -3.057599, 8, -8, 8)
-1:2/0/physics_layer_0/polygon_1/points = PackedVector2Array(8, 8, 8, 3.7770348, -3.7770338, 3.4173164, -3.956892, -8, -3.7770338, -8, -8, -8, -8, 8)
-2:2/0 = 0
-2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, 8, 3.956892, 8, -3.7770329, 8, -8, 8)
-2:2/0/physics_layer_0/polygon_1/points = PackedVector2Array(-8, 3.5971756, 8, 3.956892, 8, 8, -8, 8)
-3:2/0 = 0
-3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 4.136751, 3.5971737, 3.5971756, 8, 8, 1.4388695, 8, -0.5395756, 8, -3.7770329, 8, -8, 8)
-3:2/0/physics_layer_0/polygon_1/points = PackedVector2Array(3.956892, -8, 8, -8, 8, 8, 3.956892, 3.956892)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wwspf"]
-load_path = "res://.godot/imported/Ceiling2.png-3399f9a33b9286750d7a0fb23da84d57.ctex"
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mp1oy"]
-texture = SubResource("CompressedTexture2D_wwspf")
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -4, -8, -8, -4, -8, -4, -4)
-1:0/0 = 0
-2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, -4, 4, -8, 8, -8, 8, -4)
-3:0/0 = 0
-0:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-0:2/0 = 0
-0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, -8, 4, -4, 4, -4, 8)
-1:2/0 = 0
-2:2/0 = 0
-2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, 8, 4, 4, 8, 4, 8, 8)
-3:2/0 = 0
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5080h"]
-load_path = "res://.godot/imported/single ceiling.png-9fd11a20281ffa6eda5c58dc9be05580.ctex"
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wmu2j"]
-texture = SubResource("CompressedTexture2D_5080h")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h2tdp"]
 texture = ExtResource("1_3fddq")
@@ -85,19 +26,16 @@ texture = ExtResource("1_3fddq")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gvnx1"]
 texture = ExtResource("2_xp32l")
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, -8, -8, -3, -8, -3, -4, -4, -4, -4, -3)
-2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, -3, 4, -4, 3, -4, 3, -8, 8, -8, 8, -3)
-0:2/0 = 0
-0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, -8, 3, -4, 3, -4, 4, -3, 4, -3, 8)
 2:2/0 = 0
 2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(3, 8, 3, 4, 4, 4, 4, 3, 8, 3, 8, 8)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, -8, 3, -4, 3, -4, 4, -3, 4, -3, 8)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, -3, 4, -4, 3, -4, 3, -8, 8, -8, 8, -3)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, -8, -8, -3, -8, -3, -4, -4, -4, -4, -3)
 
 [resource]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_wwspf")
-sources/2 = SubResource("TileSetAtlasSource_mp1oy")
-sources/3 = SubResource("TileSetAtlasSource_wmu2j")
 sources/4 = SubResource("TileSetAtlasSource_h2tdp")
 sources/5 = SubResource("TileSetAtlasSource_gvnx1")
