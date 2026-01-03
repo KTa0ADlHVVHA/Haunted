@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c5wpl8wxndowr"
+path="res://.godot/imported/Bathroom.dialogue-8f23796f3e1fa52cc00668e48200422f.tres"
+
+[deps]
+
+source_file="res://Dialogue/Bathroom.dialogue"
+dest_files=["res://.godot/imported/Bathroom.dialogue-8f23796f3e1fa52cc00668e48200422f.tres"]
+
+[params]
+
+defaults=true

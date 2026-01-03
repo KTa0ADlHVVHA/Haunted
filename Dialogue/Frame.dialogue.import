@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c8l2mkjjw3nwg"
+path="res://.godot/imported/Frame.dialogue-051961927a16b073615813b77ed63612.tres"
+
+[deps]
+
+source_file="res://Dialogue/Frame.dialogue"
+dest_files=["res://.godot/imported/Frame.dialogue-051961927a16b073615813b77ed63612.tres"]
+
+[params]
+
+defaults=true

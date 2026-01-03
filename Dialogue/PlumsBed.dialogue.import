@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b7qtfavlgtjl2"
+path="res://.godot/imported/PlumsBed.dialogue-431e72785195197797f428bab3932782.tres"
+
+[deps]
+
+source_file="res://Dialogue/PlumsBed.dialogue"
+dest_files=["res://.godot/imported/PlumsBed.dialogue-431e72785195197797f428bab3932782.tres"]
+
+[params]
+
+defaults=true

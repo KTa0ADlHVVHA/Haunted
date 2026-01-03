@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cpaldhfps6c1k"
+path="res://.godot/imported/Dad's bed.dialogue-15ef4cbb09fcb5f7b4b84c416e1edb63.tres"
+
+[deps]
+
+source_file="res://Dialogue/Dad's bed.dialogue"
+dest_files=["res://.godot/imported/Dad's bed.dialogue-15ef4cbb09fcb5f7b4b84c416e1edb63.tres"]
+
+[params]
+
+defaults=true
