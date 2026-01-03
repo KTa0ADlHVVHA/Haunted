@@ -66,7 +66,7 @@ interact={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://Dialogue/Mirror.dialogue", "res://Dialogue/Plant.dialogue", "res://Dialogue/Trash.dialogue", "res://Dialogue/Clock.dialogue", "res://Dialogue/Closet.dialogue", "res://Dialogue/Carpet.dialogue", "res://Dialogue/Bookshelf.dialogue", "res://Dialogue/Windows_Black.dialogue")
+locale/translations_pot_files=PackedStringArray("res://Dialogue/Mirror.dialogue", "res://Dialogue/Plant.dialogue", "res://Dialogue/Trash.dialogue", "res://Dialogue/Clock.dialogue", "res://Dialogue/Closet.dialogue", "res://Dialogue/Carpet.dialogue", "res://Dialogue/Bookshelf.dialogue", "res://Dialogue/Windows_Black.dialogue", "res://Dialogue/WelcomeMat.dialogue", "res://Dialogue/Kitchen.dialogue", "res://Dialogue/Ouside.dialogue", "res://Bathroom.dialogue")
 
 [layer_names]
 

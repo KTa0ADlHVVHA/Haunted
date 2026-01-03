@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bsx2734v207gn"
+path="res://.godot/imported/Ouside.dialogue-e4934596fc26cc5b57f52e1550e6036f.tres"
+
+[deps]
+
+source_file="res://Dialogue/Ouside.dialogue"
+dest_files=["res://.godot/imported/Ouside.dialogue-e4934596fc26cc5b57f52e1550e6036f.tres"]
+
+[params]
+
+defaults=true
