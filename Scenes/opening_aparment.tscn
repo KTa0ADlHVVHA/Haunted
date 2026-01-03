@@ -89,10 +89,10 @@ size = Vector2(64, 30)
 size = Vector2(64, 44)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qeuyk"]
-size = Vector2(14, 21)
+size = Vector2(14, 25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tqdvf"]
-size = Vector2(13, 16)
+size = Vector2(13, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wrxgv"]
 size = Vector2(32, 36)
@@ -520,7 +520,7 @@ texture_filter = 1
 texture = ExtResource("33_tqdvf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Desk/Sprite2D/Laptop"]
-position = Vector2(9, -7.5)
+position = Vector2(9, -5.5)
 shape = SubResource("RectangleShape2D_qeuyk")
 
 [node name="Plush" type="StaticBody2D" parent="Items/Desk/Sprite2D"]
@@ -537,7 +537,7 @@ texture = ExtResource("34_cjaad")
 offset = Vector2(-7, 22)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Desk/Sprite2D/Plush"]
-position = Vector2(-9.5, -16)
+position = Vector2(-9.5, -14)
 shape = SubResource("RectangleShape2D_tqdvf")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Items/Desk"]

@@ -19,6 +19,10 @@ config/features=PackedStringArray("4.5", "GL Compatibility")
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 GameState="*res://Scripts/GameState.gd"
 
+[dialogue_manager]
+
+runtime/balloon_path="res://Scenes/balloon.tscn"
+
 [display]
 
 window/size/viewport_width=1920
