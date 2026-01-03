@@ -32,6 +32,7 @@ func _input(event):
 
 
 func _physics_process(delta):
+	
 	if GameState.in_dialogue:
 		velocity = Vector2.ZERO
 		anim_timer = 0.0
