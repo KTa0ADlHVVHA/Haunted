@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b3xmcamjbc7iq"
+path="res://.godot/imported/Laptop.dialogue-63adf36d45999cdd51a6d4eb9b20705b.tres"
+
+[deps]
+
+source_file="res://Dialogue/Laptop.dialogue"
+dest_files=["res://.godot/imported/Laptop.dialogue-63adf36d45999cdd51a6d4eb9b20705b.tres"]
+
+[params]
+
+defaults=true

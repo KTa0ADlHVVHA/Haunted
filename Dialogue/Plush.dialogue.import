@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bucyt2u28t5y3"
+path="res://.godot/imported/Plush.dialogue-58447be6def220ba67939d802e654229.tres"
+
+[deps]
+
+source_file="res://Dialogue/Plush.dialogue"
+dest_files=["res://.godot/imported/Plush.dialogue-58447be6def220ba67939d802e654229.tres"]
+
+[params]
+
+defaults=true

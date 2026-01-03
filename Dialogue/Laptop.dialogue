@@ -1,0 +1,16 @@
+~ start
+Plum: It's dad's laptop.
+- Check it out
+	Plum: What shall I check first?
+	- History
+		Plum: Boring.
+		=> END
+	- Wallpaper
+		Plum: Awe it's me.
+		Vincent: I'm changing it.
+		=> END
+	- Drawing program
+		Plum: I'm going to draw a cat!
+		=> END
+- Be a good girl.
+	=> END
