@@ -254,6 +254,8 @@ shape = SubResource("RectangleShape2D_hm670")
 
 [node name="Trash" type="StaticBody2D" parent="."]
 position = Vector2(-161, 98)
+collision_layer = 513
+collision_mask = 513
 constant_linear_velocity = Vector2(0, -0.255)
 script = ExtResource("12_tq8fc")
 dialogue_resource = ExtResource("13_2qj86")
@@ -269,6 +271,8 @@ shape = SubResource("RectangleShape2D_tq8fc")
 
 [node name="Clock" type="StaticBody2D" parent="."]
 position = Vector2(-51, -91)
+collision_layer = 513
+collision_mask = 513
 script = ExtResource("15_bxl5y")
 dialogue_resource = ExtResource("16_3b6gx")
 
@@ -281,16 +285,23 @@ position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_3b6gx")
 
 [node name="Closet" type="StaticBody2D" parent="."]
+light_mask = 513
+visibility_layer = 513
 texture_filter = 1
 position = Vector2(-96, -65)
+collision_layer = 513
+collision_mask = 513
 script = ExtResource("18_kmchj")
 dialogue_resource = ExtResource("19_1gavx")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Closet"]
+position = Vector2(0, -1)
 texture = ExtResource("18_pxjuf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Closet"]
+light_mask = 513
+visibility_layer = 513
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_1gavx")
 
