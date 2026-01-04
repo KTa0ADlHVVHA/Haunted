@@ -184,10 +184,16 @@ sources/0 = SubResource("TileSetAtlasSource_qeuyk")
 y_sort_enabled = true
 metadata/_edit_vertical_guides_ = [28.0]
 
+[node name="Plum" parent="." instance=ExtResource("1_squku")]
+z_index = 0
+y_sort_enabled = true
+position = Vector2(0, 6)
+
 [node name="Items" type="Node" parent="."]
 
 [node name="Plant" type="StaticBody2D" parent="Items"]
-position = Vector2(-59, 89)
+y_sort_enabled = true
+position = Vector2(-61, 89)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("24_wuqxb")
@@ -544,11 +550,6 @@ shape = SubResource("RectangleShape2D_tqdvf")
 position = Vector2(1, -10)
 shape = SubResource("RectangleShape2D_wrxgv")
 
-[node name="Plum" parent="." instance=ExtResource("1_squku")]
-z_index = 0
-y_sort_enabled = true
-position = Vector2(0, 6)
-
 [node name="Background stuff" type="Node" parent="."]
 
 [node name="Layer0" type="TileMapLayer" parent="Background stuff"]
@@ -580,7 +581,7 @@ metadata/_edit_lock_ = true
 
 [node name="Background" type="Sprite2D" parent="Background stuff"]
 z_index = -50
-position = Vector2(-49, 43)
-scale = Vector2(2.704861, 3.8387096)
+position = Vector2(18.249985, 43.74998)
+scale = Vector2(3.1718748, 3.8483868)
 texture = ExtResource("29_po6kr")
 metadata/_edit_lock_ = true
