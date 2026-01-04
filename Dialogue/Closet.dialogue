@@ -1,9 +1,9 @@
 ~ start
-PLUM: It's a closet.
+PLUM: It's a closet. 
 - Get in.
-	PLUM: I'm in the closet!
+	PLUM: I'm in the closet! (silly)
 	VINCENT: Stop messing around.
-	PLUM: You can't just force a girl out of the closet.
+	PLUM: You can't just force a girl out of the closet. (worried)
 	=> END
 - Try on some clothes.
 	 pics!

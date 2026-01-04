@@ -1,13 +1,12 @@
-[gd_scene load_steps=22 format=3 uid="uid://bt76t7ck67c8t"]
+[gd_scene load_steps=21 format=3 uid="uid://bt76t7ck67c8t"]
 
-[ext_resource type="Script" uid="uid://cyfkuaajduvew" path="res://Pixel art/balloon.gd" id="1_36de5"]
-[ext_resource type="Texture2D" uid="uid://qkq71rpkjni0" path="res://Pixel art/Dialogue box.png" id="2_5iodc"]
+[ext_resource type="Script" uid="uid://cyfkuaajduvew" path="res://Scripts/balloon.gd" id="1_36de5"]
+[ext_resource type="Texture2D" uid="uid://qkq71rpkjni0" path="res://Pixel art/Dialogue Box/Dialogue box.png" id="2_5iodc"]
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="2_a8ve6"]
 [ext_resource type="Script" uid="uid://bb52rsfwhkxbn" path="res://addons/dialogue_manager/dialogue_responses_menu.gd" id="3_72ixx"]
-[ext_resource type="FontFile" uid="uid://cppcsr0crxapv" path="res://Pixel art/BoldPixels.ttf" id="4_kbj1d"]
-[ext_resource type="Texture2D" uid="uid://nefwv2wb1huv" path="res://Pixel art/Nametag.png" id="5_nrerx"]
-[ext_resource type="Texture2D" uid="uid://ch113j6s8hpdv" path="res://Pixel art/choices.png" id="7_syg23"]
-[ext_resource type="Texture2D" uid="uid://qqef3bwuafoj" path="res://Pixel art/test.png" id="8_xyim1"]
+[ext_resource type="FontFile" uid="uid://cppcsr0crxapv" path="res://Fonts/BoldPixels.ttf" id="4_kbj1d"]
+[ext_resource type="Texture2D" uid="uid://nefwv2wb1huv" path="res://Pixel art/Dialogue Box/Nametag.png" id="5_nrerx"]
+[ext_resource type="Texture2D" uid="uid://ch113j6s8hpdv" path="res://Pixel art/Dialogue Box/choices.png" id="7_syg23"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spyqn"]
 bg_color = Color(0, 0, 0, 1)
@@ -269,10 +268,10 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="Test" type="Sprite2D" parent="."]
+[node name="Potrait" type="Sprite2D" parent="."]
 z_index = -2
-position = Vector2(452, 530)
-texture = ExtResource("8_xyim1")
+position = Vector2(388, 555)
+scale = Vector2(0.5, 0.5)
 
 [connection signal="gui_input" from="Balloon" to="." method="_on_balloon_gui_input"]
 [connection signal="response_selected" from="VBoxContainer3/ResponsesMenu" to="." method="_on_responses_menu_response_selected"]
