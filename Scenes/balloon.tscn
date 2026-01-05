@@ -1,12 +1,12 @@
 [gd_scene load_steps=21 format=3 uid="uid://bt76t7ck67c8t"]
 
 [ext_resource type="Script" uid="uid://cyfkuaajduvew" path="res://Scripts/balloon.gd" id="1_36de5"]
-[ext_resource type="Texture2D" uid="uid://qkq71rpkjni0" path="res://Pixel art/Dialogue Box/Dialogue box.png" id="2_5iodc"]
+[ext_resource type="Texture2D" uid="uid://qkq71rpkjni0" path="res://Pixel art/UI/Dialogue box.png" id="2_5iodc"]
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="2_a8ve6"]
 [ext_resource type="Script" uid="uid://bb52rsfwhkxbn" path="res://addons/dialogue_manager/dialogue_responses_menu.gd" id="3_72ixx"]
 [ext_resource type="FontFile" uid="uid://cppcsr0crxapv" path="res://Fonts/BoldPixels.ttf" id="4_kbj1d"]
-[ext_resource type="Texture2D" uid="uid://nefwv2wb1huv" path="res://Pixel art/Dialogue Box/Nametag.png" id="5_nrerx"]
-[ext_resource type="Texture2D" uid="uid://ch113j6s8hpdv" path="res://Pixel art/Dialogue Box/choices.png" id="7_syg23"]
+[ext_resource type="Texture2D" uid="uid://nefwv2wb1huv" path="res://Pixel art/UI/Nametag.png" id="5_nrerx"]
+[ext_resource type="Texture2D" uid="uid://ch113j6s8hpdv" path="res://Pixel art/UI/choices.png" id="7_syg23"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spyqn"]
 bg_color = Color(0, 0, 0, 1)

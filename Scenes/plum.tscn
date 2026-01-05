@@ -1,12 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://w3vshkkefhkp"]
+[gd_scene load_steps=13 format=3 uid="uid://w3vshkkefhkp"]
 
 [ext_resource type="Script" uid="uid://dbdew53n1dgvx" path="res://Scripts/Character.gd" id="1_yjcpj"]
 [ext_resource type="Texture2D" uid="uid://b31hi7ox45u2b" path="res://Pixel art/Characters/Plum.png" id="2_yjcpj"]
+[ext_resource type="Texture2D" uid="uid://d0beojp0k24gl" path="res://Pixel art/Save.png" id="3_f5pb5"]
+[ext_resource type="Texture2D" uid="uid://cr043o2l38y63" path="res://Pixel art/Load.png" id="4_gkgln"]
+[ext_resource type="FontFile" uid="uid://cppcsr0crxapv" path="res://Fonts/BoldPixels.ttf" id="4_ij5j4"]
+[ext_resource type="Texture2D" uid="uid://d2ul5j5xt8p78" path="res://Pixel art/Options.png" id="5_ij5j4"]
+[ext_resource type="Texture2D" uid="uid://dc2lnlningyfd" path="res://Pixel art/Items.png" id="6_li0uo"]
+[ext_resource type="Shader" uid="uid://hqob2phnqtc6" path="res://Scenes/saturation.gdshader" id="8_ij5j4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0xm2m"]
 radius = 5.0990195
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjcpj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6tx2w"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_li0uo"]
+shader = ExtResource("8_ij5j4")
+shader_parameter/saturation = 1.0
 
 [node name="Plum" type="CharacterBody2D"]
 z_index = 10
@@ -35,3 +47,84 @@ shape = SubResource("CircleShape2D_yjcpj")
 target_position = Vector2(0, 3)
 max_results = 10
 collision_mask = 512
+
+[node name="icons" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+rotation = 1.5707964
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_6tx2w")
+
+[node name="Pause Menu" type="Node" parent="."]
+
+[node name="Save" type="Sprite2D" parent="Pause Menu"]
+z_index = 101
+texture_filter = 1
+texture = ExtResource("3_f5pb5")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Pause Menu/Save"]
+texture_filter = 1
+offset_left = -20.0
+offset_top = -48.0
+offset_right = 20.0
+offset_bottom = -8.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("4_ij5j4")
+text = "Save"
+horizontal_alignment = 1
+
+[node name="Load" type="Sprite2D" parent="Pause Menu"]
+z_index = 101
+texture_filter = 1
+texture = ExtResource("4_gkgln")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Pause Menu/Load"]
+offset_left = -20.0
+offset_top = -48.0
+offset_right = 20.0
+offset_bottom = -8.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("4_ij5j4")
+text = "Load"
+horizontal_alignment = 1
+
+[node name="Options" type="Sprite2D" parent="Pause Menu"]
+z_index = 101
+texture_filter = 1
+texture = ExtResource("5_ij5j4")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Pause Menu/Options"]
+offset_left = -34.0
+offset_top = -48.0
+offset_right = 33.0
+offset_bottom = -8.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("4_ij5j4")
+text = "Options"
+horizontal_alignment = 1
+
+[node name="Items" type="Sprite2D" parent="Pause Menu"]
+z_index = 101
+texture_filter = 1
+texture = ExtResource("6_li0uo")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Pause Menu/Items"]
+offset_left = -24.0
+offset_top = -48.0
+offset_right = 25.0
+offset_bottom = -8.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("4_ij5j4")
+text = "Items"
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 100
+material = SubResource("ShaderMaterial_li0uo")
+offset_left = -387.0
+offset_top = -326.0
+offset_right = 432.0
+offset_bottom = 233.0
