@@ -18,7 +18,8 @@ config/features=PackedStringArray("4.5", "GL Compatibility")
 
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 GameState="*res://Scripts/GameState.gd"
-global_accesibility_signal="res://addons/accesibilitytools/global_accesibility_signal.gd"
+global_accesibility_signal="*res://addons/accesibilitytools/global_accesibility_signal.gd"
+SaveManager="*res://Scripts/SaveManager.gd"
 
 [dialogue_manager]
 
@@ -33,7 +34,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/accesibilitytools/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/GodotSavesAddon/plugin.cfg", "res://addons/SaveManagerLite/plugin.cfg", "res://addons/accesibilitytools/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg")
 
 [input]
 

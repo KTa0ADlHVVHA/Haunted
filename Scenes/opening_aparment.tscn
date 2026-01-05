@@ -185,7 +185,6 @@ y_sort_enabled = true
 metadata/_edit_vertical_guides_ = [28.0]
 
 [node name="Plum" parent="." instance=ExtResource("1_squku")]
-z_index = 0
 y_sort_enabled = true
 position = Vector2(-1, 6)
 
@@ -347,7 +346,7 @@ texture = ExtResource("21_xvnyx")
 
 [node name="Bookshelf" type="StaticBody2D" parent="Items"]
 z_index = -1
-position = Vector2(-17, -73)
+position = Vector2(-18, -73)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("24_wuqxb")

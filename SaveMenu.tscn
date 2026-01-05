@@ -1,0 +1,165 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhnbes4oenvps"]
+
+[ext_resource type="Script" uid="uid://kvdk4ddlnad3" path="res://Scripts/SaveMenu.gd" id="1_njgpl"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1920.0
+offset_bottom = -1080.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_njgpl")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "SAVE"
+
+[node name="1" type="Button" parent="CanvasLayer/Panel/Label"]
+layout_mode = 0
+offset_left = 346.0
+offset_top = 461.0
+offset_right = 576.0
+offset_bottom = 712.0
+
+[node name="2" type="Button" parent="CanvasLayer/Panel/Label"]
+layout_mode = 0
+offset_left = 654.0
+offset_top = 470.0
+offset_right = 884.0
+offset_bottom = 721.0
+
+[node name="3" type="Button" parent="CanvasLayer/Panel/Label"]
+layout_mode = 0
+offset_left = 1043.0
+offset_top = 458.0
+offset_right = 1273.0
+offset_bottom = 709.0
+
+[node name="4" type="Button" parent="CanvasLayer/Panel/Label"]
+visible = false
+layout_mode = 0
+offset_left = 1239.0
+offset_top = 129.0
+offset_right = 1469.0
+offset_bottom = 380.0
+
+[node name="5" type="Button" parent="CanvasLayer/Panel/Label"]
+visible = false
+layout_mode = 0
+offset_left = 1614.0
+offset_top = 164.0
+offset_right = 1844.0
+offset_bottom = 415.0
+
+[node name="6" type="Button" parent="CanvasLayer/Panel/Label"]
+visible = false
+layout_mode = 0
+offset_left = 321.0
+offset_top = 423.0
+offset_right = 551.0
+offset_bottom = 674.0
+
+[node name="7" type="Button" parent="CanvasLayer/Panel/Label"]
+visible = false
+layout_mode = 0
+offset_left = 592.0
+offset_top = 393.0
+offset_right = 822.0
+offset_bottom = 644.0
+
+[node name="8" type="Button" parent="CanvasLayer/Panel/Label"]
+visible = false
+layout_mode = 0
+offset_left = 939.0
+offset_top = 418.0
+offset_right = 1169.0
+offset_bottom = 669.0
+
+[node name="9" type="Button" parent="CanvasLayer/Panel/Label"]
+visible = false
+layout_mode = 0
+offset_left = 1270.0
+offset_top = 448.0
+offset_right = 1500.0
+offset_bottom = 699.0
+
+[node name="10" type="Button" parent="CanvasLayer/Panel/Label"]
+visible = false
+layout_mode = 0
+offset_left = 1583.0
+offset_top = 480.0
+offset_right = 1813.0
+offset_bottom = 731.0
+
+[node name="11" type="Button" parent="CanvasLayer/Panel/Label"]
+visible = false
+layout_mode = 0
+offset_left = 277.0
+offset_top = 717.0
+offset_right = 507.0
+offset_bottom = 968.0
+
+[node name="12" type="Button" parent="CanvasLayer/Panel/Label"]
+visible = false
+layout_mode = 0
+offset_left = 674.0
+offset_top = 678.0
+offset_right = 904.0
+offset_bottom = 929.0
+
+[node name="13" type="Button" parent="CanvasLayer/Panel/Label"]
+visible = false
+layout_mode = 0
+offset_left = 1027.0
+offset_top = 713.0
+offset_right = 1257.0
+offset_bottom = 964.0
+
+[node name="14" type="Button" parent="CanvasLayer/Panel/Label"]
+visible = false
+layout_mode = 0
+offset_left = 1405.0
+offset_top = 736.0
+offset_right = 1635.0
+offset_bottom = 987.0
+
+[node name="15" type="Button" parent="CanvasLayer/Panel/Label"]
+visible = false
+layout_mode = 0
+offset_left = 1673.0
+offset_top = 749.0
+offset_right = 1903.0
+offset_bottom = 1000.0
+
+[node name="Load" type="Button" parent="CanvasLayer/Panel"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 145.0
+offset_right = 220.0
+offset_bottom = 224.0
+text = "LOAD"
+
+[node name="Save" type="Button" parent="CanvasLayer/Panel"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 36.0
+offset_right = 203.0
+offset_bottom = 135.0
+text = "SAVE"
+
+[node name="Delete" type="Button" parent="CanvasLayer/Panel"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 269.0
+offset_right = 216.0
+offset_bottom = 368.0
+text = "DELETE"

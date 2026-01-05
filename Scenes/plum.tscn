@@ -21,7 +21,6 @@ shader = ExtResource("8_ij5j4")
 shader_parameter/saturation = 1.0
 
 [node name="Plum" type="CharacterBody2D"]
-z_index = 10
 script = ExtResource("1_yjcpj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -36,7 +35,6 @@ position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_0xm2m")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-1, 0)
 zoom = Vector2(5, 5)
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="."]
@@ -57,6 +55,7 @@ sprite_frames = SubResource("SpriteFrames_6tx2w")
 [node name="Pause Menu" type="Node" parent="."]
 
 [node name="Save" type="Sprite2D" parent="Pause Menu"]
+visible = false
 z_index = 101
 texture_filter = 1
 texture = ExtResource("3_f5pb5")
@@ -70,7 +69,7 @@ offset_bottom = -8.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("4_ij5j4")
-text = "Save"
+text = "SAVE"
 horizontal_alignment = 1
 
 [node name="Load" type="Sprite2D" parent="Pause Menu"]
@@ -86,10 +85,11 @@ offset_bottom = -8.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("4_ij5j4")
-text = "Load"
+text = "MENU"
 horizontal_alignment = 1
 
 [node name="Options" type="Sprite2D" parent="Pause Menu"]
+visible = false
 z_index = 101
 texture_filter = 1
 texture = ExtResource("5_ij5j4")
@@ -102,10 +102,11 @@ offset_bottom = -8.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("4_ij5j4")
-text = "Options"
+text = "OPTIONS"
 horizontal_alignment = 1
 
 [node name="Items" type="Sprite2D" parent="Pause Menu"]
+visible = false
 z_index = 101
 texture_filter = 1
 texture = ExtResource("6_li0uo")
@@ -118,13 +119,13 @@ offset_bottom = -8.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("4_ij5j4")
-text = "Items"
+text = "ITEMS"
 horizontal_alignment = 1
 
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = 100
 material = SubResource("ShaderMaterial_li0uo")
-offset_left = -387.0
+offset_left = -487.0
 offset_top = -326.0
 offset_right = 432.0
-offset_bottom = 233.0
+offset_bottom = 305.0

@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal slot_selected(slot: int) # used by SaveMenu
+
 @onready var sprite := $Sprite2D
 @onready var interaction_ray := $ShapeCast2D
 
@@ -9,8 +11,7 @@ extends CharacterBody2D
 @onready var options_icon := $"Pause Menu/Options"
 @onready var items_icon := $"Pause Menu/Items"
 
-# Pause overlay (ColorRect with SCREEN_TEXTURE shader)
-@onready var pause_overlay :=  $ColorRect
+@onready var pause_overlay := $ColorRect
 
 @export var speed := 150.0
 @export var acceleration := 1200.0
@@ -21,35 +22,59 @@ var anim_timer := 0.0
 var facing_dir := Vector2.DOWN
 var last_dir := Vector2.ZERO
 var is_paused := false
-
-# Icon selection state
-var icon_index := 0 # 0=Save,1=Load,2=Options,3=Items
-
-# Store original saturation to restore after unpause
+var icon_index := 0
 var _original_saturation := 1.0
+
+# Currently selected save slot
+var current_save_slot := 1
+
+# Track if a menu is open
+var save_menu_open := false
 
 
 func _ready():
 	interaction_ray.enabled = true
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_hide_all_icons()
-	
+
 	if pause_overlay and pause_overlay.material:
 		_original_saturation = pause_overlay.material.get_shader_parameter("saturation")
+		pause_overlay.visible = false
+
+	is_paused = false
+	save_menu_open = false
+
+	# Reset dialogue state
+	GameState.in_dialogue = false
+
+	# Load current slot
+	SaveManager.set_slot(current_save_slot)
+	SaveManager.load_slot(current_save_slot)
+
+	var pos_data = SaveManager.get_value("player_position", null)
+	if typeof(pos_data) == TYPE_DICTIONARY:
+		global_position = SaveManager.deserialize_vector2(pos_data, global_position)
+
+	var face_data = SaveManager.get_value("player_facing", null)
+	if typeof(face_data) == TYPE_DICTIONARY:
+		facing_dir = SaveManager.deserialize_vector2(face_data, facing_dir)
+
+	sprite.frame = get_anim_offset(facing_dir)
+	update_interaction_ray()
 
 
+# ------------------- INPUT -------------------
 func _input(event):
-	# Block pausing during dialogue
-	if GameState.in_dialogue:
+	if GameState.in_dialogue or not is_inside_tree():
 		return
 
-	# Toggle pause menu
 	if event.is_action_pressed("cancel"):
 		toggle_pause()
 		return
 
-	# Pause menu navigation & activation
 	if is_paused:
+		if save_menu_open:
+			return
 		if event.is_action_pressed("right") or event.is_action_pressed("down"):
 			rotate_icons(1)
 		elif event.is_action_pressed("left") or event.is_action_pressed("up"):
@@ -58,7 +83,6 @@ func _input(event):
 			activate_icon()
 		return
 
-	# Normal movement input
 	if event.is_action_pressed("right"):
 		last_dir = Vector2.RIGHT
 	elif event.is_action_pressed("left"):
@@ -72,33 +96,40 @@ func _input(event):
 		try_interact()
 
 
+# ------------------- PAUSE -------------------
 func toggle_pause():
+	if save_menu_open:
+		return
+
 	is_paused = !is_paused
+
 	if is_paused:
-		# Stop player movement and reset animation
 		velocity = Vector2.ZERO
 		anim_timer = 0.0
 		sprite.frame = get_anim_offset(facing_dir)
 		icon_index = 0
 		update_icon_visibility()
 
-		# Show overlay and halve current saturation
 		if pause_overlay:
 			pause_overlay.visible = true
 			if pause_overlay.material:
-				var current_sat = pause_overlay.material.get_shader_parameter("saturation")
-				pause_overlay.material.set_shader_parameter("saturation", current_sat * 0.5)
+				var sat = pause_overlay.material.get_shader_parameter("saturation")
+				pause_overlay.material.set_shader_parameter("saturation", sat * 0.5)
 
-		get_tree().paused = true
+		_set_tree_paused(true)
 	else:
-		# Hide menu icons and restore overlay
 		_hide_all_icons()
 		if pause_overlay:
 			if pause_overlay.material:
 				pause_overlay.material.set_shader_parameter("saturation", _original_saturation)
 			pause_overlay.visible = false
 
-		get_tree().paused = false
+		_set_tree_paused(false)
+
+
+func _set_tree_paused(p: bool):
+	if is_inside_tree() and get_tree():
+		get_tree().paused = p
 
 
 func rotate_icons(dir: int):
@@ -107,10 +138,10 @@ func rotate_icons(dir: int):
 
 
 func update_icon_visibility():
-	save_icon.visible = (icon_index == 0)
-	load_icon.visible = (icon_index == 1)
-	options_icon.visible = (icon_index == 2)
-	items_icon.visible = (icon_index == 3)
+	save_icon.visible = icon_index == 0
+	load_icon.visible = icon_index == 1
+	options_icon.visible = icon_index == 2
+	items_icon.visible = icon_index == 3
 
 
 func _hide_all_icons():
@@ -123,25 +154,78 @@ func _hide_all_icons():
 func activate_icon():
 	match icon_index:
 		0:
-			print("Save selected")
+			open_save_menu()
 		1:
-			print("Load selected")
+			load_game()
 		2:
 			print("Options selected")
 		3:
 			print("Items selected")
 
 
+# ------------------- SAVE MENU -------------------
+func open_save_menu():
+	if save_menu_open:
+		return
+	save_menu_open = true
+	is_paused = true
+	_set_tree_paused(true)
+
+	var menu_scene := preload("res://SaveMenu.tscn").instantiate()
+	add_child(menu_scene)
+	menu_scene.connect("slot_selected", Callable(self, "_on_save_slot_selected"))
+	menu_scene.connect("tree_exited", Callable(self, "_on_save_menu_closed"))
+
+
+func _on_save_slot_selected(slot: int):
+	current_save_slot = slot
+	SaveManager.set_slot(slot)
+
+	# Save player data to the chosen slot
+	if is_inside_tree() and get_tree():
+		SaveManager.set_value("scene_path", get_tree().current_scene.scene_file_path)
+	SaveManager.set_value("player_position", SaveManager.serialize_vector2(global_position))
+	SaveManager.set_value("player_facing", SaveManager.serialize_vector2(facing_dir))
+	SaveManager.save()
+
+
+func _on_save_menu_closed():
+	save_menu_open = false
+	if is_paused and is_inside_tree():
+		toggle_pause()
+
+
+# ------------------- LOAD -------------------
+func load_game():
+	SaveManager.set_slot(current_save_slot)
+	SaveManager.load_slot(current_save_slot)
+	var scene_path = SaveManager.get_value("scene_path", "")
+	if scene_path != "":
+		# Reset overlay & pause state before changing scene
+		if pause_overlay:
+			pause_overlay.visible = false
+			if pause_overlay.material:
+				pause_overlay.material.set_shader_parameter("saturation", _original_saturation)
+
+		is_paused = false
+		save_menu_open = false
+		_set_tree_paused(false)
+
+		if get_tree():
+			get_tree().change_scene_to_file(scene_path)
+			# no deferred or yield needed — new player `_ready()` resets state
+
+
+# ------------------- PHYSICS / MOVEMENT -------------------
 func _physics_process(delta):
-	# Update menu icons to follow player
 	if is_paused:
+		# Keep icons following the player
 		save_icon.position = position
 		load_icon.position = position
 		options_icon.position = position
 		items_icon.position = position
 		return
 
-	# Dialogue overrides movement
 	if GameState.in_dialogue:
 		velocity = Vector2.ZERO
 		anim_timer = 0.0
@@ -150,6 +234,7 @@ func _physics_process(delta):
 		return
 
 	var direction := Vector2.ZERO
+
 	if last_dir == Vector2.RIGHT and Input.is_action_pressed("right"):
 		direction = Vector2.RIGHT
 	elif last_dir == Vector2.LEFT and Input.is_action_pressed("left"):
@@ -188,6 +273,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 
+# ------------------- ANIMATION -------------------
 func get_anim_offset(dir: Vector2) -> int:
 	if dir.y > 0:
 		return 0
@@ -217,8 +303,10 @@ func update_interaction_ray():
 
 
 func try_interact():
+	if not is_inside_tree():
+		return
 	interaction_ray.force_shapecast_update()
 	if interaction_ray.is_colliding():
-		var target: Object = interaction_ray.get_collider(0)  # 0 = first collider
+		var target: Object = interaction_ray.get_collider(0)
 		if target and target.has_method("interact"):
 			target.interact(self)
