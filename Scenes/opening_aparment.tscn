@@ -186,7 +186,7 @@ metadata/_edit_vertical_guides_ = [28.0]
 
 [node name="Plum" parent="." instance=ExtResource("1_squku")]
 y_sort_enabled = true
-position = Vector2(-1, 6)
+position = Vector2(-2, 4)
 
 [node name="Items" type="Node" parent="."]
 
