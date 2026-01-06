@@ -273,5 +273,9 @@ z_index = -2
 position = Vector2(388, 555)
 scale = Vector2(0.5, 0.5)
 
+[node name="ScreenSprite" type="Sprite2D" parent="."]
+z_index = -3
+position = Vector2(960, 540)
+
 [connection signal="gui_input" from="Balloon" to="." method="_on_balloon_gui_input"]
 [connection signal="response_selected" from="VBoxContainer3/ResponsesMenu" to="." method="_on_responses_menu_response_selected"]
