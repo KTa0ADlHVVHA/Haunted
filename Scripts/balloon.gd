@@ -235,7 +235,7 @@ func _set_screen_sprite(name: String) -> void:
 		screen_sprite.hide()
 		return
 
-	var path := "res://Art/Items/%s.png" % name.strip_edges()
+	var path := "res://Art/Screens/%s.png" % name.strip_edges()
 
 	if ResourceLoader.exists(path):
 		screen_sprite.texture = load(path)
