@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://oq6nbis68km8"
-path="res://.godot/imported/Plush.png-e9952d153b2c2df0b4863ba4d3739b97.ctex"
+uid="uid://cmjdpalq1a04u"
+path="res://.godot/imported/P_Frame.png-fbc20766b1b6b7e56dc29732faf6be50.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Screens/Plush.png"
-dest_files=["res://.godot/imported/Plush.png-e9952d153b2c2df0b4863ba4d3739b97.ctex"]
+source_file="res://Art/Screens/P_Frame.png"
+dest_files=["res://.godot/imported/P_Frame.png-fbc20766b1b6b7e56dc29732faf6be50.ctex"]
 
 [params]
 

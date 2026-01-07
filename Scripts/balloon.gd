@@ -116,11 +116,12 @@ func apply_dialogue_line() -> void:
 	for m in matches:
 		_set_screen_sprite(m.get_string(1))
 
-# Re
-
 	dialogue_label.hide()
 	dialogue_label.dialogue_line = dialogue_line
-	dialogue_label.dialogue_line.text = parsed.text
+
+	# 🔹 Replace [time] token with current system time
+	var final_text: String = parsed.text.replace("[time]", get_system_time())
+	dialogue_label.dialogue_line.text = final_text
 
 	responses_menu.hide()
 	responses_menu.responses = dialogue_line.responses
@@ -150,13 +151,11 @@ func apply_dialogue_line() -> void:
 		balloon.grab_focus()
 
 
-
 func next(next_id: String) -> void:
 	dialogue_line = await dialogue_resource.get_next_dialogue_line(next_id, temporary_game_states)
 
 
-# ---------------- MUTATIONS (unchanged, not used for screen) ----------------
-
+# ---------------- MUTATIONS ----------------
 func _on_mutated(_mutation: Dictionary) -> void:
 	if not _mutation.is_inline:
 		is_waiting_for_input = false
@@ -171,13 +170,33 @@ func _on_mutation_cooldown_timeout() -> void:
 
 
 # ---------------- INPUT ----------------
-
 func _on_balloon_gui_input(event: InputEvent) -> void:
+	# Skip typing if dialogue is typing
 	if dialogue_label.is_typing:
 		if event.is_action_pressed(skip_action):
 			dialogue_label.skip_typing()
 			return
 
+	# Toggle hiding/showing the entire dialogue UI, always
+	if event.is_action_pressed("hide"):
+		var currently_visible := dialogue_label.visible
+		var new_visible := not currently_visible
+
+		# Main dialogue UI
+		dialogue_label.visible = new_visible
+		character_label.visible = new_visible
+		portrait_sprite.visible = new_visible
+		$TextureRect.visible = new_visible
+		$TextureRect2.visible = new_visible
+		# Responses menu
+		$Control.visible = new_visible
+
+		# Optional: grab focus back when showing
+		if new_visible:
+			balloon.grab_focus()
+		return
+
+	# Only allow next if waiting for input and no responses (regular advancement)
 	if not is_waiting_for_input or dialogue_line.responses.size() > 0:
 		return
 
@@ -190,7 +209,6 @@ func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
 
 
 # ---------------- HELPERS ----------------
-
 func _extract_emotion(text: String) -> Dictionary:
 	var emotion := "neutral"
 	var clean_text := text
@@ -243,3 +261,9 @@ func _set_screen_sprite(name: String) -> void:
 	else:
 		push_warning("Missing screen sprite: " + path)
 		screen_sprite.hide()
+
+
+# ---------------- DIALOGUE FUNCTION (TIME) ----------------
+func get_system_time() -> String:
+	var now := Time.get_datetime_dict_from_system()
+	return "%02d:%02d" % [now.hour, now.minute]

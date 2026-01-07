@@ -200,12 +200,22 @@ func _on_response_gui_input(event: InputEvent, item: Control, response) -> void:
 	if "Disallowed" in item.name:
 		return
 
+	# ✅ Always allow the "hide" action to propagate
+	if event.is_action_pressed("hide"):
+		if get_parent().has_method("toggle_dialogue_visibility"):
+			get_parent().toggle_dialogue_visibility()
+			return # stop processing here so nothing else grabs it
+
+	# Handle mouse click for selection
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
-		get_viewport().set_input_as_handled()
 		response_selected.emit(response)
+		get_viewport().set_input_as_handled()
+
+	# Handle keyboard/controller accept actio
 	elif event.is_action_pressed(&"ui_accept" if next_action.is_empty() else next_action) and item in get_menu_items():
-		get_viewport().set_input_as_handled()
 		response_selected.emit(response)
+		get_viewport().set_input_as_handled()
+
 
 
 #endregion
