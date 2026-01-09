@@ -2,15 +2,17 @@
 PLUM: It's dad's laptop.
 - Check it out
 	PLUM: What shall I check first? (thinking)
-	- History
-		PLUM: Boring. (tired)
+	- History 
+		PLUM: Boring. (tired) [screen=P_CHistory]
 		=> END
-	- Wallpaper
-		PLUM: Awe it's me. (happy)
+	- Desktop
+		PLUM: Awe it's me. (happy) [screen=P_CWallpaper]
 		VINCENT: I'm changing it.
 		=> END
 	- Drawing program
-		PLUM: I'm going to draw a cat! 
+		PLUM: I'm going to draw a cat!
+		[show paint]
+		 
 		=> END
 - Be a good girl.
 	=> END

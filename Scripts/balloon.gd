@@ -16,6 +16,7 @@ extends CanvasLayer
 @onready var dialogue_label: DialogueLabel = %DialogueLabel
 @onready var responses_menu: DialogueResponsesMenu = %ResponsesMenu
 @onready var progress: Polygon2D = %Progress
+@onready var paint_node: Node = $Paint
 
 var temporary_game_states: Array = []
 var is_waiting_for_input := false
@@ -42,17 +43,32 @@ var dialogue_line: DialogueLine:
 func _ready() -> void:
 	balloon.hide()
 	screen_sprite.hide()
+	paint_node.hide()
 
-	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
 
+	# Get DialogueManager singleton safely
+	var dm := Engine.get_singleton("DialogueManager")
+
+	# Connect to mutated signal (always exists)
+	if dm.has_signal("mutated"):
+		dm.mutated.connect(_on_mutated)
+
+	# Connect to action signal if it exists (prevents crash)
+	if dm.has_signal("action"):
+		dm.action.connect(_on_dialogue_action)
+
+	# Set responses menu next_action fallback
 	if responses_menu.next_action.is_empty():
 		responses_menu.next_action = next_action
 
+	# Mutation cooldown timer
 	mutation_cooldown.timeout.connect(_on_mutation_cooldown_timeout)
 	add_child(mutation_cooldown)
 
+	# Auto-start dialogue if enabled
 	if auto_start:
 		start()
+
 
 
 func _process(_delta: float) -> void:
@@ -93,7 +109,8 @@ func start(with_dialogue_resource: DialogueResource = null, title: String = "", 
 
 ## APPLY LINE
 func apply_dialogue_line() -> void:
-	mutation_cooldown.stop()
+	mutation_cooldown.stop()#
+	
 
 	progress.hide()
 	is_waiting_for_input = false
@@ -102,6 +119,9 @@ func apply_dialogue_line() -> void:
 
 	var text_with_tags := dialogue_line.text
 	var parsed := _extract_emotion(text_with_tags)
+	if "[show paint]" in parsed.text:
+		paint_node.show()
+		parsed.text = parsed.text.replace("[show paint]", "")  # remove tag from visible text
 
 	character_label.visible = not dialogue_line.character.is_empty()
 	character_label.text = tr(dialogue_line.character, "dialogue")
@@ -109,7 +129,7 @@ func apply_dialogue_line() -> void:
 	# Portrait emotion
 	_update_portrait(dialogue_line.character, parsed.emotion)
 
-	# ✅ SCREEN TAG HANDLING
+	# SCREEN TAG HANDLING
 	var screen_tag_regex := RegEx.new()
 	screen_tag_regex.compile("\\[screen=([^\\]]+)\\]")
 	var matches := screen_tag_regex.search_all(text_with_tags)
@@ -119,7 +139,7 @@ func apply_dialogue_line() -> void:
 	dialogue_label.hide()
 	dialogue_label.dialogue_line = dialogue_line
 
-	# 🔹 Replace [time] token with current system time
+	# Replace [time] token with system time
 	var final_text: String = parsed.text.replace("[time]", get_system_time())
 	dialogue_label.dialogue_line.text = final_text
 
@@ -155,6 +175,14 @@ func next(next_id: String) -> void:
 	dialogue_line = await dialogue_resource.get_next_dialogue_line(next_id, temporary_game_states)
 
 
+# ---------------- ACTIONS ----------------
+func _on_dialogue_action(action_name: String, _params: Dictionary) -> void:
+	if action_name == "load_paint":
+		balloon.hide()
+		await get_tree().process_frame
+		get_tree().change_scene_to_file("res://paint.tscn")
+
+
 # ---------------- MUTATIONS ----------------
 func _on_mutated(_mutation: Dictionary) -> void:
 	if not _mutation.is_inline:
@@ -171,32 +199,24 @@ func _on_mutation_cooldown_timeout() -> void:
 
 # ---------------- INPUT ----------------
 func _on_balloon_gui_input(event: InputEvent) -> void:
-	# Skip typing if dialogue is typing
 	if dialogue_label.is_typing:
 		if event.is_action_pressed(skip_action):
 			dialogue_label.skip_typing()
 			return
 
-	# Toggle hiding/showing the entire dialogue UI, always
 	if event.is_action_pressed("hide"):
-		var currently_visible := dialogue_label.visible
-		var new_visible := not currently_visible
-
-		# Main dialogue UI
+		var new_visible := not dialogue_label.visible
 		dialogue_label.visible = new_visible
 		character_label.visible = new_visible
 		portrait_sprite.visible = new_visible
 		$TextureRect.visible = new_visible
 		$TextureRect2.visible = new_visible
-		# Responses menu
 		$Control.visible = new_visible
 
-		# Optional: grab focus back when showing
 		if new_visible:
 			balloon.grab_focus()
 		return
 
-	# Only allow next if waiting for input and no responses (regular advancement)
 	if not is_waiting_for_input or dialogue_line.responses.size() > 0:
 		return
 

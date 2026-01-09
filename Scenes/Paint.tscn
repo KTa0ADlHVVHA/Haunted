@@ -1,0 +1,124 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4miqixjynltp"]
+
+[ext_resource type="Script" uid="uid://bqdudxp0hkx6g" path="res://Scripts/paint.gd" id="1_j4gw5"]
+[ext_resource type="Texture2D" uid="uid://d2ocu3jcfctsj" path="res://Art/Extras/Laptop Top.png" id="2_20ph2"]
+[ext_resource type="Texture2D" uid="uid://cufokwv7t4esv" path="res://Art/Extras/Laptop Paint Icons.png" id="2_ovj46"]
+[ext_resource type="Texture2D" uid="uid://bq5e6e2kxqofj" path="res://Art/Extras/Laptop Pen Large.png" id="4_30jn7"]
+
+[node name="Paint" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j4gw5")
+
+[node name="Canvas" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = 2
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_20ph2")
+
+[node name="Brush" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_30jn7")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+z_index = 2
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_ovj46")
+
+[node name="Color" type="Button" parent="TextureRect2"]
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+layout_mode = 0
+offset_left = 102.0
+offset_top = 272.99997
+offset_right = 110.0
+offset_bottom = 280.99997
+scale = Vector2(10, 10)
+focus_mode = 0
+
+[node name="Color2" type="Button" parent="TextureRect2"]
+self_modulate = Color(1, 1, 1, 0)
+z_index = 5
+layout_mode = 0
+offset_left = 210.0
+offset_top = 168.0
+offset_right = 218.0
+offset_bottom = 176.0
+scale = Vector2(10, 10)
+focus_mode = 0
+
+[node name="Color3" type="Button" parent="TextureRect2"]
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+layout_mode = 0
+offset_left = 106.00006
+offset_top = 169.00002
+offset_right = 114.00006
+offset_bottom = 177.00002
+scale = Vector2(10, 10)
+focus_mode = 0
+
+[node name="Color4" type="Button" parent="TextureRect2"]
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+layout_mode = 0
+offset_left = 208.00003
+offset_top = 76.00002
+offset_right = 216.00003
+offset_bottom = 84.00002
+scale = Vector2(10, 10)
+focus_mode = 0
+
+[node name="Color5" type="Button" parent="TextureRect2"]
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+layout_mode = 0
+offset_left = 102.00012
+offset_top = 74.00002
+offset_right = 110.00012
+offset_bottom = 82.00002
+scale = Vector2(10, 10)
+focus_mode = 0
+
+[node name="Brush Size" type="Button" parent="TextureRect2"]
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.77500004
+anchor_top = 4.7390003
+anchor_right = 0.77500004
+anchor_bottom = 4.7390003
+offset_left = -1276.0001
+offset_top = -4853.12
+offset_right = -1266.8002
+offset_bottom = -4843.22
+scale = Vector2(10, 10)
+focus_mode = 0
+
+[connection signal="pressed" from="TextureRect2/Color" to="." method="_on_color_pressed"]
+[connection signal="pressed" from="TextureRect2/Color2" to="." method="_on_color_2_pressed"]
+[connection signal="pressed" from="TextureRect2/Color3" to="." method="_on_color_3_pressed"]
+[connection signal="pressed" from="TextureRect2/Color4" to="." method="_on_color_4_pressed"]
+[connection signal="pressed" from="TextureRect2/Color5" to="." method="_on_color_5_pressed"]
+[connection signal="pressed" from="TextureRect2/Brush Size" to="." method="_on_brush_size_pressed"]

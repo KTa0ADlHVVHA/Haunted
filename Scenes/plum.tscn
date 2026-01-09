@@ -21,6 +21,7 @@ shader = ExtResource("8_ij5j4")
 shader_parameter/saturation = 1.0
 
 [node name="Plum" type="CharacterBody2D"]
+position = Vector2(0, -1)
 script = ExtResource("1_yjcpj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -126,6 +127,6 @@ horizontal_alignment = 1
 z_index = 100
 material = SubResource("ShaderMaterial_li0uo")
 offset_left = -487.0
-offset_top = -326.0
+offset_top = -325.0
 offset_right = 432.0
-offset_bottom = 305.0
+offset_bottom = 306.0

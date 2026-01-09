@@ -92,10 +92,10 @@ size = Vector2(64, 44)
 size = Vector2(14, 25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tqdvf"]
-size = Vector2(13, 20)
+size = Vector2(13, 23)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wrxgv"]
-size = Vector2(32, 36)
+size = Vector2(32, 40)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h2tdp"]
 texture = ExtResource("2_j0236")
@@ -180,19 +180,22 @@ sources/2 = SubResource("TileSetAtlasSource_tqdvf")
 sources/3 = SubResource("TileSetAtlasSource_cjaad")
 sources/0 = SubResource("TileSetAtlasSource_qeuyk")
 
-[node name="Opening aparment" type="Node2D"]
+[node name="Opening apartment" type="Node2D"]
 y_sort_enabled = true
 metadata/_edit_vertical_guides_ = [28.0]
 
 [node name="Plum" parent="." instance=ExtResource("1_squku")]
-y_sort_enabled = true
-position = Vector2(-2, 4)
+position = Vector2(-3, 5)
+friction = 1399.41
 
-[node name="Items" type="Node" parent="."]
+[node name="Items" type="Node2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, 2)
 
 [node name="Plant" type="StaticBody2D" parent="Items"]
+z_as_relative = false
 y_sort_enabled = true
-position = Vector2(-61, 89)
+position = Vector2(-61, 77.975)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("24_wuqxb")
@@ -202,16 +205,18 @@ metadata/_edit_group_ = true
 [node name="Sprite2D" type="Sprite2D" parent="Items/Plant"]
 light_mask = 513
 visibility_layer = 513
+z_as_relative = false
 texture_filter = 1
-position = Vector2(0, -9.5)
 texture = ExtResource("4_qa4ed")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Plant"]
-position = Vector2(0, 0.5)
+y_sort_enabled = true
+position = Vector2(0, 9.59)
 shape = SubResource("RectangleShape2D_qa4ed")
 
 [node name="Mirror" type="StaticBody2D" parent="Items" node_paths=PackedStringArray("player")]
 z_index = -1
+z_as_relative = false
 position = Vector2(28, -67)
 collision_layer = 513
 collision_mask = 513
@@ -274,6 +279,7 @@ position = Vector2(1.5876923, 37.18274)
 shape = SubResource("RectangleShape2D_hm670")
 
 [node name="Trash" type="StaticBody2D" parent="Items"]
+z_as_relative = false
 position = Vector2(-161, 98)
 collision_layer = 513
 collision_mask = 513
@@ -291,6 +297,7 @@ position = Vector2(0, 3.5)
 shape = SubResource("RectangleShape2D_tq8fc")
 
 [node name="Clock" type="StaticBody2D" parent="Items"]
+z_as_relative = false
 position = Vector2(-51, -91)
 collision_layer = 513
 collision_mask = 513
@@ -309,6 +316,7 @@ shape = SubResource("RectangleShape2D_3b6gx")
 light_mask = 513
 visibility_layer = 513
 z_index = -1
+z_as_relative = false
 texture_filter = 1
 position = Vector2(-97, -65)
 collision_layer = 513
@@ -328,6 +336,7 @@ position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_1gavx")
 
 [node name="Carpet" type="StaticBody2D" parent="Items"]
+z_as_relative = false
 position = Vector2(0, 1)
 collision_layer = 512
 collision_mask = 512
@@ -346,6 +355,7 @@ texture = ExtResource("21_xvnyx")
 
 [node name="Bookshelf" type="StaticBody2D" parent="Items"]
 z_index = -1
+z_as_relative = false
 position = Vector2(-18, -73)
 collision_layer = 513
 collision_mask = 513
@@ -362,6 +372,7 @@ position = Vector2(0.5, 15.5)
 shape = SubResource("RectangleShape2D_h07qb")
 
 [node name="windows_black" type="StaticBody2D" parent="Items"]
+z_as_relative = false
 position = Vector2(1, 0)
 collision_layer = 512
 collision_mask = 512
@@ -376,6 +387,7 @@ shape = SubResource("RectangleShape2D_wmu2j")
 
 [node name="Welcome Mat" type="StaticBody2D" parent="Items"]
 z_index = -1
+z_as_relative = false
 texture_filter = 1
 position = Vector2(-325, -5)
 collision_layer = 512
@@ -395,6 +407,7 @@ position = Vector2(164.1, 49.22)
 texture = ExtResource("30_j0236")
 
 [node name="Outside" type="StaticBody2D" parent="Items"]
+z_as_relative = false
 position = Vector2(1, 0)
 collision_layer = 512
 collision_mask = 512
@@ -409,6 +422,7 @@ shape = SubResource("RectangleShape2D_g554b")
 
 [node name="Kitchen" type="StaticBody2D" parent="Items"]
 z_index = -1
+z_as_relative = false
 position = Vector2(-132, -77)
 collision_layer = 513
 collision_mask = 513
@@ -429,6 +443,7 @@ shape = SubResource("RectangleShape2D_wwspf")
 
 [node name="Bathroom" type="StaticBody2D" parent="Items"]
 z_index = -1
+z_as_relative = false
 position = Vector2(109, -77)
 collision_layer = 513
 collision_mask = 513
@@ -448,6 +463,7 @@ position = Vector2(1, -3)
 shape = SubResource("RectangleShape2D_wwspf")
 
 [node name="Frame" type="StaticBody2D" parent="Items"]
+z_as_relative = false
 position = Vector2(150, -96)
 collision_layer = 513
 collision_mask = 513
@@ -465,6 +481,7 @@ shape = SubResource("RectangleShape2D_h2tdp")
 
 [node name="Plum Bed" type="StaticBody2D" parent="Items"]
 z_index = -1
+z_as_relative = false
 position = Vector2(142, 88)
 collision_layer = 513
 collision_mask = 513
@@ -484,7 +501,8 @@ position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_gokc6")
 
 [node name="Bed" type="StaticBody2D" parent="Items"]
-position = Vector2(142, 47)
+z_as_relative = false
+position = Vector2(142, 17.87)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("24_wuqxb")
@@ -495,26 +513,27 @@ metadata/_edit_group_ = true
 light_mask = 513
 visibility_layer = 513
 texture_filter = 1
-position = Vector2(0, -9.5)
 texture = ExtResource("29_gvnx1")
+offset = Vector2(0, 19.135)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Bed"]
-position = Vector2(0, -8)
+position = Vector2(0, 20.325)
 shape = SubResource("RectangleShape2D_5uds2")
 
 [node name="Desk" type="StaticBody2D" parent="Items"]
-z_index = -1
-y_sort_enabled = true
-position = Vector2(62, 47)
+z_as_relative = false
+position = Vector2(63, 48)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Items/Desk"]
 texture_filter = 1
-position = Vector2(1, -3)
+position = Vector2(1, 0)
 texture = ExtResource("32_qeuyk")
+offset = Vector2(0, 23.005)
 
 [node name="Laptop" type="StaticBody2D" parent="Items/Desk/Sprite2D"]
 z_index = 2
+position = Vector2(1, 19.065)
 collision_layer = 512
 collision_mask = 512
 script = ExtResource("24_wuqxb")
@@ -530,6 +549,7 @@ shape = SubResource("RectangleShape2D_qeuyk")
 
 [node name="Plush" type="StaticBody2D" parent="Items/Desk/Sprite2D"]
 z_index = 2
+position = Vector2(1, 23.72)
 collision_layer = 512
 collision_mask = 512
 script = ExtResource("24_wuqxb")
@@ -542,11 +562,11 @@ texture = ExtResource("34_cjaad")
 offset = Vector2(-7, 22)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Desk/Sprite2D/Plush"]
-position = Vector2(-9.5, -14)
+position = Vector2(-9.5, -12.5)
 shape = SubResource("RectangleShape2D_tqdvf")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Items/Desk"]
-position = Vector2(1, -10)
+position = Vector2(1, 19.065)
 shape = SubResource("RectangleShape2D_wrxgv")
 
 [node name="Background stuff" type="Node" parent="."]
