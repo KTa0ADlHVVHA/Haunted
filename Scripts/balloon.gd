@@ -85,17 +85,41 @@ func _process(_delta: float) -> void:
 			and not dialogue_line.has_tag("voice")
 		)
 
+func _input(event: InputEvent) -> void:
+	# Manual hide toggle (ONLY place hide is handled)
+	if event.is_action_pressed("hide"):
+		# Dialogue-enforced screen-only cannot be overridden
+		if screen_only_locked:
+			return
 
-func _unhandled_input(event: InputEvent) -> void:
-	# Allow advancing dialogue while dialogue-enforced hide is active
+		var new_visible := not dialogue_label.visible
+		manual_hide_active = not new_visible
+
+		dialogue_label.visible = new_visible
+		character_label.visible = new_visible
+		portrait_sprite.visible = new_visible
+		vbox_container.visible = new_visible
+		$TextureRect.visible = new_visible
+		$TextureRect2.visible = new_visible
+		$Control.visible = new_visible
+		responses_menu.visible = new_visible
+
+		if new_visible:
+			manual_hide_active = false
+			balloon.grab_focus()
+
+		get_viewport().set_input_as_handled()
+		return
+
+	# ---------------------------------------
+
+	# Allow advancing dialogue during dialogue-enforced screen-only
 	if screen_only_locked \
 	and is_waiting_for_input \
 	and event.is_action_pressed(next_action):
 		next(dialogue_line.next_id)
 		get_viewport().set_input_as_handled()
-		return
 
-	get_viewport().set_input_as_handled()
 
 
 func _notification(what: int) -> void:
@@ -156,7 +180,9 @@ func apply_dialogue_line() -> void:
 	dialogue_label.dialogue_line = dialogue_line
 
 	var final_text: String = parsed.text.replace("[time]", get_system_time())
+	final_text = _handle_scene_tag(final_text)
 	dialogue_label.dialogue_line.text = final_text
+
 
 	responses_menu.hide()
 	responses_menu.responses = dialogue_line.responses
@@ -232,14 +258,10 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 		dialogue_label.skip_typing()
 		return
 
-	# Manual hide toggle
+	#	# Manual hide toggle (ONLY place hide is handled)
 	if event.is_action_pressed("hide"):
+		# Dialogue-enforced screen-only cannot be overridden
 		if screen_only_locked:
-			_set_screen_only_mode(false)
-			screen_only_locked = false
-			balloon.show()
-			vbox_container.show()
-			balloon.grab_focus()
 			return
 
 		var new_visible := not dialogue_label.visible
@@ -252,11 +274,15 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 		$TextureRect.visible = new_visible
 		$TextureRect2.visible = new_visible
 		$Control.visible = new_visible
+		responses_menu.visible = new_visible
 
 		if new_visible:
 			manual_hide_active = false
 			balloon.grab_focus()
+
+		get_viewport().set_input_as_handled()
 		return
+
 
 	# Advance dialogue
 	if not is_waiting_for_input or dialogue_line.responses.size() > 0:
@@ -353,3 +379,25 @@ func _set_screen_sprite(name: String) -> void:
 func get_system_time() -> String:
 	var now := Time.get_datetime_dict_from_system()
 	return "%02d:%02d" % [now.hour, now.minute]
+
+func _change_scene_safe(path: String) -> void:
+	balloon.hide()
+	screen_sprite.hide()
+	await get_tree().process_frame
+	get_tree().change_scene_to_file(path)
+func _handle_scene_tag(text: String) -> String:
+	var scene_tag_regex := RegEx.new()
+	scene_tag_regex.compile("\\[scene=([^\\]]+)\\]")
+
+	for m in scene_tag_regex.search_all(text):
+		var scene_name := m.get_string(1).strip_edges()
+		var path := "res://Scenes/%s.tscn" % scene_name
+
+		if ResourceLoader.exists(path):
+			# Defer scene change so Dialogue Manager doesn't explode
+			call_deferred("_change_scene_safe", path)
+		else:
+			push_warning("Missing scene: " + path)
+
+	# Remove tag from dialogue text
+	return scene_tag_regex.sub(text, "", true)

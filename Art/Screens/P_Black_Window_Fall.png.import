@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2ul5j5xt8p78"
-path="res://.godot/imported/Options.png-82520af123feae74d3ffe1d428fc721c.ctex"
+uid="uid://18adjd43tkmq"
+path="res://.godot/imported/P_Black_Window_Fall.png-1518a6d840afa7f70775a680bcdbf2a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Pixel art/Options.png"
-dest_files=["res://.godot/imported/Options.png-82520af123feae74d3ffe1d428fc721c.ctex"]
+source_file="res://Art/Screens/P_Black_Window_Fall.png"
+dest_files=["res://.godot/imported/P_Black_Window_Fall.png-1518a6d840afa7f70775a680bcdbf2a6.ctex"]
 
 [params]
 

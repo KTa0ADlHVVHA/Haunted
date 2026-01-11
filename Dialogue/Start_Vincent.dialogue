@@ -1,0 +1,58 @@
+PLUM: Hi dad!
+PLUM: Did you find anything cool today?
+
+VINCENT: Nope…
+VINCENT: I went to investigate the same house, but it was once again empty.
+VINCENT: Kids are still going missing despite my watch…
+VINCENT: And whenever I enter the house, it’s empty.
+VINCENT: They’re going to demolish it tomorrow.
+
+- Because of the ghosts
+	VINCENT: Listen, Plum.
+	VINCENT: 90% of cases of paranormal activity are falsely reported.
+	VINCENT: The other 10% have a logical explanation.
+
+- Who cares about this house
+	VINCENT: I care about this house.
+	VINCENT: Some serial kidnapper uses it as bait.
+	VINCENT: If we destroy the house without solving it.
+	VINCENT: That just moves the problem somewhere else.
+
+VINCENT: Anyway…
+
+- Take me with you
+	VINCENT: What?
+
+	PLUM: You said kids are the only ones who go missing.
+
+	VINCENT: I’m not putting you in harm’s way.
+
+	PLUM: It’ll barely be dangerous.
+	PLUM: I’d be next to you the entire time.
+	PLUM: Maybe there’s a small area only kids can see.
+	PLUM: Besides, it’s my birthday!
+	PLUM: You promised to hang out with me.
+	PLUM: And if it’s not supernatural, you have nothing to worry about.
+
+	VINCENT: I’m not trying to get the only remnant of my wife killed.
+	VINCENT: Besides… a brick could fall on you.
+	VINCENT: There are so many ways to die.
+
+	PLUM: Please.
+
+	VINCENT: Fine…
+
+	- Let’s go now
+		VINCENT: Are you sure about this?
+		VINCENT: The building’s going to get demolished soon!!
+		VINCENT: Stay next to me at all times, okay.
+
+		- I will!!
+			VINCENT: Good.
+
+		- Nope
+			VINCENT: Not funny.
+			- I will!!
+				#scene
+- I’m gonna look around
+	 

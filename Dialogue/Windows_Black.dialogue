@@ -1,12 +1,16 @@
 ~ start
-PLUM: Dad painted over the window with black paint.
+PLUM: Dad painted over the window with black paint. (neutral) [screen=P_Black_Window]
 PLUM: I think it looks ugly. (worried)
 VINCENT: I did that because some girl couldn’t sleep because it was too bright out.
 PLUM: Not true! (angry)
 - Go back
 - Jump out the window
 	VINCENT: Plum?
-	You jump out of the window.
-	You have no idea why you did that.
-	
+	You jump out of the window. () [screen=P_Black_Window_Fall]
+	Your body falls and falls.
+	There is something vaugely peaceful about this, though you could never place it.
+	You and your dad have always lived in a one story house and yet your fall seems to continue, almost infinitely.
+	Until finally.
+	 [screen=P_Black_Window_Death] (hide)
+	[scene=game_over]
 => END

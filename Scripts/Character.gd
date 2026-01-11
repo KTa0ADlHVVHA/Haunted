@@ -171,7 +171,7 @@ func open_save_menu():
 	is_paused = true
 	_set_tree_paused(true)
 
-	var menu_scene := preload("res://SaveMenu.tscn").instantiate()
+	var menu_scene := preload("res://Scenes/SaveMenu.tscn").instantiate()
 	add_child(menu_scene)
 	menu_scene.connect("slot_selected", Callable(self, "_on_save_slot_selected"))
 	menu_scene.connect("tree_exited", Callable(self, "_on_save_menu_closed"))

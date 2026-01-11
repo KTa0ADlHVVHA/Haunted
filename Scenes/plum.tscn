@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dbdew53n1dgvx" path="res://Scripts/Character.gd" id="1_yjcpj"]
 [ext_resource type="Texture2D" uid="uid://b31hi7ox45u2b" path="res://Pixel art/Characters/Plum.png" id="2_yjcpj"]
-[ext_resource type="Texture2D" uid="uid://d0beojp0k24gl" path="res://Pixel art/Save.png" id="3_f5pb5"]
-[ext_resource type="Texture2D" uid="uid://cr043o2l38y63" path="res://Pixel art/Load.png" id="4_gkgln"]
+[ext_resource type="Texture2D" uid="uid://d0beojp0k24gl" path="res://Pixel art/UI/Save.png" id="3_f5pb5"]
+[ext_resource type="Texture2D" uid="uid://cr043o2l38y63" path="res://Pixel art/UI/Load.png" id="4_gkgln"]
 [ext_resource type="FontFile" uid="uid://cppcsr0crxapv" path="res://Fonts/BoldPixels.ttf" id="4_ij5j4"]
-[ext_resource type="Texture2D" uid="uid://d2ul5j5xt8p78" path="res://Pixel art/Options.png" id="5_ij5j4"]
-[ext_resource type="Texture2D" uid="uid://dc2lnlningyfd" path="res://Pixel art/Items.png" id="6_li0uo"]
-[ext_resource type="Shader" uid="uid://hqob2phnqtc6" path="res://Scenes/saturation.gdshader" id="8_ij5j4"]
+[ext_resource type="Texture2D" uid="uid://d2ul5j5xt8p78" path="res://Pixel art/UI/Options.png" id="5_ij5j4"]
+[ext_resource type="Texture2D" uid="uid://dc2lnlningyfd" path="res://Pixel art/UI/Items.png" id="6_li0uo"]
+[ext_resource type="Shader" uid="uid://hqob2phnqtc6" path="res://saturation.gdshader" id="8_ij5j4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ij5j4"]
 size = Vector2(9, 3.000001)

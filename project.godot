@@ -31,6 +31,7 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/sharp_corners=true
 window/stretch/mode="canvas_items"
+mouse_cursor/custom_image="uid://cgvu567ry7c08"
 
 [editor_plugins]
 
@@ -83,7 +84,7 @@ hide={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://Dialogue/Mirror.dialogue", "res://Dialogue/Plant.dialogue", "res://Dialogue/Trash.dialogue", "res://Dialogue/Clock.dialogue", "res://Dialogue/Closet.dialogue", "res://Dialogue/Carpet.dialogue", "res://Dialogue/Bookshelf.dialogue", "res://Dialogue/Windows_Black.dialogue", "res://Dialogue/WelcomeMat.dialogue", "res://Dialogue/Kitchen.dialogue", "res://Dialogue/Ouside.dialogue", "res://Dialogue/Bathroom.dialogue", "res://Dialogue/Frame.dialogue", "res://Dialogue/Dad\'s bed.dialogue", "res://Dialogue/PlumsBed.dialogue", "res://Dialogue/Plush.dialogue", "res://Dialogue/Laptop.dialogue")
+locale/translations_pot_files=PackedStringArray("res://Dialogue/Mirror.dialogue", "res://Dialogue/Plant.dialogue", "res://Dialogue/Trash.dialogue", "res://Dialogue/Clock.dialogue", "res://Dialogue/Closet.dialogue", "res://Dialogue/Carpet.dialogue", "res://Dialogue/Bookshelf.dialogue", "res://Dialogue/Windows_Black.dialogue", "res://Dialogue/WelcomeMat.dialogue", "res://Dialogue/Kitchen.dialogue", "res://Dialogue/Ouside.dialogue", "res://Dialogue/Bathroom.dialogue", "res://Dialogue/Frame.dialogue", "res://Dialogue/Dad\'s bed.dialogue", "res://Dialogue/PlumsBed.dialogue", "res://Dialogue/Plush.dialogue", "res://Dialogue/Laptop.dialogue", "res://Dialogue/Start_Vincent.dialogue")
 
 [layer_names]
 

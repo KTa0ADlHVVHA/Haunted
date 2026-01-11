@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0beojp0k24gl"
-path="res://.godot/imported/Save.png-6da616cbf329d14f5d54588232ce4410.ctex"
+uid="uid://cgvu567ry7c08"
+path="res://.godot/imported/Cursor.png-c0461cfdcc9d4219b0a238aeef25c72a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Pixel art/Save.png"
-dest_files=["res://.godot/imported/Save.png-6da616cbf329d14f5d54588232ce4410.ctex"]
+source_file="res://Pixel art/UI/Cursor.png"
+dest_files=["res://.godot/imported/Cursor.png-c0461cfdcc9d4219b0a238aeef25c72a.ctex"]
 
 [params]
 
