@@ -1,10 +1,10 @@
 ~ start
-PLUM: It's a closet. 
-- Get in.
-	PLUM: I'm in the closet! (silly)
+PLUM: It's a closet. (neutral) [screen=P_Closet]
+- Get in
+	PLUM: I'm in the closet! (silly) [screen=P_ClosetIn]
 	VINCENT: Stop messing around.
 	PLUM: You can't just force a girl out of the closet. (worried)
 	=> END
-- Try on some clothes.
-	 pics!
+- Try on some clothes
+	[screen=P_ClosetClothes] (hide)
  => END

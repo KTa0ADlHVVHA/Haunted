@@ -9,8 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://dc2lnlningyfd" path="res://Pixel art/Items.png" id="6_li0uo"]
 [ext_resource type="Shader" uid="uid://hqob2phnqtc6" path="res://Scenes/saturation.gdshader" id="8_ij5j4"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_0xm2m"]
-radius = 5.0990195
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ij5j4"]
+size = Vector2(9, 3.000001)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjcpj"]
 
@@ -21,7 +21,7 @@ shader = ExtResource("8_ij5j4")
 shader_parameter/saturation = 1.0
 
 [node name="Plum" type="CharacterBody2D"]
-position = Vector2(0, -1)
+position = Vector2(0, -2)
 script = ExtResource("1_yjcpj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -32,13 +32,14 @@ vframes = 4
 frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
-shape = SubResource("CircleShape2D_0xm2m")
+position = Vector2(-0.5, 7.4999995)
+shape = SubResource("RectangleShape2D_ij5j4")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(5, 5)
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
 light_mask = 512
 visibility_layer = 512
 position = Vector2(0, 4.795)

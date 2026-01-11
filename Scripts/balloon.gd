@@ -3,6 +3,7 @@ extends CanvasLayer
 
 @onready var portrait_sprite: Sprite2D = $Potrait
 @onready var screen_sprite: Sprite2D = $ScreenSprite
+@onready var vbox_container: VBoxContainer = $VBoxContainer
 
 @export var dialogue_resource: DialogueResource
 @export var start_from_title: String = ""
@@ -26,12 +27,24 @@ var _locale := TranslationServer.get_locale()
 
 var mutation_cooldown := Timer.new()
 
+# ---------------- STATE ----------------
+var screen_only_locked := false      # dialogue-enforced hide
+var manual_hide_active := false      # player manual hide
+# -------------------------------------
+
 var dialogue_line: DialogueLine:
 	set(value):
 		if value:
 			dialogue_line = value
 			apply_dialogue_line()
 		else:
+			# Dialogue fully ended → restore UI if needed
+			if screen_only_locked:
+				_set_screen_only_mode(false)
+				screen_only_locked = false
+
+			manual_hide_active = false
+
 			if owner == null:
 				queue_free()
 			else:
@@ -44,31 +57,24 @@ func _ready() -> void:
 	balloon.hide()
 	screen_sprite.hide()
 	paint_node.hide()
+	vbox_container.hide()
 
-
-	# Get DialogueManager singleton safely
 	var dm := Engine.get_singleton("DialogueManager")
 
-	# Connect to mutated signal (always exists)
 	if dm.has_signal("mutated"):
 		dm.mutated.connect(_on_mutated)
 
-	# Connect to action signal if it exists (prevents crash)
 	if dm.has_signal("action"):
 		dm.action.connect(_on_dialogue_action)
 
-	# Set responses menu next_action fallback
 	if responses_menu.next_action.is_empty():
 		responses_menu.next_action = next_action
 
-	# Mutation cooldown timer
 	mutation_cooldown.timeout.connect(_on_mutation_cooldown_timeout)
 	add_child(mutation_cooldown)
 
-	# Auto-start dialogue if enabled
 	if auto_start:
 		start()
-
 
 
 func _process(_delta: float) -> void:
@@ -80,7 +86,15 @@ func _process(_delta: float) -> void:
 		)
 
 
-func _unhandled_input(_event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
+	# Allow advancing dialogue while dialogue-enforced hide is active
+	if screen_only_locked \
+	and is_waiting_for_input \
+	and event.is_action_pressed(next_action):
+		next(dialogue_line.next_id)
+		get_viewport().set_input_as_handled()
+		return
+
 	get_viewport().set_input_as_handled()
 
 
@@ -109,8 +123,7 @@ func start(with_dialogue_resource: DialogueResource = null, title: String = "", 
 
 ## APPLY LINE
 func apply_dialogue_line() -> void:
-	mutation_cooldown.stop()#
-	
+	mutation_cooldown.stop()
 
 	progress.hide()
 	is_waiting_for_input = false
@@ -119,35 +132,38 @@ func apply_dialogue_line() -> void:
 
 	var text_with_tags := dialogue_line.text
 	var parsed := _extract_emotion(text_with_tags)
+
+	# Dialogue-triggered screen-only lock
+	if parsed.hide:
+		_set_screen_only_mode(true)
+
 	if "[show paint]" in parsed.text:
 		paint_node.show()
-		parsed.text = parsed.text.replace("[show paint]", "")  # remove tag from visible text
+		parsed.text = parsed.text.replace("[show paint]", "")
 
 	character_label.visible = not dialogue_line.character.is_empty()
 	character_label.text = tr(dialogue_line.character, "dialogue")
 
-	# Portrait emotion
 	_update_portrait(dialogue_line.character, parsed.emotion)
 
-	# SCREEN TAG HANDLING
+	# Screen tag
 	var screen_tag_regex := RegEx.new()
 	screen_tag_regex.compile("\\[screen=([^\\]]+)\\]")
-	var matches := screen_tag_regex.search_all(text_with_tags)
-	for m in matches:
+	for m in screen_tag_regex.search_all(text_with_tags):
 		_set_screen_sprite(m.get_string(1))
 
 	dialogue_label.hide()
 	dialogue_label.dialogue_line = dialogue_line
 
-	# Replace [time] token with system time
 	var final_text: String = parsed.text.replace("[time]", get_system_time())
 	dialogue_label.dialogue_line.text = final_text
 
 	responses_menu.hide()
 	responses_menu.responses = dialogue_line.responses
 
-	balloon.show()
-	will_hide_balloon = false
+	if not screen_only_locked:
+		balloon.show()
+		vbox_container.show()
 
 	dialogue_label.show()
 	if not parsed.text.is_empty():
@@ -163,7 +179,11 @@ func apply_dialogue_line() -> void:
 		balloon.focus_mode = Control.FOCUS_NONE
 		responses_menu.show()
 	elif dialogue_line.time != "":
-		var t = parsed.text.length() * 0.02 if dialogue_line.time == "auto" else dialogue_line.time.to_float()
+		var t: float = (
+			parsed.text.length() * 0.02
+			if dialogue_line.time == "auto"
+			else dialogue_line.time.to_float()
+		)
 		await get_tree().create_timer(t).timeout
 		next(dialogue_line.next_id)
 	else:
@@ -195,28 +215,50 @@ func _on_mutation_cooldown_timeout() -> void:
 	if will_hide_balloon:
 		will_hide_balloon = false
 		balloon.hide()
+		vbox_container.hide()
 
 
 # ---------------- INPUT ----------------
 func _on_balloon_gui_input(event: InputEvent) -> void:
-	if dialogue_label.is_typing:
-		if event.is_action_pressed(skip_action):
-			dialogue_label.skip_typing()
+	if manual_hide_active and event.is_action_pressed(next_action):
+		return
+
+	# Block skip if user manually hid the UI
+	if manual_hide_active and event.is_action_pressed(skip_action):
+		return
+
+	# Normal skip while typing (only if not manually hidden)
+	if dialogue_label.is_typing and event.is_action_pressed(skip_action):
+		dialogue_label.skip_typing()
+		return
+
+	# Manual hide toggle
+	if event.is_action_pressed("hide"):
+		if screen_only_locked:
+			_set_screen_only_mode(false)
+			screen_only_locked = false
+			balloon.show()
+			vbox_container.show()
+			balloon.grab_focus()
 			return
 
-	if event.is_action_pressed("hide"):
 		var new_visible := not dialogue_label.visible
+		manual_hide_active = not new_visible
+
 		dialogue_label.visible = new_visible
 		character_label.visible = new_visible
 		portrait_sprite.visible = new_visible
+		vbox_container.visible = new_visible
 		$TextureRect.visible = new_visible
 		$TextureRect2.visible = new_visible
 		$Control.visible = new_visible
 
 		if new_visible:
+			manual_hide_active = false
 			balloon.grab_focus()
 		return
 
+	# Advance dialogue
 	if not is_waiting_for_input or dialogue_line.responses.size() > 0:
 		return
 
@@ -229,20 +271,44 @@ func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
 
 
 # ---------------- HELPERS ----------------
+func _set_screen_only_mode(enabled: bool) -> void:
+	screen_only_locked = enabled
+
+	balloon.visible = not enabled
+	dialogue_label.visible = not enabled
+	character_label.visible = not enabled
+	portrait_sprite.visible = not enabled
+	vbox_container.visible = not enabled
+	responses_menu.visible = not enabled
+	progress.visible = not enabled
+	$TextureRect.visible = not enabled
+	$TextureRect2.visible = not enabled
+	$Control.visible = false
+	paint_node.visible = false
+
+	screen_sprite.visible = true
+
+
 func _extract_emotion(text: String) -> Dictionary:
 	var emotion := "neutral"
 	var clean_text := text
+	var hide_screen_only := false
 
-	var open := text.rfind("(")
-	var close := text.rfind(")")
+	if "(hide)" in clean_text:
+		hide_screen_only = true
+		clean_text = clean_text.replace("(hide)", "").strip_edges()
+
+	var open := clean_text.rfind("(")
+	var close := clean_text.rfind(")")
 
 	if open != -1 and close != -1 and close > open:
-		emotion = text.substr(open + 1, close - open - 1).strip_edges()
-		clean_text = text.substr(0, open).strip_edges()
+		emotion = clean_text.substr(open + 1, close - open - 1).strip_edges()
+		clean_text = clean_text.substr(0, open).strip_edges()
 
 	return {
 		"text": clean_text,
-		"emotion": emotion.to_lower()
+		"emotion": emotion.to_lower(),
+		"hide": hide_screen_only
 	}
 
 
@@ -283,7 +349,7 @@ func _set_screen_sprite(name: String) -> void:
 		screen_sprite.hide()
 
 
-# ---------------- DIALOGUE FUNCTION (TIME) ----------------
+# ---------------- TIME ----------------
 func get_system_time() -> String:
 	var now := Time.get_datetime_dict_from_system()
 	return "%02d:%02d" % [now.hour, now.minute]
