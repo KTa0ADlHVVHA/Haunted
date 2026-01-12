@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b1gqjyi7eou6l"
+path="res://.godot/imported/Vincent_welcome.dialogue-1da936927e44099413c9b07df5685277.tres"
+
+[deps]
+
+source_file="res://Dialogue/Vincent_welcome.dialogue"
+dest_files=["res://.godot/imported/Vincent_welcome.dialogue-1da936927e44099413c9b07df5685277.tres"]
+
+[params]
+
+defaults=true
