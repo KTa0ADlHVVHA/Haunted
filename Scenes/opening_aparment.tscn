@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=4 uid="uid://0tiydmymtbjy"]
+[gd_scene load_steps=77 format=4 uid="uid://0tiydmymtbjy"]
 
 [ext_resource type="PackedScene" uid="uid://w3vshkkefhkp" path="res://Scenes/plum.tscn" id="1_squku"]
 [ext_resource type="Script" uid="uid://cke0gq72kd30l" path="res://Scenes/Vincent.gd" id="2_g554b"]
@@ -12,26 +12,42 @@
 [ext_resource type="Texture2D" uid="uid://bba4b12vjxywf" path="res://Pixel art/Background/wall side.png" id="4_wwspf"]
 [ext_resource type="Texture2D" uid="uid://cnl0lait4xuq6" path="res://Pixel art/Background/Ceiling (2).png" id="5_wwspf"]
 [ext_resource type="Texture2D" uid="uid://bd6vffcsw6yht" path="res://Pixel art/Background/Ceiling (2 extras).png" id="6_mp1oy"]
+[ext_resource type="Resource" uid="uid://v7tlqy77e6jk" path="res://Dialogue/Plant.dialogue" id="6_wrxgv"]
 [ext_resource type="Script" uid="uid://cpkwnpeb08syr" path="res://Scripts/mirror.gd" id="7_hm670"]
 [ext_resource type="Resource" uid="uid://dlnvc1oogyrtp" path="res://Dialogue/Mirror.dialogue" id="8_jqy05"]
 [ext_resource type="Texture2D" uid="uid://b31hi7ox45u2b" path="res://Pixel art/Characters/Plum.png" id="9_jqy05"]
 [ext_resource type="Texture2D" uid="uid://bqg8gqogaxihr" path="res://Pixel art/Items/Mirror top.png" id="9_xvnyx"]
 [ext_resource type="Texture2D" uid="uid://chm2ugvulrbl7" path="res://Pixel art/Items/Mirror.png" id="10_xvnyx"]
+[ext_resource type="Resource" uid="uid://cudsaw0cuf3kw" path="res://Dialogue/Trash.dialogue" id="13_6a4v4"]
 [ext_resource type="Texture2D" uid="uid://brgw0bcglx8u7" path="res://Pixel art/Items/Trash.png" id="13_cm4tn"]
+[ext_resource type="Resource" uid="uid://dnjlk4us4ihbp" path="res://Dialogue/Clock.dialogue" id="15_4ddea"]
 [ext_resource type="Texture2D" uid="uid://bj2v8ux7d0gcw" path="res://Pixel art/Items/Clock.png" id="15_w655g"]
+[ext_resource type="Resource" uid="uid://l4eqrgelfr1t" path="res://Dialogue/Closet.dialogue" id="17_ulche"]
 [ext_resource type="Texture2D" uid="uid://bvwnauygetc6h" path="res://Pixel art/Items/Closet .png" id="18_pxjuf"]
+[ext_resource type="Resource" uid="uid://dxh785jqfiu37" path="res://Dialogue/Carpet.dialogue" id="19_q7acl"]
+[ext_resource type="Resource" uid="uid://co2mfvwf54k3d" path="res://Dialogue/Bookshelf.dialogue" id="21_rxtpp"]
 [ext_resource type="Texture2D" uid="uid://ce1x1lcu46vrm" path="res://Pixel art/Items/Carpet .png" id="21_xvnyx"]
+[ext_resource type="Resource" uid="uid://cwdnorjyklkci" path="res://Dialogue/Windows_Black.dialogue" id="23_mapf5"]
 [ext_resource type="Texture2D" uid="uid://j26ibn7dwm25" path="res://Pixel art/Items/Door.png" id="24_5080h"]
+[ext_resource type="Resource" uid="uid://di8hulgnklfg0" path="res://Dialogue/WelcomeMat.dialogue" id="24_tsanh"]
 [ext_resource type="Texture2D" uid="uid://buf4si2b1n381" path="res://Pixel art/Items/Bookshelf.png" id="24_wmb5d"]
 [ext_resource type="Script" uid="uid://c8lic5qyea1uc" path="res://Scripts/Items.gd" id="24_wuqxb"]
+[ext_resource type="Resource" uid="uid://bsx2734v207gn" path="res://Dialogue/Ouside.dialogue" id="26_qbbjs"]
+[ext_resource type="Resource" uid="uid://dw18pi6mmj3h2" path="res://Dialogue/Kitchen.dialogue" id="27_7y5jl"]
 [ext_resource type="Texture2D" uid="uid://8fppyplxn1xe" path="res://Pixel art/Items/Frame.png" id="27_mp1oy"]
+[ext_resource type="Resource" uid="uid://c5wpl8wxndowr" path="res://Dialogue/Bathroom.dialogue" id="29_22fcn"]
 [ext_resource type="Texture2D" uid="uid://b2v285abivnmw" path="res://Pixel art/Items/Bed (1).png" id="29_gvnx1"]
 [ext_resource type="Texture2D" uid="uid://bwaocjw1a4vs" path="res://Pixel art/Background/Background.png" id="29_po6kr"]
 [ext_resource type="Texture2D" uid="uid://dhnxl1rnkldvb" path="res://Pixel art/Items/mat.png" id="30_j0236"]
+[ext_resource type="Resource" uid="uid://c8l2mkjjw3nwg" path="res://Dialogue/Frame.dialogue" id="30_w8bqb"]
 [ext_resource type="Texture2D" uid="uid://dg2n7om2u4xe" path="res://Pixel art/Items/Plum bed.png" id="31_8o6qi"]
+[ext_resource type="Resource" uid="uid://b7qtfavlgtjl2" path="res://Dialogue/PlumsBed.dialogue" id="32_nvats"]
 [ext_resource type="Texture2D" uid="uid://dcnbrg237kc6e" path="res://Pixel art/Items/Desk.png" id="32_qeuyk"]
 [ext_resource type="Texture2D" uid="uid://doy6tj3eya7r" path="res://Pixel art/Items/Laptop.png" id="33_tqdvf"]
 [ext_resource type="Texture2D" uid="uid://bijmduyeofnp6" path="res://Pixel art/Items/Plush.png" id="34_cjaad"]
+[ext_resource type="Resource" uid="uid://cpaldhfps6c1k" path="res://Dialogue/Dad's bed.dialogue" id="34_is2jo"]
+[ext_resource type="Resource" uid="uid://b3xmcamjbc7iq" path="res://Dialogue/Laptop.dialogue" id="37_4ddea"]
+[ext_resource type="Resource" uid="uid://bucyt2u28t5y3" path="res://Dialogue/Plush.dialogue" id="39_ulche"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j0236"]
 size = Vector2(12, 7)
@@ -211,6 +227,7 @@ position = Vector2(-61, 77.975)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("6_wrxgv")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Items/Plant"]
@@ -296,6 +313,7 @@ collision_layer = 513
 collision_mask = 513
 constant_linear_velocity = Vector2(0, -0.255)
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("13_6a4v4")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Items/Trash"]
@@ -312,6 +330,7 @@ position = Vector2(-51, -91)
 collision_layer = 512
 collision_mask = 512
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("15_4ddea")
 
 [node name="Sprite2D" type="Sprite2D" parent="Items/Clock"]
 texture_filter = 1
@@ -330,6 +349,7 @@ position = Vector2(-98, -64)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("17_ulche")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Items/Closet"]
@@ -348,6 +368,7 @@ position = Vector2(0, 1)
 collision_layer = 512
 collision_mask = 512
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("19_q7acl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Carpet"]
 position = Vector2(-33, 26)
@@ -365,6 +386,7 @@ position = Vector2(-18, -73)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("21_rxtpp")
 
 [node name="Sprite2D" type="Sprite2D" parent="Items/Bookshelf"]
 texture_filter = 1
@@ -381,6 +403,7 @@ position = Vector2(1, 0)
 collision_layer = 512
 collision_mask = 512
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("23_mapf5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/windows_black"]
 light_mask = 512
@@ -396,6 +419,7 @@ position = Vector2(-325, -5)
 collision_layer = 512
 collision_mask = 512
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("24_tsanh")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Welcome Mat"]
@@ -414,6 +438,7 @@ position = Vector2(1, 0)
 collision_layer = 512
 collision_mask = 512
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("26_qbbjs")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Outside"]
 light_mask = 512
@@ -428,6 +453,7 @@ position = Vector2(-132, -39.56)
 collision_layer = 512
 collision_mask = 512
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("27_7y5jl")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Items/Kitchen"]
@@ -448,6 +474,7 @@ position = Vector2(109, -39.56)
 collision_layer = 512
 collision_mask = 512
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("29_22fcn")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Items/Bathroom"]
@@ -467,6 +494,7 @@ position = Vector2(150, -96)
 collision_layer = 512
 collision_mask = 512
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("30_w8bqb")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Items/Frame"]
@@ -484,6 +512,7 @@ position = Vector2(142, 88)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("32_nvats")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Items/Plum Bed"]
@@ -503,6 +532,7 @@ position = Vector2(142, 17.87)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("34_is2jo")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Items/Bed"]
@@ -533,6 +563,7 @@ position = Vector2(1, 19.065)
 collision_layer = 512
 collision_mask = 512
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("37_4ddea")
 
 [node name="Sprite2D" type="Sprite2D" parent="Items/Desk/Sprite2D/Laptop"]
 texture_filter = 1
@@ -548,6 +579,7 @@ position = Vector2(1, 23.72)
 collision_layer = 512
 collision_mask = 512
 script = ExtResource("24_wuqxb")
+dialogue_resource = ExtResource("39_ulche")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Items/Desk/Sprite2D/Plush"]
 texture_filter = 1

@@ -1,61 +1,61 @@
 ~ start
-PLUM: Hi dad!
+PLUM: Hi dad! (happy)
 PLUM: Did you find anything cool today?
 
-VINCENT: Nope…
-VINCENT: I went to investigate the same house, but it was once again empty.
-VINCENT: Kids are still going missing despite my watch…
-VINCENT: And whenever I enter the house, it’s empty.
-VINCENT: They’re going to demolish it tomorrow.
+VINCENT: Nope… (sad)
+VINCENT: I went to investigate the same house, but it was once again empty. (thinking)
+VINCENT: Kids are still going missing despite my watch… (worried)
+VINCENT: And whenever I enter the house, it’s empty. 
+VINCENT: They’re going to demolish it tomorrow. (sad)
 
 - Because of the ghosts
-	VINCENT: Listen, Plum.
-	VINCENT: 90% of cases of paranormal activity are falsely reported by women.
-	VINCENT: The other 10% have a logical explanation.
+	VINCENT: Listen, Plum. (serious)
+	VINCENT: 90% of cases of paranormal activity are falsely reported by women. (smug)
+	VINCENT: The other 10% have a logical explanation. (thinking)
 
 - Who cares about this house
-	VINCENT: I care about this house.
+	VINCENT: I care about this house. (serious)
 	VINCENT: Some serial kidnapper uses it as bait.
-	VINCENT: If we destroy the house without solving it.
-	VINCENT: That just moves the problem somewhere else.
+	VINCENT: If we destroy the house without solving it. (thinking)
+	VINCENT: That just moves the problem somewhere else. (worried)
 
-VINCENT: Anyway… I'll probably have to test my luck tommorow.
-VINCENT: Otherwise I guess I don't get paid for this job.
+VINCENT: Anyway… I'll probably have to test my luck tommorow. (sad)
+VINCENT: Otherwise I guess I don't get paid for this job. (thinking)
 
 - Take me with you
-	VINCENT: What?
+	VINCENT: What? (suprised)
 
-	PLUM: You said kids are the only ones who go missing.
+	PLUM: You said kids are the only ones who go missing. (silly)
 
-	VINCENT: I’m not putting you in harm’s way.
+	VINCENT: I’m not putting you in harm’s way. (serious)
 
-	PLUM: It’ll barely be dangerous.
-	PLUM: I’d be next to you the entire time.
-	PLUM: Maybe there’s a small area only kids can see.
-	PLUM: Besides, it’s my birthday!
-	PLUM: You promised to hang out with me.
-	PLUM: And if it’s not supernatural, you have nothing to worry about.
+	PLUM: It’ll barely be dangerous. (tired)
+	PLUM: I’d be next to you the entire time. 
+	PLUM: Maybe there’s a small area only kids can see. (smug)
+	PLUM: Besides, it’s my birthday! (serious)
+	PLUM: You promised to hang out with me. (happy)
+	PLUM: And if it’s not supernatural, you have nothing to worry about. (thinking)
 
-	VINCENT: I’m not trying to get the only remnant of my wife killed.
-	VINCENT: Besides… a brick could fall on you.
-	VINCENT: There are so many ways to die.
+	VINCENT: I’m not trying to get the only remnant of my wife killed. (angry)
+	VINCENT: Besides… a brick could fall on you. (serious)
+	VINCENT: There are so many ways to die. (sad)
 
-	PLUM: Please.
+	PLUM: Please. (sad)
 
 	VINCENT: Fine…
 
 	- Let’s go now
-		VINCENT: Are you sure about this?
-		PLUM: The building’s going to get demolished soon!!
-		VINCENT: Stay next to me at all times, okay.
+		VINCENT: Are you sure about this? (thinking)
+		PLUM: The building’s going to get demolished soon!! 
+		VINCENT: Stay next to me at all times, okay. (serious)
 
 		- I will!!
-			VINCENT: Good.
+			VINCENT: Good. (happy)
 
 		- Nope
-			VINCENT: Not funny.
+			VINCENT: Not funny. (angry)
 			- I will!!
-				VINCENT: Good.
+				VINCENT: Good. (happy)
 - I’m gonna look around
 	 
 => END

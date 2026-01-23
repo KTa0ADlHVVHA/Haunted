@@ -2,7 +2,7 @@
 PLUM: Dad painted over the window with black paint. (neutral) [screen=P_Black_Window]
 PLUM: I think it looks ugly. (worried)
 VINCENT: I did that because some girl couldn’t sleep because it was too bright out.
-PLUM: Not true! (angry)
+PLUM: Not true! (embarassed)
 - Go back
 - Jump out the window
 	VINCENT: Plum?
