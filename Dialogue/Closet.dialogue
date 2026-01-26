@@ -2,7 +2,7 @@
 PLUM: It's a closet. (neutral) [screen=P_Closet]
 - Get in
 	PLUM: I'm in the closet! (silly) [screen=P_ClosetIn]
-	VINCENT: Stop messing around.
+	VINCENT: Stop messing around. (angry)
 	PLUM: You can't just force a girl out of the closet. (worried)
 	=> END
 - Try on some clothes
