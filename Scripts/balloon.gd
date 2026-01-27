@@ -30,6 +30,7 @@ var mutation_cooldown := Timer.new()
 # ---------------- STATE ----------------
 var screen_only_locked := false      # dialogue-enforced hide
 var manual_hide_active := false      # player manual hide
+var hide_disabled := false           # disables manual hide for specific lines
 # -------------------------------------
 
 var dialogue_line: DialogueLine:
@@ -44,6 +45,7 @@ var dialogue_line: DialogueLine:
 				screen_only_locked = false
 
 			manual_hide_active = false
+			hide_disabled = false
 
 			if owner == null:
 				queue_free()
@@ -88,8 +90,8 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	# Manual hide toggle (ONLY place hide is handled)
 	if event.is_action_pressed("hide"):
-		# Dialogue-enforced screen-only cannot be overridden
-		if screen_only_locked:
+		# Dialogue-enforced screen-only or hide-disabled cannot be overridden
+		if screen_only_locked or hide_disabled:
 			return
 
 		var new_visible := not dialogue_label.visible
@@ -156,6 +158,7 @@ func apply_dialogue_line() -> void:
 
 	var text_with_tags := dialogue_line.text
 	var parsed := _extract_emotion(text_with_tags)
+	hide_disabled = parsed.hide_disabled  # NEW: disable hide if tag present
 
 	# Dialogue-triggered screen-only lock
 	if parsed.hide:
@@ -258,10 +261,10 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 		dialogue_label.skip_typing()
 		return
 
-	#	# Manual hide toggle (ONLY place hide is handled)
+	# Manual hide toggle
 	if event.is_action_pressed("hide"):
-		# Dialogue-enforced screen-only cannot be overridden
-		if screen_only_locked:
+		# Dialogue-enforced screen-only or hide-disabled cannot be overridden
+		if screen_only_locked or hide_disabled:
 			return
 
 		var new_visible := not dialogue_label.visible
@@ -319,10 +322,15 @@ func _extract_emotion(text: String) -> Dictionary:
 	var emotion := "neutral"
 	var clean_text := text
 	var hide_screen_only := false
+	var disable_hide := false
 
 	if "(hide)" in clean_text:
 		hide_screen_only = true
 		clean_text = clean_text.replace("(hide)", "").strip_edges()
+
+	if "(nohide)" in clean_text:
+		disable_hide = true
+		clean_text = clean_text.replace("(nohide)", "").strip_edges()
 
 	var open := clean_text.rfind("(")
 	var close := clean_text.rfind(")")
@@ -334,7 +342,8 @@ func _extract_emotion(text: String) -> Dictionary:
 	return {
 		"text": clean_text,
 		"emotion": emotion.to_lower(),
-		"hide": hide_screen_only
+		"hide": hide_screen_only,
+		"hide_disabled": disable_hide
 	}
 
 

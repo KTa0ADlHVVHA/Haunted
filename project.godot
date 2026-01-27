@@ -29,6 +29,7 @@ runtime/balloon_path="res://Scenes/balloon.tscn"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/resizable=false
 window/size/sharp_corners=true
 window/stretch/mode="canvas_items"
 mouse_cursor/custom_image="uid://cgvu567ry7c08"

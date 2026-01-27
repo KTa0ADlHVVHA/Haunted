@@ -185,7 +185,7 @@ sources/0 = SubResource("TileSetAtlasSource_qeuyk")
 
 [node name="Opening apartment" type="Node2D"]
 y_sort_enabled = true
-position = Vector2(1, -3)
+position = Vector2(2, -3)
 metadata/_edit_vertical_guides_ = [28.0]
 
 [node name="Plum" parent="." instance=ExtResource("1_squku")]

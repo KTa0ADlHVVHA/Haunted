@@ -11,7 +11,7 @@ PLUM: It's dad's laptop. (neutral) [screen=P_Laptop]
 		=> END
 	- Drawing program
 		PLUM: I'm going to draw a cat!
-		[show paint]
+		(nohide) [show paint]
 		 
 		=> END
 - Be a good girl

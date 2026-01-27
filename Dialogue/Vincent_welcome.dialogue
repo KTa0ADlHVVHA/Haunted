@@ -1,5 +1,5 @@
 ~ start
-PLUM: Hi dad! (happy)
+PLUM: Hi dad! (happy) [screen=P_Vin]
 PLUM: Did you find anything cool today?
 
 VINCENT: Nope… (sad)
@@ -53,7 +53,7 @@ VINCENT: Otherwise I guess I don't get paid for this job. (thinking)
 			VINCENT: Good. (happy) [screen=P_Will]
 
 		- Nope
-			VINCENT: Not funny. (angry)
+			VINCENT: Not funny. (angry) [screen=P_Nope]
 			- I will!!
 				VINCENT: Good. (happy) [screen=P_Will]
 - I’m gonna look around
