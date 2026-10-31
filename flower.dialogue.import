@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dlk5ajiwt10ao"
+path="res://.godot/imported/flower.dialogue-3d062a5a5b9d6d3235da028d1828ff7a.tres"
+
+[deps]
+
+source_file="res://flower.dialogue"
+dest_files=["res://.godot/imported/flower.dialogue-3d062a5a5b9d6d3235da028d1828ff7a.tres"]
+
+[params]
+
+defaults=true

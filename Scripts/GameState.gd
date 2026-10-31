@@ -19,7 +19,8 @@ var in_game: bool = true
 # ============================================================
 # STORY / INVENTORY FLAGS
 # ============================================================
-
+var has_flower: bool = false
+var flower_taken: bool = false
 # Player currently possesses the house key.
 var has_house_key: bool = false
 

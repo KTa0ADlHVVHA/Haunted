@@ -22,7 +22,7 @@ shader = ExtResource("8_ij5j4")
 shader_parameter/saturation = 1.0
 
 [node name="Plum" type="CharacterBody2D" unique_id=444547423]
-position = Vector2(0, -2)
+y_sort_enabled = true
 script = ExtResource("1_yjcpj")
 
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=521523758]
@@ -40,7 +40,7 @@ vframes = 4
 frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=180912047]
-position = Vector2(-0.5, 7.4999995)
+position = Vector2(0, 4.5)
 shape = SubResource("CircleShape2D_li0uo")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=801686171]
@@ -140,3 +140,4 @@ offset_left = -501.0
 offset_top = -329.0
 offset_right = 418.0
 offset_bottom = 302.0
+metadata/_edit_use_anchors_ = true

@@ -6,7 +6,6 @@ extends StaticBody2D
 # ============================================================
 
 @export var dialogue_resource: DialogueResource
-
 @export var start_node: String = "start"
 
 
@@ -14,24 +13,8 @@ extends StaticBody2D
 # INTERACTION STATE
 # ============================================================
 
-# Counts how many times the object itself has been interacted
-# with.
-#
-# Dialogue can read:
-#
-# interaction_count
-#
 var interaction_count: int = 0
 
-
-# Stores counters for SPECIFIC choices/actions.
-#
-# Examples:
-#
-# "get_in"  -> 2
-# "pray"    -> 5
-# "flush"   -> 1
-#
 var choice_counts: Dictionary = {}
 
 
@@ -40,50 +23,27 @@ var choice_counts: Dictionary = {}
 # ============================================================
 
 func interact(_player = null) -> void:
-
 	if GameState.in_dialogue:
 		return
 
 
 	if dialogue_resource == null:
-
 		push_warning(
 			"Interactable has no DialogueResource assigned."
 		)
-
 		return
 
 
-	# --------------------------------------------------------
-	# COUNT GENERAL INTERACTION
-	# --------------------------------------------------------
-
 	interaction_count += 1
 
-
-	# --------------------------------------------------------
-	# START NODE
-	# --------------------------------------------------------
 
 	var title: String = start_node.strip_edges()
 
 
 	if title.is_empty():
-
 		title = "start"
 
 
-	# --------------------------------------------------------
-	# START DIALOGUE
-	# --------------------------------------------------------
-
-	# Passing [self] allows the dialogue file to use:
-	#
-	# interaction_count
-	# get_choice_count(...)
-	# increment_choice(...)
-	# reset_choice(...)
-	#
 	DialogueManager.show_dialogue_balloon(
 		dialogue_resource,
 		title,
@@ -96,19 +56,14 @@ func interact(_player = null) -> void:
 # ============================================================
 
 func get_interaction_count() -> int:
-
 	return interaction_count
 
 
 func reset_interaction_count() -> void:
-
 	interaction_count = 0
 
 
-func set_interaction_count(
-	value: int
-) -> void:
-
+func set_interaction_count(value: int) -> void:
 	interaction_count = maxi(
 		value,
 		0
@@ -116,15 +71,9 @@ func set_interaction_count(
 
 
 # ============================================================
-# SPECIFIC CHOICE COUNTERS
+# CHOICE COUNTERS
 # ============================================================
 
-# Get how many times a particular choice has happened.
-#
-# Example:
-#
-# get_choice_count("get_in")
-#
 func get_choice_count(
 	choice_name: String
 ) -> int:
@@ -137,12 +86,6 @@ func get_choice_count(
 	)
 
 
-# Increase a particular choice counter by 1.
-#
-# Example:
-#
-# increment_choice("get_in")
-#
 func increment_choice(
 	choice_name: String
 ) -> void:
@@ -157,12 +100,6 @@ func increment_choice(
 	] = current_count + 1
 
 
-# Set a counter manually.
-#
-# Example:
-#
-# set_choice_count("get_in", 5)
-#
 func set_choice_count(
 	choice_name: String,
 	value: int
@@ -176,12 +113,6 @@ func set_choice_count(
 	)
 
 
-# Reset one particular counter.
-#
-# Example:
-#
-# reset_choice("get_in")
-#
 func reset_choice(
 	choice_name: String
 ) -> void:
@@ -191,7 +122,67 @@ func reset_choice(
 	)
 
 
-# Reset every specific-choice counter.
 func reset_all_choices() -> void:
-
 	choice_counts.clear()
+
+
+# ============================================================
+# NODE VISIBILITY
+# ============================================================
+
+# Allows dialogue to show one of this object's child nodes.
+#
+# Example:
+#
+# $> show_node("Sprite2D2")
+#
+func show_node(
+	node_path: String
+) -> void:
+
+	var target: Node = get_node_or_null(
+		NodePath(node_path)
+	)
+
+
+	if target == null:
+
+		push_warning(
+			"Could not find node: " + node_path
+		)
+
+		return
+
+
+	if target is CanvasItem:
+
+		target.visible = true
+
+
+# Allows dialogue to hide one of this object's child nodes.
+#
+# Example:
+#
+# $> hide_node("Sprite2D2")
+#
+func hide_node(
+	node_path: String
+) -> void:
+
+	var target: Node = get_node_or_null(
+		NodePath(node_path)
+	)
+
+
+	if target == null:
+
+		push_warning(
+			"Could not find node: " + node_path
+		)
+
+		return
+
+
+	if target is CanvasItem:
+
+		target.visible = false

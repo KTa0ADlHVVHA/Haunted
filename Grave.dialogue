@@ -1,18 +1,41 @@
 ~ start
 
-match get_choice_count("paid_respect")
+match get_choice_count("laid_flower")
 	when 0
-		PLUM: The writing is impossible to read. (sad)
-		PLUM: I can only make out the words "I didn't" and "Rosie".
+		match get_choice_count("paid_respect")
+			when 0
+				PLUM: The writing is impossible to read. (sad)
+				PLUM: I can only make out the words "I didn't" and "Rosie".
 
-		- Pay respect
-			$> increment_choice("paid_respect")
-			You pray for Rosie.
-			=> END
+				- Pay respect
+					$> increment_choice("paid_respect")
+					You pray for Rosie.
+					=> END
 
-		- Do nothing
-			=> END
+				- Do nothing
+					=> END
+
+			else
+				if GameState.has_flower
+					You've already paid your respects here.
+
+					- Lay the flower here
+						$> GameState.has_flower = false
+						$> increment_choice("laid_flower")
+						$> show_node("Sprite2D2")
+						VINCENT: Are you done wasting time?
+						PLUM: Not wasting time! (angry)
+						You don't know... but you think Rosie will appreciate this.
+						=> END
+
+					- Keep the flower to yourself
+						You didn't have to give the flower, but you still feel like a bad person.
+						=> END
+
+				else
+					You've already paid your respects here.
+					=> END
 
 	else
-		You've already paid your respects here.
+		You don't know... but you think Rosie will appreciate this.
 		=> END

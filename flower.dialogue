@@ -1,0 +1,19 @@
+~ start
+
+match GameState.flower_taken
+	when false
+		You can see a small flower through the hole.
+
+		- Take it
+			$> GameState.has_flower = true
+			$> GameState.flower_taken = true
+			You took the flower.
+			=> END
+
+		- Leave it
+			You decide to let the flower grow.
+			=> END
+
+	else
+		There is nothing there anymore.
+		=> END
