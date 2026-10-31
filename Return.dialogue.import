@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://doquwp4r63lut"
+path="res://.godot/imported/Return.dialogue-dac42e37e2c47180bb79fe04ef73ed17.tres"
+
+[deps]
+
+source_file="res://Return.dialogue"
+dest_files=["res://.godot/imported/Return.dialogue-dac42e37e2c47180bb79fe04ef73ed17.tres"]
+
+[params]
+
+defaults=true

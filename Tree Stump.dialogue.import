@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b60te4roeuv31"
+path="res://.godot/imported/Tree Stump.dialogue-263dedd35b23a775184138d8a8edd216.tres"
+
+[deps]
+
+source_file="res://Tree Stump.dialogue"
+dest_files=["res://.godot/imported/Tree Stump.dialogue-263dedd35b23a775184138d8a8edd216.tres"]
+
+[params]
+
+defaults=true

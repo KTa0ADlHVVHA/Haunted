@@ -1,0 +1,22 @@
+~ start
+
+match GameState.fountain_key_taken
+	when false
+		PLUM: Dad doesn't let me throw coins in fountains... (sad)
+		VINCENT: The key to the door should be in the fountain.
+
+		- Take the key
+			$> GameState.give_house_key()
+			You got the house key.
+			=> END
+
+		- Make Vincent do it
+			VINCENT: Are you serious? (surprised)
+			VINCENT: Fine... (angry)
+			$> GameState.give_house_key()
+			Vincent got the house key.
+			=> END
+
+	else
+		PLUM: The fountain is empty now.
+		=> END

@@ -1,6 +1,13 @@
 ~ start
-PLUM: It's empty inside. (sad) [screen=P_Trash]
-PLUM: Just like me... (crying)
-VINCENT: The trashcan in full. What are you talking about? (thinking)
-PLUM: Let me be emo! (angry)
-=> END
+
+match interaction_count
+	when 1
+		PLUM: It's empty inside. (sad) [screen=P_Trash]
+		PLUM: Just like me... (crying)
+		VINCENT: The trashcan is full. What are you talking about? (thinking)
+		PLUM: Let me be emo! (angry)
+		=> END
+
+	else
+		PLUM: It's full. I need time to come up with another joke. [screen=P_Trash] (serious)
+		=> END

@@ -1,3 +1,18 @@
 ~ start
-PLUM: This is a reflection of the prettiest girl in the world. (happy) [screen=P_Mirror]
-=> END
+
+match interaction_count
+	when 1
+		PLUM: This is a reflection of the prettiest girl in the world. (happy) [screen=P_Mirror]
+		=> END
+
+	when 2
+		PLUM: Still the prettiest girl in the world. (happy) [screen=P_Mirror]
+		=> END
+
+	when 3
+		PLUM: It's me. Yay! (happy) [screen=P_Mirror]
+		=> END
+
+	else
+		PLUM: I will never get bored of this. (happy) [screen=P_Mirror]
+		=> END

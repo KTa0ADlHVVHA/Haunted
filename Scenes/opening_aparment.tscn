@@ -1,6 +1,7 @@
-[gd_scene load_steps=77 format=4 uid="uid://0tiydmymtbjy"]
+[gd_scene format=4 uid="uid://0tiydmymtbjy"]
 
 [ext_resource type="PackedScene" uid="uid://w3vshkkefhkp" path="res://Scenes/plum.tscn" id="1_squku"]
+[ext_resource type="Script" uid="uid://eb4p7repl7rv" path="res://Scenes/opening_aparment.gd" id="1_ulche"]
 [ext_resource type="Script" uid="uid://cke0gq72kd30l" path="res://Scenes/Vincent.gd" id="2_g554b"]
 [ext_resource type="Texture2D" uid="uid://mbq31ooldmf0" path="res://Pixel art/Background/Wall.png" id="2_j0236"]
 [ext_resource type="Texture2D" uid="uid://da2eosglkbxy0" path="res://Pixel art/Background/Blank.png" id="2_ormun"]
@@ -183,20 +184,21 @@ sources/2 = SubResource("TileSetAtlasSource_tqdvf")
 sources/3 = SubResource("TileSetAtlasSource_cjaad")
 sources/0 = SubResource("TileSetAtlasSource_qeuyk")
 
-[node name="Opening apartment" type="Node2D"]
+[node name="Opening apartment" type="Node2D" unique_id=989828036]
 y_sort_enabled = true
 position = Vector2(2, -3)
+script = ExtResource("1_ulche")
 metadata/_edit_vertical_guides_ = [28.0]
 
-[node name="Plum" parent="." instance=ExtResource("1_squku")]
+[node name="Plum" parent="." unique_id=591823023 instance=ExtResource("1_squku")]
 position = Vector2(-4, 6)
 friction = 1399.41
 
-[node name="Items" type="Node2D" parent="."]
+[node name="Items" type="Node2D" parent="." unique_id=583843284]
 y_sort_enabled = true
 position = Vector2(0, 2)
 
-[node name="Vincent" type="StaticBody2D" parent="Items"]
+[node name="Vincent" type="StaticBody2D" parent="Items" unique_id=1579570830]
 z_as_relative = false
 texture_filter = 1
 position = Vector2(-116, -1)
@@ -207,20 +209,20 @@ dialogue_resource = ExtResource("3_wrxgv")
 player_path = NodePath("../../Plum")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Vincent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Vincent" unique_id=1360600231]
 light_mask = 512
 visibility_layer = 512
 position = Vector2(-1, 6.5)
 shape = SubResource("RectangleShape2D_j0236")
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Vincent"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Vincent" unique_id=1361878318]
 texture_filter = 1
 position = Vector2(-1, 0)
 texture = ExtResource("4_6a4v4")
 hframes = 4
 vframes = 4
 
-[node name="Plant" type="StaticBody2D" parent="Items"]
+[node name="Plant" type="StaticBody2D" parent="Items" unique_id=1075768253]
 z_as_relative = false
 y_sort_enabled = true
 position = Vector2(-61, 77.975)
@@ -230,19 +232,19 @@ script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("6_wrxgv")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Plant"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Plant" unique_id=328519648]
 light_mask = 513
 visibility_layer = 513
 z_as_relative = false
 texture_filter = 1
 texture = ExtResource("4_qa4ed")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Plant"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Plant" unique_id=1762472606]
 y_sort_enabled = true
 position = Vector2(0, 9.59)
 shape = SubResource("RectangleShape2D_qa4ed")
 
-[node name="Mirror" type="StaticBody2D" parent="Items" node_paths=PackedStringArray("player")]
+[node name="Mirror" type="StaticBody2D" parent="Items" unique_id=1671422693 node_paths=PackedStringArray("player")]
 z_index = -1
 z_as_relative = false
 position = Vector2(28, -67)
@@ -253,18 +255,18 @@ player = NodePath("../../Plum")
 dialogue_resource = ExtResource("8_jqy05")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Mirror"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Mirror" unique_id=125105263]
 z_index = 1
 position = Vector2(0.099998474, 1.465004)
 shape = SubResource("RectangleShape2D_qa4ed")
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Mirror"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Mirror" unique_id=1795880336]
 texture_filter = 1
 position = Vector2(-6.855, 2.48)
 texture = ExtResource("9_xvnyx")
 offset = Vector2(7.890007, -12.129997)
 
-[node name="MirrorSprite" type="Sprite2D" parent="Items/Mirror"]
+[node name="MirrorSprite" type="Sprite2D" parent="Items/Mirror" unique_id=1795678411]
 light_mask = 513
 visibility_layer = 513
 z_index = -1
@@ -273,7 +275,7 @@ position = Vector2(15.099998, -56.57)
 texture = ExtResource("10_xvnyx")
 offset = Vector2(-14.099998, 47.07)
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Items/Mirror"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Items/Mirror" unique_id=1919464773]
 clip_contents = true
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -286,7 +288,7 @@ scale = Vector2(0.885, 0.885)
 pivot_offset = Vector2(-64.406784, -39.548027)
 metadata/_edit_use_anchors_ = true
 
-[node name="Reflection" type="Sprite2D" parent="Items/Mirror/SubViewportContainer"]
+[node name="Reflection" type="Sprite2D" parent="Items/Mirror/SubViewportContainer" unique_id=1441758749]
 modulate = Color(1, 1, 1, 0.76862746)
 z_index = -1
 texture_filter = 1
@@ -298,15 +300,15 @@ hframes = 4
 vframes = 4
 frame = 1
 
-[node name="Area2D" type="Area2D" parent="Items/Mirror"]
+[node name="Area2D" type="Area2D" parent="Items/Mirror" unique_id=1682494329]
 position = Vector2(-0.35510635, -2.7149963)
 scale = Vector2(0.885, 0.885)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Mirror/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Mirror/Area2D" unique_id=992625496]
 position = Vector2(1.5876923, 37.18274)
 shape = SubResource("RectangleShape2D_hm670")
 
-[node name="Trash" type="StaticBody2D" parent="Items"]
+[node name="Trash" type="StaticBody2D" parent="Items" unique_id=670539419]
 z_as_relative = false
 position = Vector2(-161, 98)
 collision_layer = 513
@@ -316,15 +318,15 @@ script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("13_6a4v4")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Trash"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Trash" unique_id=521418095]
 texture_filter = 1
 texture = ExtResource("13_cm4tn")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Trash"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Trash" unique_id=364543796]
 position = Vector2(0, 3.5)
 shape = SubResource("RectangleShape2D_tq8fc")
 
-[node name="Clock" type="StaticBody2D" parent="Items"]
+[node name="Clock" type="StaticBody2D" parent="Items" unique_id=2102900839]
 z_as_relative = false
 position = Vector2(-51, -91)
 collision_layer = 512
@@ -332,15 +334,15 @@ collision_mask = 512
 script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("15_4ddea")
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Clock"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Clock" unique_id=1689160049]
 texture_filter = 1
 texture = ExtResource("15_w655g")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Clock"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Clock" unique_id=825608525]
 position = Vector2(0, 8.5)
 shape = SubResource("RectangleShape2D_3b6gx")
 
-[node name="Closet" type="StaticBody2D" parent="Items"]
+[node name="Closet" type="StaticBody2D" parent="Items" unique_id=1908891881]
 light_mask = 513
 visibility_layer = 513
 z_as_relative = false
@@ -352,17 +354,17 @@ script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("17_ulche")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Closet"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Closet" unique_id=1835882468]
 position = Vector2(0, -1)
 texture = ExtResource("18_pxjuf")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Closet"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Closet" unique_id=1202246336]
 light_mask = 513
 visibility_layer = 513
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_1gavx")
 
-[node name="Carpet" type="StaticBody2D" parent="Items"]
+[node name="Carpet" type="StaticBody2D" parent="Items" unique_id=1507720234]
 z_as_relative = false
 position = Vector2(0, 1)
 collision_layer = 512
@@ -370,17 +372,17 @@ collision_mask = 512
 script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("19_q7acl")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Carpet"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Carpet" unique_id=1522883666]
 position = Vector2(-33, 26)
 shape = SubResource("RectangleShape2D_xvnyx")
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Carpet"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Carpet" unique_id=2060253845]
 z_index = -1
 texture_filter = 1
 position = Vector2(-33, 26)
 texture = ExtResource("21_xvnyx")
 
-[node name="Bookshelf" type="StaticBody2D" parent="Items"]
+[node name="Bookshelf" type="StaticBody2D" parent="Items" unique_id=1410745520]
 z_as_relative = false
 position = Vector2(-18, -73)
 collision_layer = 513
@@ -388,16 +390,16 @@ collision_mask = 513
 script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("21_rxtpp")
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Bookshelf"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Bookshelf" unique_id=19628802]
 texture_filter = 1
 position = Vector2(1, -3)
 texture = ExtResource("24_wmb5d")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Bookshelf"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Bookshelf" unique_id=453715898]
 position = Vector2(0.5, 15.5)
 shape = SubResource("RectangleShape2D_h07qb")
 
-[node name="windows_black" type="StaticBody2D" parent="Items"]
+[node name="windows_black" type="StaticBody2D" parent="Items" unique_id=843962703]
 z_as_relative = false
 position = Vector2(1, 0)
 collision_layer = 512
@@ -405,13 +407,13 @@ collision_mask = 512
 script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("23_mapf5")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/windows_black"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/windows_black" unique_id=498134135]
 light_mask = 512
 visibility_layer = 512
 position = Vector2(198, -46)
 shape = SubResource("RectangleShape2D_wmu2j")
 
-[node name="Welcome Mat" type="StaticBody2D" parent="Items"]
+[node name="Welcome Mat" type="StaticBody2D" parent="Items" unique_id=77629434]
 z_index = -1
 z_as_relative = false
 texture_filter = 1
@@ -422,17 +424,17 @@ script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("24_tsanh")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Welcome Mat"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Welcome Mat" unique_id=34591099]
 light_mask = 512
 visibility_layer = 512
 position = Vector2(168.5, 49)
 shape = SubResource("RectangleShape2D_j0236")
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Welcome Mat"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Welcome Mat" unique_id=479911485]
 position = Vector2(164.1, 49.22)
 texture = ExtResource("30_j0236")
 
-[node name="Outside" type="StaticBody2D" parent="Items"]
+[node name="Outside" type="StaticBody2D" parent="Items" unique_id=2010133472]
 z_as_relative = false
 position = Vector2(1, 0)
 collision_layer = 512
@@ -440,13 +442,13 @@ collision_mask = 512
 script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("26_qbbjs")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Outside"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Outside" unique_id=917830675]
 light_mask = 512
 visibility_layer = 512
 position = Vector2(-188.5, 45.5)
 shape = SubResource("RectangleShape2D_g554b")
 
-[node name="Kitchen" type="StaticBody2D" parent="Items"]
+[node name="Kitchen" type="StaticBody2D" parent="Items" unique_id=819084293]
 z_index = -1
 z_as_relative = false
 position = Vector2(-132, -39.56)
@@ -456,18 +458,18 @@ script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("27_7y5jl")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Kitchen"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Kitchen" unique_id=2091214505]
 texture_filter = 1
 position = Vector2(1, -39.56)
 texture = ExtResource("24_5080h")
 hframes = 8
 frame = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Kitchen"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Kitchen" unique_id=89809440]
 position = Vector2(1, -39.56)
 shape = SubResource("RectangleShape2D_wwspf")
 
-[node name="Bathroom" type="StaticBody2D" parent="Items"]
+[node name="Bathroom" type="StaticBody2D" parent="Items" unique_id=1266485960]
 z_index = -1
 z_as_relative = false
 position = Vector2(109, -39.56)
@@ -477,18 +479,18 @@ script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("29_22fcn")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Bathroom"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Bathroom" unique_id=1036768199]
 texture_filter = 1
 position = Vector2(1, -39.56)
 texture = ExtResource("24_5080h")
 hframes = 8
 frame = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Bathroom"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Bathroom" unique_id=685701688]
 position = Vector2(1, -39.56)
 shape = SubResource("RectangleShape2D_wwspf")
 
-[node name="Frame" type="StaticBody2D" parent="Items"]
+[node name="Frame" type="StaticBody2D" parent="Items" unique_id=1525725110]
 z_as_relative = false
 position = Vector2(150, -96)
 collision_layer = 512
@@ -497,15 +499,15 @@ script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("30_w8bqb")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Frame"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Frame" unique_id=1739953409]
 texture_filter = 1
 texture = ExtResource("27_mp1oy")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Frame"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Frame" unique_id=594120446]
 position = Vector2(0.5, 10)
 shape = SubResource("RectangleShape2D_h2tdp")
 
-[node name="Plum Bed" type="StaticBody2D" parent="Items"]
+[node name="Plum Bed" type="StaticBody2D" parent="Items" unique_id=815476497]
 z_index = -1
 z_as_relative = false
 position = Vector2(142, 88)
@@ -515,18 +517,18 @@ script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("32_nvats")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Plum Bed"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Plum Bed" unique_id=445603623]
 light_mask = 513
 visibility_layer = 513
 texture_filter = 1
 position = Vector2(0, -9.5)
 texture = ExtResource("31_8o6qi")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Plum Bed"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Plum Bed" unique_id=962430428]
 position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_gokc6")
 
-[node name="Bed" type="StaticBody2D" parent="Items"]
+[node name="Bed" type="StaticBody2D" parent="Items" unique_id=1378710424]
 z_as_relative = false
 position = Vector2(142, 17.87)
 collision_layer = 513
@@ -535,29 +537,29 @@ script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("34_is2jo")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Bed"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Bed" unique_id=1343351819]
 light_mask = 513
 visibility_layer = 513
 texture_filter = 1
 texture = ExtResource("29_gvnx1")
 offset = Vector2(0, 19.135)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Bed"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Bed" unique_id=1526653593]
 position = Vector2(0, 20.325)
 shape = SubResource("RectangleShape2D_5uds2")
 
-[node name="Desk" type="StaticBody2D" parent="Items"]
+[node name="Desk" type="StaticBody2D" parent="Items" unique_id=586054915]
 z_as_relative = false
 position = Vector2(63, 48)
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Desk"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Desk" unique_id=1851185191]
 texture_filter = 1
 position = Vector2(1, 0)
 texture = ExtResource("32_qeuyk")
 offset = Vector2(0, 23.005)
 
-[node name="Laptop" type="StaticBody2D" parent="Items/Desk/Sprite2D"]
+[node name="Laptop" type="StaticBody2D" parent="Items/Desk/Sprite2D" unique_id=790108312]
 z_index = 2
 position = Vector2(1, 19.065)
 collision_layer = 512
@@ -565,15 +567,15 @@ collision_mask = 512
 script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("37_4ddea")
 
-[node name="Sprite2D" type="Sprite2D" parent="Items/Desk/Sprite2D/Laptop"]
+[node name="Sprite2D" type="Sprite2D" parent="Items/Desk/Sprite2D/Laptop" unique_id=1147238647]
 texture_filter = 1
 texture = ExtResource("33_tqdvf")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Desk/Sprite2D/Laptop"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Desk/Sprite2D/Laptop" unique_id=1447996345]
 position = Vector2(9, -5.5)
 shape = SubResource("RectangleShape2D_qeuyk")
 
-[node name="Plush" type="StaticBody2D" parent="Items/Desk/Sprite2D"]
+[node name="Plush" type="StaticBody2D" parent="Items/Desk/Sprite2D" unique_id=1602258963]
 z_index = 2
 position = Vector2(1, 23.72)
 collision_layer = 512
@@ -581,23 +583,23 @@ collision_mask = 512
 script = ExtResource("24_wuqxb")
 dialogue_resource = ExtResource("39_ulche")
 
-[node name="Sprite2D2" type="Sprite2D" parent="Items/Desk/Sprite2D/Plush"]
+[node name="Sprite2D2" type="Sprite2D" parent="Items/Desk/Sprite2D/Plush" unique_id=1045248895]
 texture_filter = 1
 position = Vector2(7, -22)
 texture = ExtResource("34_cjaad")
 offset = Vector2(-7, 22)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Desk/Sprite2D/Plush"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Desk/Sprite2D/Plush" unique_id=515191029]
 position = Vector2(-9.5, -12.5)
 shape = SubResource("RectangleShape2D_tqdvf")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Items/Desk"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Items/Desk" unique_id=53313640]
 position = Vector2(1.5, 22.5)
 shape = SubResource("RectangleShape2D_wrxgv")
 
-[node name="Background stuff" type="Node" parent="."]
+[node name="Background stuff" type="Node" parent="." unique_id=751376320]
 
-[node name="Layer0" type="TileMapLayer" parent="Background stuff"]
+[node name="Layer0" type="TileMapLayer" parent="Background stuff" unique_id=1108338311]
 z_index = -1
 texture_filter = 1
 use_parent_material = true
@@ -606,7 +608,7 @@ tile_map_data = PackedByteArray("AAD1//z/AgAAAAAAAAALAPz/AgAAAAAAAAD2//z/BQAAAAA
 tile_set = SubResource("TileSet_8o6qi")
 metadata/_edit_lock_ = true
 
-[node name="Layer2" type="TileMapLayer" parent="Background stuff"]
+[node name="Layer2" type="TileMapLayer" parent="Background stuff" unique_id=1651094587]
 z_index = 1
 texture_filter = 1
 use_parent_material = true
@@ -615,7 +617,7 @@ tile_map_data = PackedByteArray("AAD3//n/AQABAAAAAAD4//n/AQABAAAAAAD5//n/AQABAAA
 tile_set = SubResource("TileSet_t2jx1")
 metadata/_edit_lock_ = true
 
-[node name="Layer1" type="TileMapLayer" parent="Background stuff"]
+[node name="Layer1" type="TileMapLayer" parent="Background stuff" unique_id=1743324589]
 z_index = -5
 texture_filter = 1
 use_parent_material = true
@@ -624,7 +626,7 @@ tile_map_data = PackedByteArray("AAD1//3/AwADAAAAAAD1//7/AwAAAAAAAAD1////AwADAAA
 tile_set = SubResource("TileSet_wrxgv")
 metadata/_edit_lock_ = true
 
-[node name="Background" type="Sprite2D" parent="Background stuff"]
+[node name="Background" type="Sprite2D" parent="Background stuff" unique_id=157379599]
 z_index = -50
 position = Vector2(18.249985, 43.74998)
 scale = Vector2(3.1718748, 3.8483868)

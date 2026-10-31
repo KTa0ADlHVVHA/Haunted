@@ -1,4 +1,9 @@
 ~ start
-PLUM: I can't read this. (sad) [screen=P_Clock]
-VINCENT: It's [time] (happy)
+match interaction_count
+	when 1:
+		PLUM: I can't read this. (sad) [screen=P_Clock]
+		VINCENT: It's [time] (happy)
+
+	else
+		PLUM: It's [time] [screen=P_Clock]
 => END

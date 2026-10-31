@@ -1,0 +1,21 @@
+~ start
+
+match interaction_count
+	when 1
+		PLUM: Do I have to comment about everything? (tired)
+		VINCENT: No. You don't have to comment about anything.
+		PLUM: My friend sent me a joke in the mail. (happy)
+		PLUM: Took me a few days to get it. (silly)
+		VINCENT: I really meant it when I said no. (serious)
+		=> END
+
+	when 2
+		PLUM: Did you hear about the stamped letter? (silly)
+		PLUM: You wouldn't get it. (happy)
+		VINCENT: The joke is an unstamped letter. (angry)
+		PLUM: Whatever... (angry)
+		=> END
+
+	else
+		PLUM: I'm done... (tired)
+		=> END

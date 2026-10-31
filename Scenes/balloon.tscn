@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bt76t7ck67c8t"]
+[gd_scene format=3 uid="uid://bt76t7ck67c8t"]
 
 [ext_resource type="Script" uid="uid://cyfkuaajduvew" path="res://Scripts/balloon.gd" id="1_36de5"]
 [ext_resource type="Texture2D" uid="uid://qkq71rpkjni0" path="res://Pixel art/UI/Dialogue box.png" id="2_5iodc"]
@@ -114,11 +114,11 @@ _data = {
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xyim1"]
 
-[node name="ExampleBalloon" type="CanvasLayer"]
+[node name="ExampleBalloon" type="CanvasLayer" unique_id=1803679060]
 layer = 100
 script = ExtResource("1_36de5")
 
-[node name="Balloon" type="Control" parent="."]
+[node name="Balloon" type="Control" parent="." unique_id=1957758990]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
@@ -132,7 +132,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_qq3yp")
 
-[node name="MarginContainer" type="MarginContainer" parent="Balloon"]
+[node name="MarginContainer" type="MarginContainer" parent="Balloon" unique_id=1280567494]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -145,18 +145,18 @@ offset_bottom = 19.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="Balloon/MarginContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Balloon/MarginContainer" unique_id=2035394858]
 clip_children = 2
 layout_mode = 2
 mouse_filter = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="Balloon/MarginContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Balloon/MarginContainer/PanelContainer" unique_id=1752905102]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Balloon/MarginContainer/PanelContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Balloon/MarginContainer/PanelContainer/MarginContainer" unique_id=176970845]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=1341697591]
 z_index = 1
 custom_minimum_size = Vector2(20, 10)
 layout_mode = 3
@@ -167,20 +167,18 @@ offset_right = 1998.0
 offset_bottom = 1531.0
 size_flags_vertical = 8
 
-[node name="Progress" type="Polygon2D" parent="Control"]
+[node name="Progress" type="Polygon2D" parent="Control" unique_id=630421269]
 unique_name_in_owner = true
 polygon = PackedVector2Array(0, 0, 10, 10, 20, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Control"]
-libraries = {
-&"": SubResource("AnimationLibrary_1337t")
-}
-autoplay = "progress"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control" unique_id=2129322482]
+libraries/ = SubResource("AnimationLibrary_1337t")
+autoplay = &"progress"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=730626835]
 unique_name_in_owner = true
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=28812689]
 texture_filter = 1
 offset_left = 239.0
 offset_top = 835.0
@@ -188,7 +186,7 @@ offset_right = 1700.0
 offset_bottom = 1051.0
 texture = ExtResource("2_5iodc")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=258920222]
 offset_left = 280.0
 offset_top = 864.0
 offset_right = 1653.0
@@ -196,7 +194,7 @@ offset_bottom = 1020.0
 size_flags_horizontal = 3
 metadata/_edit_group_ = true
 
-[node name="DialogueLabel" parent="VBoxContainer" instance=ExtResource("2_a8ve6")]
+[node name="DialogueLabel" parent="VBoxContainer" unique_id=310759812 instance=ExtResource("2_a8ve6")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -204,7 +202,7 @@ theme_override_fonts/normal_font = ExtResource("4_kbj1d")
 theme_override_font_sizes/normal_font_size = 35
 text = "Dialogue..."
 
-[node name="TextureRect2" type="TextureRect" parent="."]
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1256420400]
 texture_filter = 1
 offset_left = 240.0
 offset_top = 775.0
@@ -212,7 +210,7 @@ offset_right = 522.0
 offset_bottom = 825.0
 texture = ExtResource("5_nrerx")
 
-[node name="CharacterLabel" type="RichTextLabel" parent="."]
+[node name="CharacterLabel" type="RichTextLabel" parent="." unique_id=1475351397]
 anchors_preset = -1
 anchor_right = 0.12900001
 anchor_bottom = 0.15400001
@@ -226,7 +224,7 @@ text = "Plum"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="."]
+[node name="VBoxContainer3" type="VBoxContainer" parent="." unique_id=618107634]
 texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -240,7 +238,7 @@ grow_vertical = 2
 alignment = 2
 metadata/_edit_group_ = true
 
-[node name="ResponsesMenu" type="VBoxContainer" parent="VBoxContainer3" node_paths=PackedStringArray("response_template")]
+[node name="ResponsesMenu" type="VBoxContainer" parent="VBoxContainer3" unique_id=1031462426 node_paths=PackedStringArray("response_template")]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 2
@@ -248,7 +246,7 @@ script = ExtResource("3_72ixx")
 response_template = NodePath("ResponseExample2")
 metadata/_edit_group_ = true
 
-[node name="ResponseExample2" type="Button" parent="VBoxContainer3/ResponsesMenu"]
+[node name="ResponseExample2" type="Button" parent="VBoxContainer3/ResponsesMenu" unique_id=1771378186]
 texture_filter = 1
 custom_minimum_size = Vector2(400, 50)
 layout_mode = 2
@@ -269,16 +267,16 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="Potrait" type="Sprite2D" parent="."]
+[node name="Potrait" type="Sprite2D" parent="." unique_id=1728592293]
 z_index = -2
 position = Vector2(388, 555)
 scale = Vector2(0.5, 0.5)
 
-[node name="ScreenSprite" type="Sprite2D" parent="."]
+[node name="ScreenSprite" type="Sprite2D" parent="." unique_id=1758848376]
 z_index = -3
 position = Vector2(960, 540)
 
-[node name="Paint" parent="." instance=ExtResource("8_xyim1")]
+[node name="Paint" parent="." unique_id=1440938680 instance=ExtResource("8_xyim1")]
 z_index = 10
 
 [connection signal="gui_input" from="Balloon" to="." method="_on_balloon_gui_input"]

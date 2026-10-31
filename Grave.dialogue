@@ -1,0 +1,18 @@
+~ start
+
+match get_choice_count("paid_respect")
+	when 0
+		PLUM: The writing is impossible to read. (sad)
+		PLUM: I can only make out the words "I didn't" and "Rosie".
+
+		- Pay respect
+			$> increment_choice("paid_respect")
+			You pray for Rosie.
+			=> END
+
+		- Do nothing
+			=> END
+
+	else
+		You've already paid your respects here.
+		=> END

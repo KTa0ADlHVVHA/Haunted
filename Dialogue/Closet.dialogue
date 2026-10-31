@@ -1,10 +1,21 @@
 ~ start
+
 PLUM: It's a closet. (neutral) [screen=P_Closet]
+
 - Get in
-	PLUM: I'm in the closet! (silly) [screen=P_ClosetIn]
-	VINCENT: Stop messing around. (angry)
-	PLUM: You can't just force a girl out of the closet. (worried)
-	=> END
+	$> increment_choice("get_in")
+
+	match get_choice_count("get_in")
+		when 1
+			PLUM: I'm in the closet! (silly) [screen=P_ClosetIn]
+			VINCENT: Stop messing around. (angry)
+			PLUM: You can't just force a girl out of the closet. (worried)
+			=> END
+
+		else
+			PLUM: I've been forced out of the closet. (sad) [screen=P_Closet]
+			=> END
+
 - Try on some clothes
-	[screen=P_ClosetClothes] (hide)
- => END
+	You try on some clothes. [screen=P_ClosetClothes] 
+	=> END

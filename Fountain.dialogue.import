@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cd2dtxar5823m"
+path="res://.godot/imported/Fountain.dialogue-553f2613fd40deb7dff451bff93661e9.tres"
+
+[deps]
+
+source_file="res://Fountain.dialogue"
+dest_files=["res://.godot/imported/Fountain.dialogue-553f2613fd40deb7dff451bff93661e9.tres"]
+
+[params]
+
+defaults=true

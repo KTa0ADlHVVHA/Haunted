@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cv8qyvj77wry8"
+path="res://.godot/imported/Weird Flower.dialogue-937226c2c3280ec1ff06c6d82517b2a0.tres"
+
+[deps]
+
+source_file="res://Weird Flower.dialogue"
+dest_files=["res://.godot/imported/Weird Flower.dialogue-937226c2c3280ec1ff06c6d82517b2a0.tres"]
+
+[params]
+
+defaults=true

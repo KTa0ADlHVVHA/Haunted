@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bakemhpema0a1"
+path="res://.godot/imported/Grave.dialogue-716c6d1769def8dd9e2669b76dad189f.tres"
+
+[deps]
+
+source_file="res://Grave.dialogue"
+dest_files=["res://.godot/imported/Grave.dialogue-716c6d1769def8dd9e2669b76dad189f.tres"]
+
+[params]
+
+defaults=true

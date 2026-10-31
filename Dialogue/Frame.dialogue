@@ -1,3 +1,20 @@
 ~ start
-PLUM: it's an old picture of me. (neutral) [screen=P_Frame]
-=> END
+
+match interaction_count
+	when 1
+		PLUM: It's an old picture of me. (neutral) [screen=P_Frame]
+		=> END
+
+	when 2
+		PLUM: Dad. Do I look like you or Mom? (thinking) [screen=P_Frame]
+		VINCENT: ...
+		VINCENT: You really don't look like either of us. (smug)
+		PLUM: Awww... (sad)
+		=> END
+
+	else
+		PLUM: I look happier now. (happy) [screen=P_Frame]
+		=> END
+
+
+ 		=> END
