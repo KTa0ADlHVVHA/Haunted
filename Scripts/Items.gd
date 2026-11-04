@@ -18,6 +18,14 @@ var interaction_count: int = 0
 var choice_counts: Dictionary = {}
 
 
+# Remember the player who interacted with this object.
+#
+# This lets dialogue functions such as make_walkable()
+# affect the player without needing special code for
+# every single object.
+var interacting_player: CharacterBody2D = null
+
+
 # ============================================================
 # INTERACT
 # ============================================================
@@ -32,6 +40,11 @@ func interact(_player = null) -> void:
 			"Interactable has no DialogueResource assigned."
 		)
 		return
+
+
+	# Remember who interacted with us.
+	if _player is CharacterBody2D:
+		interacting_player = _player
 
 
 	interaction_count += 1
@@ -130,12 +143,6 @@ func reset_all_choices() -> void:
 # NODE VISIBILITY
 # ============================================================
 
-# Allows dialogue to show one of this object's child nodes.
-#
-# Example:
-#
-# $> show_node("Sprite2D2")
-#
 func show_node(
 	node_path: String
 ) -> void:
@@ -146,25 +153,16 @@ func show_node(
 
 
 	if target == null:
-
 		push_warning(
 			"Could not find node: " + node_path
 		)
-
 		return
 
 
 	if target is CanvasItem:
-
 		target.visible = true
 
 
-# Allows dialogue to hide one of this object's child nodes.
-#
-# Example:
-#
-# $> hide_node("Sprite2D2")
-#
 func hide_node(
 	node_path: String
 ) -> void:
@@ -175,14 +173,117 @@ func hide_node(
 
 
 	if target == null:
-
 		push_warning(
 			"Could not find node: " + node_path
 		)
-
 		return
 
 
 	if target is CanvasItem:
-
 		target.visible = false
+
+
+# ============================================================
+# WALKABLE / NON-WALKABLE
+# ============================================================
+
+# Makes this object walkable for the player WITHOUT deleting
+# its collision shape.
+#
+# This is important because the player's ShapeCast can still
+# find the object afterward, meaning Z interaction continues
+# to work.
+func make_walkable() -> void:
+	if interacting_player == null:
+		push_warning(
+			"make_walkable() could not find the interacting player."
+		)
+		return
+
+
+	# Make the object ignore the player.
+	add_collision_exception_with(
+		interacting_player
+	)
+
+
+	# Also make the player ignore this object.
+	interacting_player.add_collision_exception_with(
+		self
+	)
+
+
+# Makes the object solid again.
+func make_solid() -> void:
+	if interacting_player == null:
+		push_warning(
+			"make_solid() could not find the interacting player."
+		)
+		return
+
+
+	remove_collision_exception_with(
+		interacting_player
+	)
+
+
+	interacting_player.remove_collision_exception_with(
+		self
+	)
+
+
+# ============================================================
+# COLLISION SHAPE HELPERS
+# ============================================================
+
+# These are still available for objects where you really
+# DO want to completely disable a collision shape.
+func disable_collision(
+	node_path: String
+) -> void:
+
+	var target: Node = get_node_or_null(
+		NodePath(node_path)
+	)
+
+
+	if target == null:
+		push_warning(
+			"Could not find collision node: " + node_path
+		)
+		return
+
+
+	if target is CollisionShape2D:
+		target.set_deferred(
+			"disabled",
+			true
+		)
+
+
+func enable_collision(
+	node_path: String
+) -> void:
+
+	var target: Node = get_node_or_null(
+		NodePath(node_path)
+	)
+
+
+	if target == null:
+		push_warning(
+			"Could not find collision node: " + node_path
+		)
+		return
+
+
+	if target is CollisionShape2D:
+		target.set_deferred(
+			"disabled",
+			false
+		)
+
+func set_node_skew(node_path: String, degrees: float) -> void:
+	var sprite := get_node_or_null(node_path) as Node2D
+	if sprite != null:
+		sprite.skew = deg_to_rad(degrees)

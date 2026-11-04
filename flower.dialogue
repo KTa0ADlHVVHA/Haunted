@@ -7,7 +7,7 @@ match GameState.flower_taken
 		- Take it
 			$> GameState.has_flower = true
 			$> GameState.flower_taken = true
-			You took the flower.
+			The flower was added to your items.
 			=> END
 
 		- Leave it

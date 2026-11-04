@@ -1,0 +1,20 @@
+~ start
+
+match get_choice_count("jumped_in_leaves")
+	when 0
+		There's a pile of leaves here.
+
+		- Jump in it
+			$> increment_choice("jumped_in_leaves")
+			$> hide_node("Sprite2D")
+			$> show_node("EvilLeaves")
+			$> make_walkable()
+			PLUM: Whee!! (happy)
+			=> END
+
+		- Leave it alone
+			=> END
+
+	else
+		Look at what you've done.
+		=> END

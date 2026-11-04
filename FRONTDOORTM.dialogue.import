@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://big6c5cjsw473"
+path="res://.godot/imported/FRONTDOORTM.dialogue-b2c2abfc0f7b8a01862cc7cf7e20d712.tres"
+
+[deps]
+
+source_file="res://FRONTDOORTM.dialogue"
+dest_files=["res://.godot/imported/FRONTDOORTM.dialogue-b2c2abfc0f7b8a01862cc7cf7e20d712.tres"]
+
+[params]
+
+defaults=true

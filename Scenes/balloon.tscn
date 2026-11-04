@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://cppcsr0crxapv" path="res://Fonts/BoldPixels.ttf" id="4_kbj1d"]
 [ext_resource type="Texture2D" uid="uid://nefwv2wb1huv" path="res://Pixel art/UI/Nametag.png" id="5_nrerx"]
 [ext_resource type="Texture2D" uid="uid://ch113j6s8hpdv" path="res://Pixel art/UI/choices.png" id="7_syg23"]
+[ext_resource type="Script" uid="uid://2amgas5ggsj2" path="res://Scenes/response_example_2.gd" id="8_rl6ge"]
 [ext_resource type="PackedScene" uid="uid://b4miqixjynltp" path="res://Scenes/Paint.tscn" id="8_xyim1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spyqn"]
@@ -244,6 +245,7 @@ layout_mode = 2
 alignment = 2
 script = ExtResource("3_72ixx")
 response_template = NodePath("ResponseExample2")
+hide_failed_responses = true
 metadata/_edit_group_ = true
 
 [node name="ResponseExample2" type="Button" parent="VBoxContainer3/ResponsesMenu" unique_id=1771378186]
@@ -266,6 +268,7 @@ icon = ExtResource("7_syg23")
 flat = true
 icon_alignment = 1
 expand_icon = true
+script = ExtResource("8_rl6ge")
 
 [node name="Potrait" type="Sprite2D" parent="." unique_id=1728592293]
 z_index = -2

@@ -1,0 +1,25 @@
+
+~ start
+
+PLUM: It's pretty strong for a spider web. (thinking)
+
+- Use the web to fix the chair part [if GameState.has_broken_chair_part]
+	PLUM: Tada! (silly)
+	VINCENT: This will help us how exactly?
+	$> GameState.fix_broken_chair_part()
+	The fixed chair part was added to your items.
+	=> END
+
+- Take a nap
+	PLUM: I'm just going to lie down for a bit. (Tired)
+	You don't remember how long you were out.
+	You try to move around, but the strands tighten around your arms and legs.
+	Something crawls across your hand.
+	You try to scream.
+	Your breathing becomes shallow.
+	[scene=game_over]
+	=> END
+
+- Don't
+	PLUM: That sounds like a dumb idea. (happy)
+	=> END

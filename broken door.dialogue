@@ -1,0 +1,43 @@
+
+~ start
+
+if GameState.door_fallen
+	The door has fallen down, trapping the chair part that saved your life under it.
+	PLUM: ... (sad)
+	VINCENT: Awe... come on... I'll get you another chair part. (sad)
+	=> END
+
+else
+	match interaction_count
+		when 1
+			PLUM: It's a door! (happy)
+			VINCENT: It's a fake door. (serious)
+			PLUM: I was getting there. (angry)
+			You try to pull the door.
+			It's losened quite a bit. Shaking it one more time might cause it to drop.
+			VINCENT: Stop wasting time. (serious)
+			$> set_node_skew("Sprite2D", -12.7)
+			=> END
+
+		else
+			if GameState.has_fixed_chair_part
+				The door almost crushes you.
+				Luckily enough, the chair part saved your life.
+				PLUM: I was so lucky (scared)
+				$> GameState.use_fixed_chair_part_for_door()
+				$> hide_node("Sprite2D")
+				$> disable_collision("CollisionShape2D")
+				$> enable_collision("CollisionShape2D2")
+				$> show_node("Sprite2D2")
+				Seems like the door was hiding a code behind it.
+				'247'
+				$> GameState.collect_safe_code()
+				Code was added to your items.
+				=> END
+
+			else
+				You pull the door even harder, using all the strenght in your 10 year old body.
+				PLUM: Oh! (suprised)
+				(The door squshes her)
+				[scene=game_over]
+				=> END

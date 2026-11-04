@@ -1,0 +1,32 @@
+~ start
+
+if GameState.has_house_key
+	PLUM: The door is locked. (sad)
+
+	- Open the door and enter
+		You unlock the door with the house key.
+		VINCENT: This is it. Stay right next to me. (serious)
+		=> END
+
+	- Explore some more
+		VINCENT: Seriously? Just open it... (angry)
+		PLUM: Let me explore! There might be something else here. (angry)
+		VINCENT: Women... (smug)
+		PLUM: Women... (smug)
+		=> END
+
+else
+	$> increment_choice("checked_locked_door")
+
+	match get_choice_count("checked_locked_door")
+		when 1
+			PLUM: The door is locked. (sad)
+			VINCENT: The key should be in the fountain over there.
+			PLUM: Why is the key in the fountain? Why not just keep it on you? (thinking)
+			VINCENT: Enough questions. Just get the key. (angry)
+			=> END
+
+		else
+			PLUM: I forgot where the key is. (sad)
+			VINCENT: Fountain.
+			=> END

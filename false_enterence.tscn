@@ -1,0 +1,330 @@
+[gd_scene format=4 uid="uid://b4wpnw8p54bn0"]
+
+[ext_resource type="PackedScene" uid="uid://w3vshkkefhkp" path="res://Scenes/plum.tscn" id="2_8md64"]
+[ext_resource type="Resource" uid="uid://cam33ia8xp2ok" path="res://broken door.dialogue" id="2_t8gos"]
+[ext_resource type="Texture2D" uid="uid://mbq31ooldmf0" path="res://Pixel art/Background/Wall.png" id="3_qat1i"]
+[ext_resource type="Texture2D" uid="uid://b8jhk3nab3uxf" path="res://Scripts/Fallen down .png" id="4_3wnpn"]
+[ext_resource type="Texture2D" uid="uid://g3abmv4acj3c" path="res://Pixel art/Background/wall side 2.png" id="4_4rbut"]
+[ext_resource type="Texture2D" uid="uid://bba4b12vjxywf" path="res://Pixel art/Background/wall side.png" id="5_u6rk5"]
+[ext_resource type="Texture2D" uid="uid://cnl0lait4xuq6" path="res://Pixel art/Background/Ceiling (2).png" id="6_805dt"]
+[ext_resource type="Texture2D" uid="uid://bd6vffcsw6yht" path="res://Pixel art/Background/Ceiling (2 extras).png" id="7_t8gos"]
+[ext_resource type="Texture2D" uid="uid://da2eosglkbxy0" path="res://Pixel art/Background/Blank.png" id="8_n2u1p"]
+[ext_resource type="Texture2D" uid="uid://dv1gsyw45nfly" path="res://Pixel art/Items/Floor.png" id="9_vjgcc"]
+[ext_resource type="Texture2D" uid="uid://bwaocjw1a4vs" path="res://Pixel art/Background/Background.png" id="10_m3lg6"]
+[ext_resource type="Script" uid="uid://c8lic5qyea1uc" path="res://Scripts/Items.gd" id="10_qat1i"]
+[ext_resource type="Resource" uid="uid://jc0q45cnco26" path="res://words.dialogue" id="11_qat1i"]
+[ext_resource type="Texture2D" uid="uid://bu2bnd57hx2j3" path="res://words.png" id="12_u6rk5"]
+[ext_resource type="Texture2D" uid="uid://cwa4s6iv3pexp" path="res://Web.png" id="13_4rbut"]
+[ext_resource type="Resource" uid="uid://dissf0s4i846" path="res://Web.dialogue" id="13_u6rk5"]
+[ext_resource type="Texture2D" uid="uid://bsg6agvyuy8el" path="res://Door broken.png" id="16_n2u1p"]
+[ext_resource type="Texture2D" uid="uid://dg1ma5odexltf" path="res://Hole(1).png" id="17_m3lg6"]
+[ext_resource type="Resource" uid="uid://c0o5oyhapcwb7" path="res://hole.dialogue" id="17_s147b"]
+[ext_resource type="Texture2D" uid="uid://d4gxy5ggk2tnn" path="res://Scripts/Frame.png" id="18_s147b"]
+[ext_resource type="Resource" uid="uid://big6c5cjsw473" path="res://FRONTDOORTM.dialogue" id="18_vjgcc"]
+[ext_resource type="Texture2D" uid="uid://nnk3ayia3el1" path="res://Code.png" id="21_iwv7w"]
+[ext_resource type="Resource" uid="uid://gpqtuk0w43wj" path="res://Chair.dialogue" id="22_yq68y"]
+[ext_resource type="Texture2D" uid="uid://eeeush30877n" path="res://Scripts/Chair.png" id="23_3wnpn"]
+[ext_resource type="Texture2D" uid="uid://b42i2icid7rf3" path="res://Scripts/Broken .png" id="24_r3otx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgcc"]
+size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r3otx"]
+size = Vector2(22, 34)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h2tdp"]
+texture = ExtResource("3_qat1i")
+0:1/0 = 0
+0:1/0/y_sort_origin = -3
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gvnx1"]
+texture = ExtResource("4_4rbut")
+0:0/next_alternative_id = 2
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(3.5971737, -8, 8, -8, 8, 8, 3.4173164, 8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5uds2"]
+texture = ExtResource("5_u6rk5")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -3.2374573, -8, -3.057599, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_8o6qi"]
+physics_layer_0/collision_layer = 1
+sources/2 = SubResource("TileSetAtlasSource_h2tdp")
+sources/4 = SubResource("TileSetAtlasSource_gvnx1")
+sources/5 = SubResource("TileSetAtlasSource_5uds2")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gokc6"]
+texture = ExtResource("6_805dt")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, -8, -7, -7, -7, -7, -8, 8, -8, 8, -3, -3, -3, -3, 8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, -8, -8, 8, -8, 8, -3)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(3, 8, 3, -3, -8, -3, -8, -8, 7, -8, 7, -7, 8, -7, 8, 8)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, -8, -8, -3, -8, -3, 8)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(3, 8, 3, -8, 8, -8, 8, 8)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, 8, -7, 7, -8, 7, -8, -8, -3, -8, -3, 3, 8, 3, 8, 8)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, -8, 3, 8, 3, 8, 8)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, -8, 3, 3, 3, 3, -8, 8, -8, 8, 7, 7, 7, 7, 8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d44e0"]
+texture = ExtResource("7_t8gos")
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(3, 8, 3, 4, 4, 4, 4, 3, 8, 3, 8, 8)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, -8, 3, -4, 3, -4, 4, -3, 4, -3, 8)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, -3, 4, -4, 3, -4, 3, -8, 8, -8, 8, -3)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, -8, -8, -3, -8, -3, -4, -4, -4, -4, -3)
+
+[sub_resource type="TileSet" id="TileSet_t2jx1"]
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_gokc6")
+sources/2 = SubResource("TileSetAtlasSource_d44e0")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qeuyk"]
+texture = ExtResource("3_qat1i")
+0:1/0 = 0
+0:1/0/y_sort_origin = 1
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:0/0 = 0
+0:0/0/z_index = 1
+0:0/0/y_sort_origin = 8
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tqdvf"]
+texture = ExtResource("8_n2u1p")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cjaad"]
+texture = ExtResource("9_vjgcc")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_wrxgv"]
+physics_layer_0/collision_layer = 1
+sources/2 = SubResource("TileSetAtlasSource_tqdvf")
+sources/3 = SubResource("TileSetAtlasSource_cjaad")
+sources/0 = SubResource("TileSetAtlasSource_qeuyk")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_805dt"]
+size = Vector2(30.160002, 12.637493)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u6rk5"]
+size = Vector2(35, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m3lg6"]
+size = Vector2(17, 30.514994)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n2u1p"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q1wsu"]
+size = Vector2(16, 9.050003)
+
+[node name="False enterence" type="Node2D" unique_id=989828036]
+z_as_relative = false
+y_sort_enabled = true
+position = Vector2(-6.375, 32.205)
+metadata/_edit_vertical_guides_ = [28.0]
+
+[node name="Broken door" type="StaticBody2D" parent="." unique_id=1007607855]
+z_as_relative = false
+position = Vector2(-9.685, -23.83)
+collision_layer = 512
+collision_mask = 512
+script = ExtResource("10_qat1i")
+dialogue_resource = ExtResource("2_t8gos")
+
+[node name="Sprite2D" type="Sprite2D" parent="Broken door" unique_id=1593252562]
+z_as_relative = false
+texture_filter = 1
+texture = ExtResource("16_n2u1p")
+offset = Vector2(0, -8.24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Broken door" unique_id=364547496]
+position = Vector2(0, -8.395)
+shape = SubResource("RectangleShape2D_vjgcc")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Broken door" unique_id=105431306]
+visible = false
+light_mask = 512
+visibility_layer = 512
+position = Vector2(-11.939999, 23.359999)
+shape = SubResource("RectangleShape2D_r3otx")
+one_way_collision = true
+one_way_collision_margin = 0.0
+
+[node name="Sprite2D2" type="Sprite2D" parent="Broken door" unique_id=610058076]
+visible = false
+z_as_relative = false
+texture_filter = 1
+position = Vector2(-11.325, 30.99)
+texture = ExtResource("4_3wnpn")
+offset = Vector2(0, -8.24)
+
+[node name="Plum" parent="." unique_id=591823023 instance=ExtResource("2_8md64")]
+position = Vector2(-14.34, 115.675)
+friction = 1399.41
+
+[node name="Background stuff" type="Node2D" parent="." unique_id=1236275948]
+y_sort_enabled = true
+
+[node name="Layer0" type="TileMapLayer" parent="Background stuff" unique_id=1108338311]
+y_sort_enabled = true
+texture_filter = 1
+use_parent_material = true
+tile_map_data = PackedByteArray("AAD3/wYABAAAAAAAAAD5/wcAAgAAAAAAAAD8/wgABAAAAAAAAAADAAcABAAAAAAAAAAEAAcABQAAAAAAAAABAAgABQAAAAAAAAAFAAYABAAAAAAAAAAGAAYABQAAAAAAAAD4/wcAAgAAAAAAAAD3/wcABAAAAAAAAAA=")
+tile_set = SubResource("TileSet_8o6qi")
+
+[node name="Layer2" type="TileMapLayer" parent="Background stuff" unique_id=1651094587]
+z_index = 3
+texture_filter = 1
+use_parent_material = true
+tile_map_data = PackedByteArray("AAACAP3/AQAAAAEAAAACAP7/AQAAAAIAAAADAP7/AQABAAIAAAAEAP7/AQABAAIAAAAFAP7/AQABAAIAAAD7//3/AQACAAEAAAD7//7/AQACAAIAAAD4//7/AQABAAIAAAD5//7/AQABAAIAAAD6//7/AQABAAIAAAD3////AQACAAEAAAD3/wAAAQACAAEAAAD3/wEAAQACAAEAAAD3/wIAAQACAAEAAAD3/wMAAQACAAEAAAD3/wQAAQACAAEAAAD3/wUAAQACAAEAAAD3//7/AgACAAIAAAD3/wYAAQACAAEAAAD6/wYAAQABAAIAAAD7/wYAAQABAAIAAAD8/wYAAQABAAIAAAD8/wcAAQACAAEAAAD9/wcAAQABAAIAAAD+/wcAAQABAAIAAAACAAcAAQABAAAAAAADAAcAAQABAAAAAAABAAcAAQAAAAAAAAD//wcAAQABAAIAAAAAAAcAAQABAAIAAAAEAAYAAQAAAAAAAAAFAAYAAQABAAAAAAAGAAAAAQAAAAEAAAAGAAEAAQAAAAEAAAAGAAIAAQAAAAEAAAAGAAMAAQAAAAEAAAAGAAQAAQAAAAEAAAAGAAUAAQAAAAEAAAAGAP//AQAAAAEAAAAGAP7/AgAAAAIAAAAGAAYAAgAAAAAAAAD8//z/AQABAAIAAAD9//z/AQABAAIAAAD+//z/AQABAAIAAAD///z/AQABAAIAAAAAAPz/AQABAAIAAAABAPz/AQABAAIAAAACAPz/AgAAAAIAAAD7//z/AgACAAIAAAAEAAcAAgAAAAAAAAD4/wYAAQABAAIAAAD5/wYAAQABAAIAAAA=")
+tile_set = SubResource("TileSet_t2jx1")
+
+[node name="Layer1" type="TileMapLayer" parent="Background stuff" unique_id=1743324589]
+z_index = -2
+y_sort_enabled = true
+texture_filter = 1
+use_parent_material = true
+tile_map_data = PackedByteArray("AAD9//7/AAAAAAEAAAD+//7/AAAAAAEAAAD///7/AAAAAAEAAAAAAP7/AAAAAAEAAAABAP7/AAAAAAEAAAD8//7/AAAAAAEAAAD8//3/AAAAAAAAAAD9//3/AAAAAAAAAAD+//3/AAAAAAAAAAD///3/AAAAAAAAAAAAAP3/AAAAAAAAAAABAP3/AAAAAAAAAAD4////AAAAAAAAAAD4/wAAAAAAAAEAAAD5////AAAAAAAAAAD5/wAAAAAAAAEAAAD6////AAAAAAAAAAD6/wAAAAAAAAEAAAD7////AAAAAAAAAAD7/wAAAAAAAAEAAAACAP//AAAAAAAAAAACAAAAAAAAAAEAAAADAP//AAAAAAAAAAADAAAAAAAAAAEAAAAEAP//AAAAAAAAAAAEAAAAAAAAAAEAAAAFAP//AAAAAAAAAAAFAAAAAAAAAAEAAAD4/wYAAgAAAAAAAAD5/wYAAgAAAAAAAAD6/wcAAAAAAAAAAAD7/wcAAAAAAAAAAAD8/wcAAAAAAAAAAAD9/wgAAAAAAAAAAAD+/wgAAAAAAAAAAAD//wgAAAAAAAAAAAAAAAgAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAD5/wcAAgAAAAAAAAD4/wcAAgAAAAAAAAA=")
+tile_set = SubResource("TileSet_wrxgv")
+
+[node name="Background" type="Sprite2D" parent="Background stuff" unique_id=157379599]
+z_index = -50
+scale = Vector2(3.1718748, 3.8483868)
+texture = ExtResource("10_m3lg6")
+metadata/_edit_lock_ = true
+
+[node name="Layer3" type="TileMapLayer" parent="Background stuff" unique_id=2018207286]
+z_index = -1
+y_sort_enabled = true
+texture_filter = 1
+use_parent_material = true
+tile_map_data = PackedByteArray("AAD8////AwABAAAAAAD9////AwADAAAAAAD+////AgAAAAAAAAD/////AgAAAAAAAAD8/wAAAwACAAAAAAD9/wAAAwAAAAAAAAD+/wAAAgAAAAAAAAD//wAAAgAAAAAAAAD8/wEAAgAAAAAAAAD9/wEAAgAAAAAAAAD+/wEAAgAAAAAAAAD//wEAAgAAAAAAAAD8/wIAAgAAAAAAAAD9/wIAAgAAAAAAAAD+/wIAAgAAAAAAAAD//wIAAgAAAAAAAAD8/wMAAgAAAAAAAAD9/wMAAgAAAAAAAAD+/wMAAgAAAAAAAAD//wMAAgAAAAAAAAD8/wQAAgAAAAAAAAD9/wQAAgAAAAAAAAD+/wQAAgAAAAAAAAD//wQAAgAAAAAAAAD8/wUAAgAAAAAAAAD9/wUAAgAAAAAAAAD+/wUAAgAAAAAAAAD//wUAAgAAAAAAAAD8/wYAAgAAAAAAAAD9/wYAAgAAAAAAAAD+/wYAAwABAAAAAAD//wYAAwAAAAAAAAAAAP//AgAAAAAAAAABAP//AgAAAAAAAAAAAAAAAgAAAAAAAAABAAAAAgAAAAAAAAAAAAEAAgAAAAAAAAABAAEAAgAAAAAAAAAAAAIAAgAAAAAAAAABAAIAAgAAAAAAAAAAAAMAAgAAAAAAAAABAAMAAgAAAAAAAAAAAAQAAgAAAAAAAAABAAQAAgAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAAAAAYAAgAAAAAAAAABAAYAAgAAAAAAAAD4/wEAAgAAAAAAAAD4/wIAAgAAAAAAAAD4/wMAAgAAAAAAAAD4/wQAAgAAAAAAAAD4/wUAAgAAAAAAAAD5/wEAAgAAAAAAAAD7/wEAAgAAAAAAAAD5/wIAAgAAAAAAAAD6/wIAAgAAAAAAAAD7/wIAAgAAAAAAAAD5/wMAAgAAAAAAAAD6/wMAAgAAAAAAAAD7/wMAAgAAAAAAAAD5/wQAAgAAAAAAAAD6/wQAAgAAAAAAAAD7/wQAAgAAAAAAAAD5/wUAAgAAAAAAAAD6/wUAAgAAAAAAAAD7/wUAAgAAAAAAAAD6/wYAAgAAAAAAAAD7/wYAAgAAAAAAAAACAAYAAgAAAAAAAAADAAYAAgAAAAAAAAD9/wcAAgAAAAAAAAD+/wcAAwACAAAAAAD//wcAAwAAAAAAAAAAAAcAAgAAAAAAAAACAAEAAgAAAAAAAAADAAEAAgAAAAAAAAAEAAEAAgAAAAAAAAAFAAEAAgAAAAAAAAACAAIAAgAAAAAAAAADAAIAAgAAAAAAAAAEAAIAAgAAAAAAAAAFAAIAAgAAAAAAAAACAAMAAgAAAAAAAAADAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAAFAAMAAgAAAAAAAAACAAQAAgAAAAAAAAADAAQAAgAAAAAAAAAEAAQAAgAAAAAAAAAFAAQAAgAAAAAAAAACAAUAAgAAAAAAAAADAAUAAgAAAAAAAAAEAAUAAgAAAAAAAAAFAAUAAgAAAAAAAAD4/wAAAgAAAAAAAAD5/wAAAgAAAAAAAAD6/wAAAgAAAAAAAAD7/wAAAgAAAAAAAAD8/wcAAgAAAAAAAAD6/wEAAgAAAAAAAAA=")
+tile_set = SubResource("TileSet_wrxgv")
+
+[node name="words" type="StaticBody2D" parent="." unique_id=2048197927]
+z_index = 2
+z_as_relative = false
+position = Vector2(62.5, -5.795)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("10_qat1i")
+dialogue_resource = ExtResource("11_qat1i")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="words" unique_id=718559777]
+texture_filter = 1
+texture = ExtResource("12_u6rk5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="words" unique_id=1949038592]
+position = Vector2(-1.0449982, 7.27125)
+shape = SubResource("RectangleShape2D_805dt")
+
+[node name="Web" type="StaticBody2D" parent="." unique_id=1774556519]
+z_as_relative = false
+position = Vector2(78.375, 57.19)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("10_qat1i")
+dialogue_resource = ExtResource("13_u6rk5")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Web" unique_id=487732706]
+texture_filter = 1
+texture = ExtResource("13_4rbut")
+offset = Vector2(0, 21.05)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Web" unique_id=950812818]
+light_mask = 512
+visibility_layer = 512
+position = Vector2(1.5, 21.604996)
+shape = SubResource("RectangleShape2D_u6rk5")
+one_way_collision = true
+one_way_collision_margin = 0.0
+
+[node name="Hole" type="StaticBody2D" parent="." unique_id=608557324]
+z_index = 1
+z_as_relative = false
+position = Vector2(-113.415, -27.72)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("10_qat1i")
+dialogue_resource = ExtResource("17_s147b")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Hole" unique_id=888730944]
+texture_filter = 1
+texture = ExtResource("17_m3lg6")
+offset = Vector2(0, 21.05)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hole" unique_id=982901686]
+light_mask = 512
+visibility_layer = 512
+position = Vector2(0.5, 28.257502)
+shape = SubResource("RectangleShape2D_m3lg6")
+one_way_collision = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="Hole" unique_id=1530790451]
+position = Vector2(0, 21.03)
+texture = ExtResource("18_s147b")
+
+[node name="Code" type="StaticBody2D" parent="." unique_id=340904749]
+z_index = -1
+z_as_relative = false
+position = Vector2(-39.625, 105.795)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("10_qat1i")
+dialogue_resource = ExtResource("18_vjgcc")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Code" unique_id=1309004706]
+light_mask = 512
+visibility_layer = 512
+position = Vector2(24, 21)
+shape = SubResource("RectangleShape2D_n2u1p")
+one_way_collision = true
+
+[node name="Code" type="Sprite2D" parent="Code" unique_id=804531213]
+position = Vector2(29, -137)
+texture = ExtResource("21_iwv7w")
+
+[node name="Chair" type="StaticBody2D" parent="." unique_id=842257879]
+z_as_relative = false
+position = Vector2(-80.625, 11.794998)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("10_qat1i")
+dialogue_resource = ExtResource("22_yq68y")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Chair" unique_id=1605096539]
+texture_filter = 1
+position = Vector2(-4.709999, 1.7299957)
+texture = ExtResource("23_3wnpn")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Chair" unique_id=1374302282]
+visible = false
+texture_filter = 1
+position = Vector2(-4.709999, 1.7299957)
+texture = ExtResource("24_r3otx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chair" unique_id=2733063]
+position = Vector2(-5, 5.5250015)
+shape = SubResource("RectangleShape2D_q1wsu")

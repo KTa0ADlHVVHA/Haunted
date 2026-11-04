@@ -50,12 +50,13 @@ VINCENT: Otherwise I guess I don't get paid for this job. (thinking)
 		VINCENT: Stay next to me at all times, okay. (serious)
 
 		- I will!!
-			VINCENT: Good. (happy) [screen=P_Will]
+			VINCENT: Good. (happy) [screen=P_Will] [scene=Outside]
 
 		- Nope
 			VINCENT: Not funny. (angry) [screen=P_Nope]
 			- I will!!
-				VINCENT: Good. (happy) [screen=P_Will]
+				VINCENT: Good. (happy) [screen=P_Will] [scene=Outside]
+				 
 - I’m gonna look around
 	 
 => END

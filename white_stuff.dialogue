@@ -1,0 +1,21 @@
+~ start
+
+PLUM: White moss! (worried)
+
+- Eat it
+	You eat the moss...
+	PLUM: Tasty! (Happy)
+	It feels soft on your tongue, almost melting in your mouth.
+	There's a sudden sharp pain in your stomach.
+	You feel the moss multiplying inside you.
+	VINCENT: Plum! Throw it up. (Worried)
+	You bend over trying to throw it up. Each part of it that exits your throat is sharper than the last, as if the moss was replaced with spikes.
+	You try to stop yourself from throwing up but body refuses.
+	Each part that exits your body hurts more than the last. 
+	Your vision begins to turn white...
+	(//picture of plum's body overcome by moss)[scene=game_over]
+	=> END
+
+- Let it grow
+	You decide to leave the moss alone.
+	=> END

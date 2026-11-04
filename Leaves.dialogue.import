@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bfa3kk42w8m7q"
+path="res://.godot/imported/Leaves.dialogue-3f1e27dd437d23dc62a5b1aa5d7ed4a8.tres"
+
+[deps]
+
+source_file="res://Leaves.dialogue"
+dest_files=["res://.godot/imported/Leaves.dialogue-3f1e27dd437d23dc62a5b1aa5d7ed4a8.tres"]
+
+[params]
+
+defaults=true

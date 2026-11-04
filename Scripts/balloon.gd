@@ -1,15 +1,5 @@
 extends CanvasLayer
 
-## Dialogue balloon for Dialogue Manager
-##
-## Controls:
-## Z / interact = advance
-## Enter        = advance
-## X / cancel  = hold to fast-forward, advance when finished
-## H / hide    = hide/show dialogue UI
-##
-## Includes protection against rapid input / overlapping dialogue lines.
-
 
 # ============================================================
 # NODES
@@ -29,128 +19,138 @@ extends CanvasLayer
 
 
 # ============================================================
-# SETTINGS
+# DIALOGUE SETTINGS
 # ============================================================
 
 @export var dialogue_resource: DialogueResource
+
 @export var start_from_title: String = ""
+
 @export var auto_start: bool = false
 
-# Z
 @export var next_action: StringName = &"interact"
 
-# X
+
+# X / Cancel
 const FAST_FORWARD_ACTION: StringName = &"cancel"
 
-# H
-const HIDE_ACTION: StringName = &"hide"
-
-# Enter
-const ACCEPT_ACTION: StringName = &"ui_accept"
-
-# Obvious speed increase while testing.
-@export var fast_forward_multiplier: float = 10.0
+const FAST_FORWARD_MULTIPLIER: float = 10.0
 
 
 # ============================================================
-# DIALOGUE STATE
+# STATE
 # ============================================================
 
 var temporary_game_states: Array = []
 
 var is_waiting_for_input: bool = false
-var transition_in_progress: bool = false
 
 var will_hide_balloon: bool = false
 
 var locals: Dictionary = {}
 
-var _locale := TranslationServer.get_locale()
-
-var mutation_cooldown := Timer.new()
+var _locale: String = TranslationServer.get_locale()
 
 
 # ============================================================
-# UI STATE
+# VISIBILITY STATE
 # ============================================================
 
 var screen_only_locked: bool = false
 
-# This variable is now the SINGLE source of truth for H.
 var manual_hide_active: bool = false
 
 var hide_disabled: bool = false
 
 
 # ============================================================
+# SAFE LINE TRANSITIONS
+# ============================================================
+
+var line_revision: int = 0
+
+var transition_in_progress: bool = false
+
+
+# ============================================================
+# SCENE CHANGING
+# ============================================================
+
+# When the current dialogue line contains:
+#
+# [scene=Outside]
+#
+# the scene isn't changed immediately.
+#
+# Instead, its path is saved here and the scene changes
+# when the player ADVANCES from that dialogue line.
+var pending_scene_path: String = ""
+
+
+# ============================================================
 # TYPEWRITER
 # ============================================================
 
-var normal_seconds_per_step: float = 0.02
-var normal_seconds_per_pause_step: float = 0.3
+var normal_seconds_per_step: float = 0.0
+
+var normal_seconds_per_pause_step: float = 0.0
 
 
 # ============================================================
-# RACE PROTECTION
+# MUTATION TIMER
 # ============================================================
 
-# Incremented whenever the current line changes.
-#
-# Async work belonging to an older line can detect that it
-# is obsolete and stop touching the UI.
-var line_revision: int = 0
+var mutation_cooldown: Timer = Timer.new()
 
 
 # ============================================================
-# CURRENT LINE
+# CURRENT DIALOGUE LINE
 # ============================================================
 
 var dialogue_line: DialogueLine:
 	set(value):
 
-		# Invalidate any old async apply_dialogue_line().
 		line_revision += 1
 
-		# A requested transition has finished.
+		dialogue_line = value
+
 		transition_in_progress = false
 
-		_restore_normal_text_speed()
+		_restore_typing_speed()
 
 
-		if value:
-
-			dialogue_line = value
-
-			var my_revision := line_revision
+		if value != null:
 
 			apply_dialogue_line(
-				my_revision
+				line_revision
 			)
+
 
 		else:
 
-			dialogue_line = null
-
 			is_waiting_for_input = false
-			transition_in_progress = false
+
+			pending_scene_path = ""
 
 			manual_hide_active = false
+
 			hide_disabled = false
 
 
 			if screen_only_locked:
 
-				_set_screen_only_mode(false)
+				_set_screen_only_mode(
+					false
+				)
 
-				screen_only_locked = false
 
-
-			_restore_normal_text_speed()
+			screen_only_locked = false
 
 
 			if owner == null:
 
 				queue_free()
+
 
 			else:
 
@@ -169,9 +169,14 @@ var dialogue_line: DialogueLine:
 func _ready() -> void:
 
 	balloon.hide()
+
 	screen_sprite.hide()
+
 	paint_node.hide()
+
 	vbox_container.hide()
+
+	progress.hide()
 
 
 	# --------------------------------------------------------
@@ -182,13 +187,14 @@ func _ready() -> void:
 		dialogue_label.seconds_per_step
 	)
 
+
 	normal_seconds_per_pause_step = (
 		dialogue_label.seconds_per_pause_step
 	)
 
 
 	# --------------------------------------------------------
-	# DIALOGUE MANAGER
+	# DIALOGUE MANAGER SIGNALS
 	# --------------------------------------------------------
 
 	var dm := Engine.get_singleton(
@@ -196,18 +202,24 @@ func _ready() -> void:
 	)
 
 
-	if dm.has_signal("mutated"):
+	if dm != null:
 
-		dm.mutated.connect(
-			_on_mutated
-		)
+		if dm.has_signal(
+			"mutated"
+		):
+
+			dm.mutated.connect(
+				_on_mutated
+			)
 
 
-	if dm.has_signal("action"):
+		if dm.has_signal(
+			"action"
+		):
 
-		dm.action.connect(
-			_on_dialogue_action
-		)
+			dm.action.connect(
+				_on_dialogue_action
+			)
 
 
 	# --------------------------------------------------------
@@ -216,16 +228,22 @@ func _ready() -> void:
 
 	if responses_menu.next_action.is_empty():
 
-		responses_menu.next_action = next_action
+		responses_menu.next_action = (
+			next_action
+		)
 
 
 	# --------------------------------------------------------
 	# MUTATION TIMER
 	# --------------------------------------------------------
 
+	mutation_cooldown.one_shot = true
+
+
 	mutation_cooldown.timeout.connect(
 		_on_mutation_cooldown_timeout
 	)
+
 
 	add_child(
 		mutation_cooldown
@@ -245,489 +263,172 @@ func _ready() -> void:
 # PROCESS
 # ============================================================
 
-func _process(_delta: float) -> void:
+func _process(
+	_delta: float
+) -> void:
 
-	if dialogue_line == null:
+	_update_fast_forward()
+
+
+	if not is_instance_valid(
+		dialogue_line
+	):
 
 		progress.hide()
-
-		_restore_normal_text_speed()
 
 		return
 
 
-	# --------------------------------------------------------
-	# CONTINUE INDICATOR
-	# --------------------------------------------------------
-
 	progress.visible = (
-		not manual_hide_active
-		and not screen_only_locked
-		and is_waiting_for_input
+		is_waiting_for_input
 		and not dialogue_label.is_typing
-		and dialogue_line.responses.size() == 0
+		and dialogue_line.responses.is_empty()
 		and not dialogue_line.has_tag("voice")
+		and not manual_hide_active
+		and not screen_only_locked
 	)
-
-
-	# --------------------------------------------------------
-	# FAST FORWARD
-	# --------------------------------------------------------
-
-	_update_fast_forward()
 
 
 # ============================================================
 # INPUT
 # ============================================================
 
-func _input(event: InputEvent) -> void:
+func _input(
+	event: InputEvent
+) -> void:
 
-	# Ignore keyboard auto-repeat.
-	#
-	# Holding H should count as ONE press, not hundreds.
-	if event is InputEventKey:
+	if dialogue_line == null:
+		return
 
-		var key_event := event as InputEventKey
 
-		if key_event.echo:
+	# Don't process keyboard echo events.
+	if (
+		event is InputEventKey
+		and event.echo
+	):
 
+		return
+
+
+	# --------------------------------------------------------
+	# HIDE / SHOW
+	# --------------------------------------------------------
+
+	if event.is_action_pressed(
+		"hide"
+	):
+
+		if screen_only_locked:
 			return
 
 
-	# ========================================================
-	# H — HIDE / SHOW
-	# ========================================================
+		if hide_disabled:
+			return
 
-	if event.is_action_pressed(HIDE_ACTION):
 
 		_toggle_manual_hide()
 
-		get_viewport().set_input_as_handled()
-
-		return
-
-
-	# ========================================================
-	# X — FAST FORWARD / ADVANCE
-	# ========================================================
-
-	if event.is_action_pressed(FAST_FORWARD_ACTION):
-
-		if manual_hide_active:
-
-			get_viewport().set_input_as_handled()
-
-			return
-
-
-		if dialogue_line == null:
-
-			return
-
-
-		# Never use X to choose a response.
-		if dialogue_line.responses.size() > 0:
-
-			get_viewport().set_input_as_handled()
-
-			return
-
-
-		# If typing, holding X speeds it up.
-		if dialogue_label.is_typing:
-
-			get_viewport().set_input_as_handled()
-
-			return
-
-
-		# If already finished, X advances.
-		_request_advance()
-
 
 		get_viewport().set_input_as_handled()
 
-		return
-
-
-	# ========================================================
-	# Z / ENTER — NORMAL ADVANCE
-	# ========================================================
-
-	if (
-		event.is_action_pressed(next_action)
-		or event.is_action_pressed(ACCEPT_ACTION)
-	):
-
-		if manual_hide_active:
-
-			return
-
-
-		if dialogue_line == null:
-
-			return
-
-
-		# Let ResponsesMenu own Z / Enter when choices exist.
-		if dialogue_line.responses.size() > 0:
-
-			return
-
-
-		# Don't advance normal dialogue while text is typing.
-		if dialogue_label.is_typing:
-
-			get_viewport().set_input_as_handled()
-
-			return
-
-
-		_request_advance()
-
-
-		get_viewport().set_input_as_handled()
 
 		return
 
-
-# ============================================================
-# HIDE / SHOW
-# ============================================================
-
-func _toggle_manual_hide() -> void:
-
-	# These lines intentionally prevent H.
-	if screen_only_locked:
-
-		return
-
-
-	if hide_disabled:
-
-		return
-
-
-	manual_hide_active = not manual_hide_active
-
-
-	_sync_dialogue_visibility()
-
-
-# ============================================================
-# AUTHORITATIVE UI VISIBILITY
-# ============================================================
-
-func _sync_dialogue_visibility() -> void:
-
-	# ========================================================
-	# SCREEN-ONLY MODE
-	# ========================================================
-
-	if screen_only_locked:
-
-		balloon.hide()
-		dialogue_label.hide()
-		character_label.hide()
-		portrait_sprite.hide()
-		vbox_container.hide()
-		responses_menu.hide()
-		progress.hide()
-
-		$TextureRect.hide()
-		$TextureRect2.hide()
-		$Control.hide()
-
-		paint_node.hide()
-
-		screen_sprite.show()
-
-		return
-
-
-	# ========================================================
-	# HIDDEN BY PLAYER
-	# ========================================================
 
 	if manual_hide_active:
-
-		dialogue_label.hide()
-		character_label.hide()
-		portrait_sprite.hide()
-		vbox_container.hide()
-		responses_menu.hide()
-		progress.hide()
-
-		$TextureRect.hide()
-		$TextureRect2.hide()
-		$Control.hide()
-
 		return
-
-
-	# ========================================================
-	# NORMAL VISIBLE UI
-	# ========================================================
-
-	balloon.show()
-	vbox_container.show()
-	dialogue_label.show()
-
-	$TextureRect.show()
-	$TextureRect2.show()
-	$Control.show()
-
-
-	# --------------------------------------------------------
-	# CHARACTER NAME
-	# --------------------------------------------------------
-
-	if (
-		dialogue_line != null
-		and not dialogue_line.character.is_empty()
-	):
-
-		character_label.show()
-
-	else:
-
-		character_label.hide()
-
-
-	# --------------------------------------------------------
-	# PORTRAIT
-	# --------------------------------------------------------
-
-	if (
-		dialogue_line != null
-		and not dialogue_line.character.is_empty()
-		and portrait_sprite.texture != null
-	):
-
-		portrait_sprite.show()
-
-	else:
-
-		portrait_sprite.hide()
 
 
 	# --------------------------------------------------------
 	# RESPONSES
 	# --------------------------------------------------------
 
-	if (
-		dialogue_line != null
-		and dialogue_line.responses.size() > 0
-		and not dialogue_label.is_typing
-	):
-
-		responses_menu.show()
-
-	else:
-
-		responses_menu.hide()
-
-
-	# --------------------------------------------------------
-	# CONTINUE ICON
-	# --------------------------------------------------------
-
-	progress.visible = (
-		dialogue_line != null
-		and is_waiting_for_input
-		and not dialogue_label.is_typing
-		and dialogue_line.responses.size() == 0
-		and not dialogue_line.has_tag("voice")
-	)
-
-
-# ============================================================
-# FAST FORWARD
-# ============================================================
-
-func _update_fast_forward() -> void:
-
-	if dialogue_line == null:
-
-		_restore_normal_text_speed()
-
-		return
-
-
-	if manual_hide_active:
-
-		_restore_normal_text_speed()
-
-		return
-
-
-	var holding_x := Input.is_action_pressed(
-		FAST_FORWARD_ACTION
-	)
-
-
-	# --------------------------------------------------------
-	# X NOT HELD
-	# --------------------------------------------------------
-
-	if not holding_x:
-
-		_restore_normal_text_speed()
-
+	# Don't let X / Z automatically select dialogue choices.
+	if not dialogue_line.responses.is_empty():
 		return
 
 
 	# --------------------------------------------------------
-	# X HELD DURING TYPEWRITER
+	# ADVANCE
 	# --------------------------------------------------------
-
-	if dialogue_label.is_typing:
-
-		var multiplier := maxf(
-			fast_forward_multiplier,
-			1.0
-		)
-
-
-		dialogue_label.seconds_per_step = (
-			normal_seconds_per_step
-			/ multiplier
-		)
-
-
-		dialogue_label.seconds_per_pause_step = (
-			normal_seconds_per_pause_step
-			/ multiplier
-		)
-
-
-		return
-
-
-	# --------------------------------------------------------
-	# X HELD AFTER TEXT FINISHED
-	# --------------------------------------------------------
-
-	_restore_normal_text_speed()
-
 
 	if is_waiting_for_input:
 
-		_request_advance()
+		if (
+			event.is_action_pressed(
+				next_action
+			)
+			or event.is_action_pressed(
+				&"ui_accept"
+			)
+			or event.is_action_pressed(
+				FAST_FORWARD_ACTION
+			)
+		):
+
+			_request_advance()
 
 
-func _restore_normal_text_speed() -> void:
-
-	if not is_instance_valid(dialogue_label):
-
-		return
-
-
-	dialogue_label.seconds_per_step = (
-		normal_seconds_per_step
-	)
-
-
-	dialogue_label.seconds_per_pause_step = (
-		normal_seconds_per_pause_step
-	)
-
-
-# ============================================================
-# REQUEST ADVANCE
-# ============================================================
-
-func _request_advance() -> void:
-
-	if transition_in_progress:
-
-		return
-
-
-	if dialogue_line == null:
-
-		return
-
-
-	if not is_waiting_for_input:
-
-		return
-
-
-	if dialogue_label.is_typing:
-
-		return
-
-
-	if dialogue_line.responses.size() > 0:
-
-		return
-
-
-	if dialogue_line.has_tag("voice"):
-
-		return
-
-
-	_advance_to(
-		dialogue_line.next_id
-	)
+			get_viewport().set_input_as_handled()
 
 
 # ============================================================
-# ADVANCE TO ANOTHER LINE
+# OLD GUI INPUT CONNECTION
 # ============================================================
 
-func _advance_to(
-	next_id: String
+func _on_balloon_gui_input(
+	_event: InputEvent
 ) -> void:
 
-	# This is the ONLY function that owns this lock.
-	if transition_in_progress:
-
-		return
-
-
-	transition_in_progress = true
-
-	is_waiting_for_input = false
-
-
-	var source_revision := line_revision
-
-
-	var new_line := await dialogue_resource.get_next_dialogue_line(
-		next_id,
-		temporary_game_states
-	)
-
-
-	# Something else replaced the dialogue while we waited.
-	if source_revision != line_revision:
-
-		transition_in_progress = false
-
-		return
-
-
-	# Setter resets transition_in_progress and creates
-	# a new revision.
-	dialogue_line = new_line
+	# Intentionally empty.
+	#
+	# Input is handled only in _input().
+	#
+	# Keeping this function prevents an existing scene signal
+	# connection from breaking.
+	pass
 
 
 # ============================================================
-# PUBLIC NEXT
+# TRANSLATION
 # ============================================================
 
-# Keep this method because your existing scene/plugin may call it.
-func next(
-	next_id: String
+func _notification(
+	what: int
 ) -> void:
 
-	_advance_to(
-		next_id
-	)
+	if (
+		what == NOTIFICATION_TRANSLATION_CHANGED
+		and _locale
+		!= TranslationServer.get_locale()
+	):
+
+		_locale = TranslationServer.get_locale()
+
+
+		if dialogue_line == null:
+			return
+
+
+		var ratio: float = (
+			dialogue_label.visible_ratio
+		)
+
+
+		var new_line: DialogueLine = await (
+			dialogue_resource.get_next_dialogue_line(
+				dialogue_line.id,
+				temporary_game_states
+			)
+		)
+
+
+		dialogue_line = new_line
+
+
+		if ratio < 1.0:
+
+			dialogue_label.skip_typing()
 
 
 # ============================================================
@@ -747,12 +448,17 @@ func start(
 
 
 	is_waiting_for_input = false
+
 	transition_in_progress = false
 
+	pending_scene_path = ""
 
-	if with_dialogue_resource:
 
-		dialogue_resource = with_dialogue_resource
+	if with_dialogue_resource != null:
+
+		dialogue_resource = (
+			with_dialogue_resource
+		)
 
 
 	if not title.is_empty():
@@ -760,9 +466,20 @@ func start(
 		start_from_title = title
 
 
-	var first_line := await dialogue_resource.get_next_dialogue_line(
-		start_from_title,
-		temporary_game_states
+	if dialogue_resource == null:
+
+		push_warning(
+			"Dialogue balloon has no DialogueResource."
+		)
+
+		return
+
+
+	var first_line: DialogueLine = await (
+		dialogue_resource.get_next_dialogue_line(
+			start_from_title,
+			temporary_game_states
+		)
 	)
 
 
@@ -773,79 +490,124 @@ func start(
 
 
 # ============================================================
-# APPLY LINE
+# APPLY DIALOGUE LINE
 # ============================================================
 
 func apply_dialogue_line(
 	my_revision: int
 ) -> void:
 
-	var line := dialogue_line
-
-
-	if line == null:
-
+	if dialogue_line == null:
 		return
 
 
-	# An old mutation timer must not suddenly hide this
-	# brand-new line.
+	var line: DialogueLine = (
+		dialogue_line
+	)
+
+
+	# --------------------------------------------------------
+	# RESET CURRENT LINE STATE
+	# --------------------------------------------------------
+
 	mutation_cooldown.stop()
 
 	will_hide_balloon = false
-
 
 	progress.hide()
 
 	is_waiting_for_input = false
 
-
-	balloon.focus_mode = Control.FOCUS_ALL
-
-
-	# --------------------------------------------------------
-	# PARSE TEXT
-	# --------------------------------------------------------
-
-	var text_with_tags := line.text
+	pending_scene_path = ""
 
 
-	var parsed := _extract_emotion(
-		text_with_tags
+	balloon.focus_mode = (
+		Control.FOCUS_ALL
 	)
 
 
-	hide_disabled = parsed.hide_disabled
+	balloon.grab_focus()
 
 
 	# --------------------------------------------------------
-	# SCREEN-ONLY
+	# PARSE LINE
 	# --------------------------------------------------------
 
-	if parsed.hide:
+	var text_with_tags: String = (
+		line.text
+	)
+
+
+	var parsed: Dictionary = (
+		_extract_emotion(
+			text_with_tags
+		)
+	)
+
+
+	hide_disabled = bool(
+		parsed.get(
+			"hide_disabled",
+			false
+		)
+	)
+
+
+	# --------------------------------------------------------
+	# SCREEN ONLY
+	# --------------------------------------------------------
+
+	var wants_screen_only: bool = bool(
+		parsed.get(
+			"hide",
+			false
+		)
+	)
+
+
+	if wants_screen_only:
 
 		_set_screen_only_mode(
 			true
 		)
 
 
+	elif screen_only_locked:
+
+		_set_screen_only_mode(
+			false
+		)
+
+
+	# --------------------------------------------------------
+	# TEXT AFTER EMOTION PARSING
+	# --------------------------------------------------------
+
+	var parsed_text: String = str(
+		parsed.get(
+			"text",
+			""
+		)
+	)
+
+
 	# --------------------------------------------------------
 	# PAINT
 	# --------------------------------------------------------
 
-	if "[show paint]" in parsed.text:
+	if "[show paint]" in parsed_text:
 
 		paint_node.show()
 
 
-		parsed.text = parsed.text.replace(
+		parsed_text = parsed_text.replace(
 			"[show paint]",
 			""
 		)
 
 
 	# --------------------------------------------------------
-	# CHARACTER
+	# CHARACTER NAME
 	# --------------------------------------------------------
 
 	character_label.text = tr(
@@ -860,7 +622,12 @@ func apply_dialogue_line(
 
 	_update_portrait(
 		line.character,
-		parsed.emotion
+		str(
+			parsed.get(
+				"emotion",
+				"neutral"
+			)
+		)
 	)
 
 
@@ -877,44 +644,66 @@ func apply_dialogue_line(
 
 
 	for match_result in screen_tag_regex.search_all(
-		text_with_tags
+		parsed_text
 	):
 
 		_set_screen_sprite(
-			match_result.get_string(1)
+			match_result.get_string(
+				1
+			)
 		)
 
 
-	# Remove screen tags from visible dialogue.
-	parsed.text = screen_tag_regex.sub(
-		parsed.text,
+	# Remove [screen=...] from dialogue text.
+	parsed_text = screen_tag_regex.sub(
+		parsed_text,
 		"",
 		true
 	)
 
 
 	# --------------------------------------------------------
-	# DIALOGUE LABEL
+	# SYSTEM TIME
 	# --------------------------------------------------------
 
-	dialogue_label.hide()
-
-
-	dialogue_label.dialogue_line = line
-
-
-	var final_text: String = parsed.text.replace(
-		"[time]",
-		get_system_time()
+	var final_text: String = (
+		parsed_text.replace(
+			"[time]",
+			get_system_time()
+		)
 	)
 
 
+	# --------------------------------------------------------
+	# SCENE TAG
+	# --------------------------------------------------------
+
+	# IMPORTANT:
+	#
+	# Emotion parsing now PRESERVES anything after
+	# "(happy)", "(sad)", etc.
+	#
+	# Therefore [scene=...] reaches this function correctly.
 	final_text = _handle_scene_tag(
 		final_text
 	)
 
 
-	dialogue_label.dialogue_line.text = final_text
+	# --------------------------------------------------------
+	# SET TEXT
+	# --------------------------------------------------------
+
+	dialogue_label.hide()
+
+
+	dialogue_label.dialogue_line = (
+		line
+	)
+
+
+	dialogue_label.dialogue_line.text = (
+		final_text.strip_edges()
+	)
 
 
 	# --------------------------------------------------------
@@ -923,11 +712,13 @@ func apply_dialogue_line(
 
 	responses_menu.hide()
 
-	responses_menu.responses = line.responses
+	responses_menu.responses = (
+		line.responses
+	)
 
 
 	# --------------------------------------------------------
-	# APPLY CURRENT H STATE
+	# VISIBILITY
 	# --------------------------------------------------------
 
 	_sync_dialogue_visibility()
@@ -937,7 +728,10 @@ func apply_dialogue_line(
 	# TYPEWRITER
 	# --------------------------------------------------------
 
-	if not parsed.text.is_empty():
+	if not final_text.strip_edges().is_empty():
+
+		dialogue_label.show()
+
 
 		dialogue_label.type_out()
 
@@ -945,44 +739,28 @@ func apply_dialogue_line(
 		await dialogue_label.finished_typing
 
 
-		# If a newer line started while we waited,
-		# this old coroutine dies here.
+		# Ignore an old coroutine that finished after
+		# another line already started.
 		if my_revision != line_revision:
-
 			return
 
 
 		if dialogue_line != line:
-
 			return
 
 
-	_restore_normal_text_speed()
-
-
-	# Check once more before any post-line behaviour.
-	if my_revision != line_revision:
-
-		return
-
-
-	if dialogue_line != line:
-
-		return
-
-
-	# Re-sync H state after typing ends.
-	_sync_dialogue_visibility()
-
-
-	# ========================================================
+	# --------------------------------------------------------
 	# VOICE
-	# ========================================================
+	# --------------------------------------------------------
 
-	if line.has_tag("voice"):
+	if line.has_tag(
+		"voice"
+	):
 
 		audio_stream_player.stream = load(
-			line.get_tag_value("voice")
+			line.get_tag_value(
+				"voice"
+			)
 		)
 
 
@@ -993,43 +771,63 @@ func apply_dialogue_line(
 
 
 		if my_revision != line_revision:
-
 			return
 
 
 		if dialogue_line != line:
-
 			return
 
 
-		_advance_to(
+		await _advance_to(
 			line.next_id
 		)
 
 
-	# ========================================================
+		return
+
+
+	# --------------------------------------------------------
 	# RESPONSES
-	# ========================================================
+	# --------------------------------------------------------
 
-	elif line.responses.size() > 0:
+	if not line.responses.is_empty():
 
-		balloon.focus_mode = Control.FOCUS_NONE
+		balloon.focus_mode = (
+			Control.FOCUS_NONE
+		)
+
+
+		responses_menu.show()
 
 
 		_sync_dialogue_visibility()
 
 
-	# ========================================================
-	# TIMED DIALOGUE
-	# ========================================================
+		return
 
-	elif line.time != "":
 
-		var wait_time: float = (
-			parsed.text.length() * 0.02
-			if line.time == "auto"
-			else line.time.to_float()
-		)
+	# --------------------------------------------------------
+	# AUTO / TIMED LINE
+	# --------------------------------------------------------
+
+	if line.time != "":
+
+		var wait_time: float
+
+
+		if line.time == "auto":
+
+			wait_time = (
+				final_text.length()
+				* 0.02
+			)
+
+
+		else:
+
+			wait_time = (
+				line.time.to_float()
+			)
 
 
 		await get_tree().create_timer(
@@ -1038,46 +836,133 @@ func apply_dialogue_line(
 
 
 		if my_revision != line_revision:
-
 			return
 
 
 		if dialogue_line != line:
-
 			return
 
 
-		_advance_to(
+		await _advance_to(
 			line.next_id
 		)
 
 
-	# ========================================================
-	# NORMAL WAITING LINE
-	# ========================================================
-
-	else:
-
-		is_waiting_for_input = true
+		return
 
 
-		_sync_dialogue_visibility()
+	# --------------------------------------------------------
+	# WAIT FOR INPUT
+	# --------------------------------------------------------
+
+	is_waiting_for_input = true
 
 
-		if (
-			not manual_hide_active
-			and not screen_only_locked
-		):
-
-			balloon.grab_focus()
+	balloon.grab_focus()
 
 
-		# Keep holding X through multiple lines.
-		if Input.is_action_pressed(
-			FAST_FORWARD_ACTION
-		):
+	_sync_dialogue_visibility()
 
-			_request_advance()
+
+	# Holding X continues through ordinary lines.
+	if Input.is_action_pressed(
+		FAST_FORWARD_ACTION
+	):
+
+		_request_advance()
+
+
+# ============================================================
+# REQUEST ADVANCE
+# ============================================================
+
+func _request_advance() -> void:
+
+	if dialogue_line == null:
+		return
+
+
+	if transition_in_progress:
+		return
+
+
+	if not is_waiting_for_input:
+		return
+
+
+	if not dialogue_line.responses.is_empty():
+		return
+
+
+	_advance_to(
+		dialogue_line.next_id
+	)
+
+
+# ============================================================
+# ADVANCE
+# ============================================================
+
+func _advance_to(
+	next_id: String
+) -> void:
+
+	if transition_in_progress:
+		return
+
+
+	transition_in_progress = true
+
+	is_waiting_for_input = false
+
+
+	# --------------------------------------------------------
+	# SCENE CHANGE
+	# --------------------------------------------------------
+
+	if not pending_scene_path.is_empty():
+
+		var scene_path: String = (
+			pending_scene_path
+		)
+
+
+		pending_scene_path = ""
+
+
+		await _change_scene_safe(
+			scene_path
+		)
+
+
+		return
+
+
+	# --------------------------------------------------------
+	# NORMAL DIALOGUE ADVANCE
+	# --------------------------------------------------------
+
+	var source_revision: int = (
+		line_revision
+	)
+
+
+	var new_line: DialogueLine = await (
+		dialogue_resource.get_next_dialogue_line(
+			next_id,
+			temporary_game_states
+		)
+	)
+
+
+	if source_revision != line_revision:
+
+		transition_in_progress = false
+
+		return
+
+
+	dialogue_line = new_line
 
 
 # ============================================================
@@ -1088,78 +973,64 @@ func _on_responses_menu_response_selected(
 	response: DialogueResponse
 ) -> void:
 
-	if transition_in_progress:
-
-		return
-
-
-	_advance_to(
+	await _advance_to(
 		response.next_id
 	)
 
 
 # ============================================================
-# BALLOON GUI INPUT
+# FAST FORWARD
 # ============================================================
 
-func _on_balloon_gui_input(
-	_event: InputEvent
-) -> void:
+func _update_fast_forward() -> void:
 
-	# INTENTIONALLY EMPTY.
-	#
-	# Your scene already has this signal connected, so we leave
-	# the method here.
-	#
-	# H / Z / X / Enter are handled ONLY in _input().
-	#
-	# This prevents a single keypress from being processed
-	# twice.
-	pass
+	if dialogue_label == null:
+		return
 
-
-# ============================================================
-# TRANSLATION
-# ============================================================
-
-func _notification(
-	what: int
-) -> void:
 
 	if (
-		what == NOTIFICATION_TRANSLATION_CHANGED
-		and _locale != TranslationServer.get_locale()
+		dialogue_label.is_typing
+		and Input.is_action_pressed(
+			FAST_FORWARD_ACTION
+		)
+		and not manual_hide_active
 	):
 
-		_locale = TranslationServer.get_locale()
-
-
-		if dialogue_line == null:
-
-			return
-
-
-		var ratio := dialogue_label.visible_ratio
-
-
-		var translated_line := await dialogue_resource.get_next_dialogue_line(
-			dialogue_line.id
+		dialogue_label.seconds_per_step = (
+			normal_seconds_per_step
+			/ FAST_FORWARD_MULTIPLIER
 		)
 
 
-		dialogue_line = translated_line
+		dialogue_label.seconds_per_pause_step = (
+			normal_seconds_per_pause_step
+			/ FAST_FORWARD_MULTIPLIER
+		)
 
 
-		if (
-			dialogue_line != null
-			and ratio < 1
-		):
+	else:
 
-			dialogue_label.skip_typing()
+		_restore_typing_speed()
+
+
+func _restore_typing_speed() -> void:
+
+	if dialogue_label == null:
+		return
+
+
+	dialogue_label.seconds_per_step = (
+		normal_seconds_per_step
+	)
+
+
+	dialogue_label.seconds_per_pause_step = (
+		normal_seconds_per_pause_step
+	)
 
 
 # ============================================================
-# DIALOGUE ACTION
+# ACTIONS
 # ============================================================
 
 func _on_dialogue_action(
@@ -1185,10 +1056,30 @@ func _on_dialogue_action(
 # ============================================================
 
 func _on_mutated(
-	_mutation: Dictionary
+	_mutation
 ) -> void:
 
-	if not _mutation.is_inline:
+	var is_inline: bool = false
+
+
+	if _mutation is Dictionary:
+
+		is_inline = bool(
+			_mutation.get(
+				"is_inline",
+				false
+			)
+		)
+
+
+	else:
+
+		is_inline = bool(
+			_mutation.is_inline
+		)
+
+
+	if not is_inline:
 
 		is_waiting_for_input = false
 
@@ -1203,21 +1094,36 @@ func _on_mutated(
 func _on_mutation_cooldown_timeout() -> void:
 
 	if not will_hide_balloon:
-
 		return
 
 
 	will_hide_balloon = false
 
 
-	# Don't override the player's H state.
-	if manual_hide_active:
-
+	if dialogue_line == null:
 		return
 
 
-	balloon.hide()
-	vbox_container.hide()
+	_sync_dialogue_visibility()
+
+
+# ============================================================
+# MANUAL HIDE
+# ============================================================
+
+func _toggle_manual_hide() -> void:
+
+	manual_hide_active = (
+		not manual_hide_active
+	)
+
+
+	_sync_dialogue_visibility()
+
+
+	if not manual_hide_active:
+
+		balloon.grab_focus()
 
 
 # ============================================================
@@ -1231,51 +1137,140 @@ func _set_screen_only_mode(
 	screen_only_locked = enabled
 
 
-	if enabled:
+	_sync_dialogue_visibility()
+
+
+# ============================================================
+# SYNC VISIBILITY
+# ============================================================
+
+func _sync_dialogue_visibility() -> void:
+
+	# --------------------------------------------------------
+	# SCREEN-ONLY MODE
+	# --------------------------------------------------------
+
+	if screen_only_locked:
 
 		balloon.hide()
+
 		dialogue_label.hide()
+
 		character_label.hide()
+
 		portrait_sprite.hide()
+
 		vbox_container.hide()
+
 		responses_menu.hide()
+
 		progress.hide()
 
 		$TextureRect.hide()
+
 		$TextureRect2.hide()
+
 		$Control.hide()
 
 		paint_node.hide()
 
+
 		screen_sprite.show()
+
+
+		return
+
+
+	# --------------------------------------------------------
+	# MANUALLY HIDDEN
+	# --------------------------------------------------------
+
+	if manual_hide_active:
+
+		dialogue_label.hide()
+
+		character_label.hide()
+
+		portrait_sprite.hide()
+
+		vbox_container.hide()
+
+		responses_menu.hide()
+
+		progress.hide()
+
+		$TextureRect.hide()
+
+		$TextureRect2.hide()
+
+		$Control.hide()
+
+
+		return
+
+
+	# --------------------------------------------------------
+	# NORMAL DIALOGUE
+	# --------------------------------------------------------
+
+	balloon.show()
+
+	vbox_container.show()
+
+	dialogue_label.show()
+
+	$TextureRect.show()
+
+	$TextureRect2.show()
+
+	$Control.show()
+
+
+	character_label.visible = (
+		dialogue_line != null
+		and not dialogue_line.character.is_empty()
+	)
+
+
+	portrait_sprite.visible = (
+		portrait_sprite.texture != null
+		and dialogue_line != null
+		and not dialogue_line.character.is_empty()
+	)
+
+
+	if dialogue_line != null:
+
+		responses_menu.visible = (
+			not dialogue_label.is_typing
+			and not dialogue_line.responses.is_empty()
+		)
 
 
 	else:
 
-		screen_sprite.hide()
-
-		_sync_dialogue_visibility()
+		responses_menu.hide()
 
 
 # ============================================================
-# EMOTION PARSING
+# EMOTION / SPECIAL TAG PARSING
 # ============================================================
 
 func _extract_emotion(
 	text: String
 ) -> Dictionary:
 
-	var emotion := "neutral"
+	var emotion: String = "neutral"
 
-	var clean_text := text
+	var clean_text: String = text
 
-	var hide_screen_only := false
+	var hide_screen_only: bool = false
 
-	var disable_hide := false
+	var disable_hide: bool = false
 
 
 	# --------------------------------------------------------
-	# SCREEN-ONLY
+	# HIDE
 	# --------------------------------------------------------
 
 	if "(hide)" in clean_text:
@@ -1286,11 +1281,11 @@ func _extract_emotion(
 		clean_text = clean_text.replace(
 			"(hide)",
 			""
-		).strip_edges()
+		)
 
 
 	# --------------------------------------------------------
-	# NO HIDE
+	# NOHIDE
 	# --------------------------------------------------------
 
 	if "(nohide)" in clean_text:
@@ -1301,33 +1296,82 @@ func _extract_emotion(
 		clean_text = clean_text.replace(
 			"(nohide)",
 			""
-		).strip_edges()
+		)
 
 
 	# --------------------------------------------------------
 	# EMOTION
 	# --------------------------------------------------------
 
-	var open := clean_text.rfind("(")
+	var open_index: int = (
+		clean_text.rfind(
+			"("
+		)
+	)
 
-	var close := clean_text.rfind(")")
+
+	var close_index: int = (
+		clean_text.find(
+			")",
+			open_index
+		)
+	)
 
 
 	if (
-		open != -1
-		and close != -1
-		and close > open
+		open_index != -1
+		and close_index != -1
+		and close_index > open_index
 	):
 
-		emotion = clean_text.substr(
-			open + 1,
-			close - open - 1
-		).strip_edges()
+		emotion = (
+			clean_text.substr(
+				open_index + 1,
+				close_index - open_index - 1
+			).strip_edges()
+		)
 
 
-		clean_text = clean_text.substr(
-			0,
-			open
+		# ====================================================
+		# IMPORTANT FIX
+		# ====================================================
+		#
+		# OLD VERSION:
+		#
+		# clean_text = clean_text.substr(0, open_index)
+		#
+		# That deleted EVERYTHING after the emotion.
+		#
+		# Example:
+		#
+		# Good. (happy) [scene=Outside]
+		#
+		# became:
+		#
+		# Good.
+		#
+		# This version removes ONLY "(happy)" and keeps
+		# everything after it.
+		# ====================================================
+
+		var before_emotion: String = (
+			clean_text.substr(
+				0,
+				open_index
+			)
+		)
+
+
+		var after_emotion: String = (
+			clean_text.substr(
+				close_index + 1
+			)
+		)
+
+
+		clean_text = (
+			before_emotion
+			+ after_emotion
 		).strip_edges()
 
 
@@ -1350,53 +1394,61 @@ func _update_portrait(
 
 	if character.is_empty():
 
-		portrait_sprite.texture = null
 		portrait_sprite.hide()
 
 		return
 
 
-	var char := character.capitalize()
-
-	var emo := emotion.capitalize()
-
-
-	var base := (
-		"res://Art/Expressions/%s/"
-		% char
+	var character_name: String = (
+		character.capitalize()
 	)
 
 
-	var path := (
+	var emotion_name: String = (
+		emotion.capitalize()
+	)
+
+
+	var base_path: String = (
+		"res://Art/Expressions/%s/"
+		% character_name
+	)
+
+
+	var portrait_path: String = (
 		"%s%s_%s.png"
 		% [
-			base,
-			char,
-			emo
+			base_path,
+			character_name,
+			emotion_name
 		]
 	)
 
 
-	var fallback := (
+	var fallback_path: String = (
 		"%s%s_Neutral.png"
 		% [
-			base,
-			char
+			base_path,
+			character_name
 		]
 	)
 
 
-	if ResourceLoader.exists(path):
+	if ResourceLoader.exists(
+		portrait_path
+	):
 
 		portrait_sprite.texture = load(
-			path
+			portrait_path
 		)
 
 
-	elif ResourceLoader.exists(fallback):
+	elif ResourceLoader.exists(
+		fallback_path
+	):
 
 		portrait_sprite.texture = load(
-			fallback
+			fallback_path
 		)
 
 
@@ -1405,31 +1457,50 @@ func _update_portrait(
 		portrait_sprite.texture = null
 
 
+	if portrait_sprite.texture != null:
+
+		portrait_sprite.show()
+
+
+	else:
+
+		portrait_sprite.hide()
+
+
 # ============================================================
-# SCREEN SPRITE
+# SCREEN IMAGE
 # ============================================================
 
 func _set_screen_sprite(
-	name: String
+	screen_name: String
 ) -> void:
 
+	screen_name = (
+		screen_name.strip_edges()
+	)
+
+
 	if (
-		name.is_empty()
-		or name == "none"
+		screen_name.is_empty()
+		or screen_name.to_lower() == "none"
 	):
 
 		screen_sprite.hide()
 
+		screen_sprite.texture = null
+
 		return
 
 
-	var path := (
+	var path: String = (
 		"res://Art/Screens/%s.png"
-		% name.strip_edges()
+		% screen_name
 	)
 
 
-	if ResourceLoader.exists(path):
+	if ResourceLoader.exists(
+		path
+	):
 
 		screen_sprite.texture = load(
 			path
@@ -1456,33 +1527,15 @@ func _set_screen_sprite(
 
 func get_system_time() -> String:
 
-	var now := Time.get_datetime_dict_from_system()
+	var now: Dictionary = (
+		Time.get_datetime_dict_from_system()
+	)
 
 
 	return "%02d:%02d" % [
 		now.hour,
 		now.minute
 	]
-
-
-# ============================================================
-# SAFE SCENE CHANGE
-# ============================================================
-
-func _change_scene_safe(
-	path: String
-) -> void:
-
-	balloon.hide()
-	screen_sprite.hide()
-
-
-	await get_tree().process_frame
-
-
-	get_tree().change_scene_to_file(
-		path
-	)
 
 
 # ============================================================
@@ -1505,30 +1558,38 @@ func _handle_scene_tag(
 		text
 	):
 
-		var scene_name := (
-			match_result.get_string(1).strip_edges()
+		var scene_value: String = (
+			match_result.get_string(
+				1
+			).strip_edges()
 		)
 
 
-		var path := (
-			"res://Scenes/%s.tscn"
-			% scene_name
+		var resolved_path: String = (
+			_resolve_scene_path(
+				scene_value
+			)
 		)
 
 
-		if ResourceLoader.exists(path):
+		if resolved_path.is_empty():
 
-			call_deferred(
-				"_change_scene_safe",
-				path
+			push_warning(
+				"Could not find scene from tag: "
+				+ scene_value
 			)
 
 
 		else:
 
-			push_warning(
-				"Missing scene: "
-				+ path
+			print(
+				"Dialogue scene tag found: ",
+				resolved_path
+			)
+
+
+			pending_scene_path = (
+				resolved_path
 			)
 
 
@@ -1537,3 +1598,202 @@ func _handle_scene_tag(
 		"",
 		true
 	)
+
+
+# ============================================================
+# RESOLVE SCENE PATH
+# ============================================================
+
+func _resolve_scene_path(
+	scene_value: String
+) -> String:
+
+	var value: String = (
+		scene_value.strip_edges()
+	)
+
+
+	if value.is_empty():
+
+		return ""
+
+
+	# --------------------------------------------------------
+	# FULL PATH
+	# --------------------------------------------------------
+
+	# Example:
+	#
+	# [scene=res://Outside.tscn]
+	if value.begins_with(
+		"res://"
+	):
+
+		var full_path: String = (
+			value
+		)
+
+
+		if not full_path.ends_with(
+			".tscn"
+		):
+
+			full_path += ".tscn"
+
+
+		if ResourceLoader.exists(
+			full_path
+		):
+
+			return full_path
+
+
+		return ""
+
+
+	# --------------------------------------------------------
+	# SHORT NAME
+	# --------------------------------------------------------
+
+	# Example:
+	#
+	# [scene=Outside]
+
+	var relative_path: String = (
+		value
+	)
+
+
+	if not relative_path.ends_with(
+		".tscn"
+	):
+
+		relative_path += ".tscn"
+
+
+	# --------------------------------------------------------
+	# PROJECT ROOT
+	# --------------------------------------------------------
+
+	var root_path: String = (
+		"res://"
+		+ relative_path
+	)
+
+
+	if ResourceLoader.exists(
+		root_path
+	):
+
+		return root_path
+
+
+	# --------------------------------------------------------
+	# SCENES FOLDER
+	# --------------------------------------------------------
+
+	var scenes_path: String = (
+		"res://Scenes/"
+		+ relative_path
+	)
+
+
+	if ResourceLoader.exists(
+		scenes_path
+	):
+
+		return scenes_path
+
+
+	return ""
+
+
+# ============================================================
+# SAFE SCENE CHANGE
+# ============================================================
+
+func _change_scene_safe(
+	path: String
+) -> void:
+
+	if path.is_empty():
+
+		transition_in_progress = false
+
+		return
+
+
+	if not ResourceLoader.exists(
+		path
+	):
+
+		push_warning(
+			"Cannot change scene. Missing scene: "
+			+ path
+		)
+
+
+		transition_in_progress = false
+
+		return
+
+
+	print(
+		"Changing scene to: ",
+		path
+	)
+
+
+	is_waiting_for_input = false
+
+
+	_restore_typing_speed()
+
+
+	balloon.hide()
+
+	dialogue_label.hide()
+
+	character_label.hide()
+
+	portrait_sprite.hide()
+
+	responses_menu.hide()
+
+	progress.hide()
+
+	screen_sprite.hide()
+
+	paint_node.hide()
+
+
+	# Make sure the incoming Character isn't locked because
+	# Dialogue Manager hasn't finished cleaning up yet.
+	GameState.in_dialogue = false
+
+
+	await get_tree().process_frame
+
+
+	if not is_inside_tree():
+		return
+
+
+	var error: Error = (
+		get_tree().change_scene_to_file(
+			path
+		)
+	)
+
+
+	if error != OK:
+
+		push_error(
+			"Failed to change scene to: "
+			+ path
+			+ " Error: "
+			+ str(error)
+		)
+
+
+		transition_in_progress = false

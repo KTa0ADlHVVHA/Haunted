@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://d7ierqfwnwpw"
+path="res://.godot/imported/white_stuff.dialogue-3e2f4bda70db463c8bc79f859e42ad07.tres"
+
+[deps]
+
+source_file="res://white_stuff.dialogue"
+dest_files=["res://.godot/imported/white_stuff.dialogue-3e2f4bda70db463c8bc79f859e42ad07.tres"]
+
+[params]
+
+defaults=true

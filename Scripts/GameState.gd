@@ -1,3 +1,4 @@
+
 extends Node
 
 
@@ -19,18 +20,65 @@ var in_game: bool = true
 # ============================================================
 # STORY / INVENTORY FLAGS
 # ============================================================
+
 var has_flower: bool = false
 var flower_taken: bool = false
-# Player currently possesses the house key.
+
 var has_house_key: bool = false
-
-
-# The key has already been removed from the fountain.
-#
-# This is separate from has_house_key because later we may
-# want situations where an item is removed from somewhere
-# without necessarily still being in Plum's possession.
 var fountain_key_taken: bool = false
+
+
+# ============================================================
+# BROKEN CHAIR
+# ============================================================
+
+var chair_broken: bool = false
+
+var has_broken_chair_part: bool = false
+
+var has_fixed_chair_part: bool = false
+
+
+# ============================================================
+# FAKE DOOR / CODE
+# ============================================================
+
+var door_fallen: bool = false
+
+var has_door_code: bool = false
+
+const SAFE_CODE_ITEM: String = "Code (247)"
+
+
+# ============================================================
+# INVENTORY
+# ============================================================
+
+var inventory: Array[String] = []
+
+
+func add_item(item_name: String) -> void:
+	if not inventory.has(item_name):
+		inventory.append(item_name)
+
+	if item_name == SAFE_CODE_ITEM:
+		has_door_code = true
+
+
+func has_item(item_name: String) -> bool:
+	return inventory.has(item_name)
+
+
+func remove_item(item_name: String) -> void:
+	inventory.erase(item_name)
+
+	if item_name == SAFE_CODE_ITEM:
+		has_door_code = false
+
+
+func collect_safe_code() -> void:
+	if door_fallen:
+		add_item(SAFE_CODE_ITEM)
 
 
 # ============================================================
@@ -44,7 +92,6 @@ func _ready() -> void:
 		DialogueManager.dialogue_started.connect(
 			_on_dialogue_started
 		)
-
 
 	if not DialogueManager.dialogue_ended.is_connected(
 		_on_dialogue_ended
@@ -70,14 +117,12 @@ func _process(delta: float) -> void:
 func _on_dialogue_started(
 	_resource = null
 ) -> void:
-
 	in_dialogue = true
 
 
 func _on_dialogue_ended(
 	_resource = null
 ) -> void:
-
 	in_dialogue = false
 
 
@@ -107,6 +152,39 @@ func remove_house_key() -> void:
 
 
 # ============================================================
+# BROKEN CHAIR
+# ============================================================
+
+func collect_broken_chair_part() -> void:
+	chair_broken = true
+	has_broken_chair_part = true
+
+
+func remove_broken_chair_part() -> void:
+	has_broken_chair_part = false
+
+
+func fix_broken_chair_part() -> void:
+	if has_broken_chair_part:
+		has_broken_chair_part = false
+		has_fixed_chair_part = true
+
+
+func remove_fixed_chair_part() -> void:
+	has_fixed_chair_part = false
+
+
+# ============================================================
+# FAKE DOOR
+# ============================================================
+
+func use_fixed_chair_part_for_door() -> void:
+	if has_fixed_chair_part:
+		has_fixed_chair_part = false
+		door_fallen = true
+
+
+# ============================================================
 # NEW GAME / RESET
 # ============================================================
 
@@ -115,3 +193,12 @@ func reset_story_state() -> void:
 
 	has_house_key = false
 	fountain_key_taken = false
+
+	chair_broken = false
+	has_broken_chair_part = false
+	has_fixed_chair_part = false
+
+	door_fallen = false
+	has_door_code = false
+
+	inventory.clear()

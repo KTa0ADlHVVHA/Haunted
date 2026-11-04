@@ -7,14 +7,14 @@ match GameState.fountain_key_taken
 
 		- Take the key
 			$> GameState.give_house_key()
-			You got the house key.
+			The house key was added to your items.
 			=> END
 
 		- Make Vincent do it
 			VINCENT: Are you serious? (surprised)
 			VINCENT: Fine... (angry)
 			$> GameState.give_house_key()
-			Vincent got the house key.
+			Vincent added the house key to your items.
 			=> END
 
 	else

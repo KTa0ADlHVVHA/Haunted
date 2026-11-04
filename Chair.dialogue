@@ -1,0 +1,26 @@
+
+~ start
+
+match GameState.chair_broken
+	when false
+		VINCENT: This stair looks almost as unstable as you. (smug)
+		PLUM: Huh? (serious)
+		VINCENT: Adult joke. Don't worry about it.
+		PLUM: Pervert! (angry)
+
+		- Climb on it
+			Before you can even step on it, the chair collapses.
+			PLUM: Sorry...(sad)
+			$> GameState.collect_broken_chair_part()
+			$> hide_node("Sprite2D")
+			$> show_node("Sprite2D2")
+			The broken chair part was added to your items.
+			=> END
+
+		- Leave it alone
+			You decide not to bother the chair.
+			=> END
+
+	else
+		PLUM: Poor chair.(sad)
+		=> END

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cam33ia8xp2ok"
+path="res://.godot/imported/broken door.dialogue-95713fa5400516305571cfae84f649d8.tres"
+
+[deps]
+
+source_file="res://broken door.dialogue"
+dest_files=["res://.godot/imported/broken door.dialogue-95713fa5400516305571cfae84f649d8.tres"]
+
+[params]
+
+defaults=true

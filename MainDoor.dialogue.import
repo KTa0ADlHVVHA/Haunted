@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c54kkcig8psd"
+path="res://.godot/imported/MainDoor.dialogue-1f881e827231f6ab4eb40362ab40dc4e.tres"
+
+[deps]
+
+source_file="res://MainDoor.dialogue"
+dest_files=["res://.godot/imported/MainDoor.dialogue-1f881e827231f6ab4eb40362ab40dc4e.tres"]
+
+[params]
+
+defaults=true
