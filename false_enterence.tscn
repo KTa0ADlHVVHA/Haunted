@@ -19,12 +19,15 @@
 [ext_resource type="Texture2D" uid="uid://bsg6agvyuy8el" path="res://Door broken.png" id="16_n2u1p"]
 [ext_resource type="Texture2D" uid="uid://dg1ma5odexltf" path="res://Hole(1).png" id="17_m3lg6"]
 [ext_resource type="Resource" uid="uid://c0o5oyhapcwb7" path="res://hole.dialogue" id="17_s147b"]
+[ext_resource type="Script" uid="uid://brqhqosflstfk" path="res://slow.gd" id="18_r3otx"]
 [ext_resource type="Texture2D" uid="uid://d4gxy5ggk2tnn" path="res://Scripts/Frame.png" id="18_s147b"]
 [ext_resource type="Resource" uid="uid://big6c5cjsw473" path="res://FRONTDOORTM.dialogue" id="18_vjgcc"]
 [ext_resource type="Texture2D" uid="uid://nnk3ayia3el1" path="res://Code.png" id="21_iwv7w"]
 [ext_resource type="Resource" uid="uid://gpqtuk0w43wj" path="res://Chair.dialogue" id="22_yq68y"]
 [ext_resource type="Texture2D" uid="uid://eeeush30877n" path="res://Scripts/Chair.png" id="23_3wnpn"]
 [ext_resource type="Texture2D" uid="uid://b42i2icid7rf3" path="res://Scripts/Broken .png" id="24_r3otx"]
+[ext_resource type="Resource" uid="uid://uyiiyglydak5" path="res://safe.dialogue" id="27_3p5qi"]
+[ext_resource type="Texture2D" uid="uid://cjq8qnupuxtqp" path="res://Scripts/Safe.png" id="27_q1wsu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgcc"]
 size = Vector2(16, 32)
@@ -134,6 +137,9 @@ size = Vector2(64, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q1wsu"]
 size = Vector2(16, 9.050003)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3p5qi"]
+size = Vector2(32, 14)
+
 [node name="False enterence" type="Node2D" unique_id=989828036]
 z_as_relative = false
 y_sort_enabled = true
@@ -183,10 +189,11 @@ friction = 1399.41
 y_sort_enabled = true
 
 [node name="Layer0" type="TileMapLayer" parent="Background stuff" unique_id=1108338311]
+z_index = -1
 y_sort_enabled = true
 texture_filter = 1
 use_parent_material = true
-tile_map_data = PackedByteArray("AAD3/wYABAAAAAAAAAD5/wcAAgAAAAAAAAD8/wgABAAAAAAAAAADAAcABAAAAAAAAAAEAAcABQAAAAAAAAABAAgABQAAAAAAAAAFAAYABAAAAAAAAAAGAAYABQAAAAAAAAD4/wcAAgAAAAAAAAD3/wcABAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAD3/wYABAAAAAAAAAD5/wcAAgAAAAAAAAD8/wgABAAAAAAAAAADAAcABAAAAAAAAAAEAAcABQAAAAAAAAABAAgABQAAAAAAAAAFAAYABAAAAAAAAAAGAAYABQAAAAAAAAD4/wcAAgAAAAAAAAD3/wcABAAAAAAAAAD///3/AgAAAAAAAAD+//3/AgAAAAAAAAA=")
 tile_set = SubResource("TileSet_8o6qi")
 
 [node name="Layer2" type="TileMapLayer" parent="Background stuff" unique_id=1651094587]
@@ -197,11 +204,11 @@ tile_map_data = PackedByteArray("AAACAP3/AQAAAAEAAAACAP7/AQAAAAIAAAADAP7/AQABAAI
 tile_set = SubResource("TileSet_t2jx1")
 
 [node name="Layer1" type="TileMapLayer" parent="Background stuff" unique_id=1743324589]
-z_index = -2
+z_index = -1
 y_sort_enabled = true
 texture_filter = 1
 use_parent_material = true
-tile_map_data = PackedByteArray("AAD9//7/AAAAAAEAAAD+//7/AAAAAAEAAAD///7/AAAAAAEAAAAAAP7/AAAAAAEAAAABAP7/AAAAAAEAAAD8//7/AAAAAAEAAAD8//3/AAAAAAAAAAD9//3/AAAAAAAAAAD+//3/AAAAAAAAAAD///3/AAAAAAAAAAAAAP3/AAAAAAAAAAABAP3/AAAAAAAAAAD4////AAAAAAAAAAD4/wAAAAAAAAEAAAD5////AAAAAAAAAAD5/wAAAAAAAAEAAAD6////AAAAAAAAAAD6/wAAAAAAAAEAAAD7////AAAAAAAAAAD7/wAAAAAAAAEAAAACAP//AAAAAAAAAAACAAAAAAAAAAEAAAADAP//AAAAAAAAAAADAAAAAAAAAAEAAAAEAP//AAAAAAAAAAAEAAAAAAAAAAEAAAAFAP//AAAAAAAAAAAFAAAAAAAAAAEAAAD4/wYAAgAAAAAAAAD5/wYAAgAAAAAAAAD6/wcAAAAAAAAAAAD7/wcAAAAAAAAAAAD8/wcAAAAAAAAAAAD9/wgAAAAAAAAAAAD+/wgAAAAAAAAAAAD//wgAAAAAAAAAAAAAAAgAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAD5/wcAAgAAAAAAAAD4/wcAAgAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAD9//7/AAAAAAEAAAD+//7/AAAAAAEAAAAAAP7/AAAAAAEAAAABAP7/AAAAAAEAAAD8//7/AAAAAAEAAAD8//3/AAAAAAAAAAD9//3/AAAAAAAAAAAAAP3/AAAAAAAAAAABAP3/AAAAAAAAAAD4////AAAAAAAAAAD4/wAAAAAAAAEAAAD5////AAAAAAAAAAD5/wAAAAAAAAEAAAD6////AAAAAAAAAAD6/wAAAAAAAAEAAAD7////AAAAAAAAAAD7/wAAAAAAAAEAAAACAP//AAAAAAAAAAACAAAAAAAAAAEAAAADAP//AAAAAAAAAAADAAAAAAAAAAEAAAAEAP//AAAAAAAAAAAEAAAAAAAAAAEAAAAFAP//AAAAAAAAAAAFAAAAAAAAAAEAAAD4/wYAAgAAAAAAAAD5/wYAAgAAAAAAAAD6/wcAAAAAAAAAAAD7/wcAAAAAAAAAAAD8/wcAAAAAAAAAAAD9/wgAAAAAAAAAAAD+/wgAAAAAAAAAAAD//wgAAAAAAAAAAAAAAAgAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAD5/wcAAAAAAAAAAAD4/wcAAAAAAAAAAAD///7/AAAAAAEAAAA=")
 tile_set = SubResource("TileSet_wrxgv")
 
 [node name="Background" type="Sprite2D" parent="Background stuff" unique_id=157379599]
@@ -211,7 +218,7 @@ texture = ExtResource("10_m3lg6")
 metadata/_edit_lock_ = true
 
 [node name="Layer3" type="TileMapLayer" parent="Background stuff" unique_id=2018207286]
-z_index = -1
+z_index = -2
 y_sort_enabled = true
 texture_filter = 1
 use_parent_material = true
@@ -258,6 +265,17 @@ shape = SubResource("RectangleShape2D_u6rk5")
 one_way_collision = true
 one_way_collision_margin = 0.0
 
+[node name="Area2D" type="Area2D" parent="Web" unique_id=1022023201]
+script = ExtResource("18_r3otx")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Web/Area2D" unique_id=2047899770]
+light_mask = 512
+visibility_layer = 512
+position = Vector2(1.5, 21.604996)
+shape = SubResource("RectangleShape2D_u6rk5")
+one_way_collision = true
+one_way_collision_margin = 0.0
+
 [node name="Hole" type="StaticBody2D" parent="." unique_id=608557324]
 z_index = 1
 z_as_relative = false
@@ -287,7 +305,7 @@ texture = ExtResource("18_s147b")
 [node name="Code" type="StaticBody2D" parent="." unique_id=340904749]
 z_index = -1
 z_as_relative = false
-position = Vector2(-39.625, 105.795)
+position = Vector2(-39.595, 105.34)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("10_qat1i")
@@ -328,3 +346,21 @@ texture = ExtResource("24_r3otx")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chair" unique_id=2733063]
 position = Vector2(-5, 5.5250015)
 shape = SubResource("RectangleShape2D_q1wsu")
+
+[node name="Safe" type="StaticBody2D" parent="." unique_id=329032333]
+z_as_relative = false
+position = Vector2(-39.475, -4.475)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("10_qat1i")
+dialogue_resource = ExtResource("27_3p5qi")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Safe" unique_id=605733054]
+texture_filter = 1
+position = Vector2(-4.709999, 1.7299957)
+texture = ExtResource("27_q1wsu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Safe" unique_id=270624261]
+position = Vector2(-4.5600014, 10.249998)
+shape = SubResource("RectangleShape2D_3p5qi")

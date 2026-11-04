@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://uyiiyglydak5"
+path="res://.godot/imported/safe.dialogue-739e8ebc3f7cbef41f5b930863ef178d.tres"
+
+[deps]
+
+source_file="res://safe.dialogue"
+dest_files=["res://.godot/imported/safe.dialogue-739e8ebc3f7cbef41f5b930863ef178d.tres"]
+
+[params]
+
+defaults=true

@@ -51,6 +51,23 @@ const SAFE_CODE_ITEM: String = "Code (247)"
 
 
 # ============================================================
+# SAFE
+# ============================================================
+
+var safe_opened: bool = false
+
+
+func can_open_safe() -> bool:
+	return has_item(SAFE_CODE_ITEM) and not safe_opened
+
+
+func open_safe() -> void:
+	if can_open_safe():
+		safe_opened = true
+		add_item("Stool")
+
+
+# ============================================================
 # INVENTORY
 # ============================================================
 
@@ -200,5 +217,7 @@ func reset_story_state() -> void:
 
 	door_fallen = false
 	has_door_code = false
+
+	safe_opened = false
 
 	inventory.clear()

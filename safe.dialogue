@@ -1,0 +1,38 @@
+
+~ start
+
+if GameState.safe_opened
+	PLUM: The safe is empty now... (sad)
+	PLUM: What if we just robbed an old woman? (worried)
+	VINCENT: We'll buy her another chair.
+	=> END
+
+else
+	PLUM: It's a safe! (suprised)
+	VINCENT: Yes. We all have eyes.
+	PLUM: What if there's an evil genuis who keeps kids in it. (scared)
+	VINCENT: Nope. (serious)
+	PLUM: And you know that because? (serious)
+	VINCENT: It's my job Plum. I know things. (angry)
+	VINCENT: And you're 10. You don't know things. (smug)
+
+	- Enter '274' [if GameState.can_open_safe()]
+		PLUM: We finally get to see what's in it. (happy)
+		PLUM: What? A stool? (serious)
+		$> GameState.open_safe()
+		Stool was added to your items.
+		=> END
+
+	- Enter a random code
+		PLUM: What if the code is '111'? (silly)
+		VINCENT: Very original. (smug)
+		PLUM: It's not just 1's... it's like 5 in binary. (worried)
+		You enter the code '111'.
+		For a moment nothing happens.
+		And then... [screen=P_Dead] [scene=game_over]
+		=> END
+
+	- Do Nothing
+		VINCENT: Were you about to enter something. (angry)
+		PLUM: Noo... (smug)
+		=> END
