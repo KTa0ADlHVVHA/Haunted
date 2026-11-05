@@ -1,0 +1,17 @@
+
+~ start
+
+match interaction_count
+	when 1
+		PLUM: There's a man on the poster... (suprised)
+		VINCENT: Some news about some man wanted for kidnappings. (serious)
+		PLUM: Is that the same man you're after? (thinking)
+		VINCENT: I don't think this is an appropiate conversation for you. (angry)
+		=> END
+
+	else
+		You look at the newspaper.
+		There's a girl in it.
+		You wonder if her name is rosie...
+		VINCENT: Stop messing about.
+		=> END

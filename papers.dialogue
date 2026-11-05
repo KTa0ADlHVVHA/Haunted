@@ -1,0 +1,15 @@
+
+~ start
+
+match interaction_count
+	when 1
+		PLUM: I can't read. (sad)
+		VINCENT: There's no reason for you to read.
+		PLUM: It'll be fun! (silly)
+		VINCENT: What you're steeping in are the ramblings of some mad man. (happy)
+		=> END
+
+	else
+		PLUM: Can I at least have a hint. (worried)
+		VINCENT: No. (angry)
+		=> END

@@ -1,6 +1,25 @@
+
 ~ start
-PLUM: Who hangs up an empty picture (thinking)
-PLUM: Maybe there's something behind the frame. (thinking)
-VINCENT: What a stupid idea. (angry)
-PLUM: Mean! (sad)
-=> END
+
+if GameState.has_item("Stool")
+	PLUM: Okay moment of truth. (worried)
+	PLUM: There's a hole behind the painting. (suprised)
+	VINCENT: What? (suprised)
+	VINCENT: Can you get in? 
+	PLUM: It's pretty big, I think we both can. 
+	VINCENT: I'll go first. Stay behind me okay? (serious)
+	PLUM: Can I get a "I was right?" (silly)
+	VINCENT: You got lucky.
+	A few minutes pass.
+	PLUM: This feels like it'd never end (tired)
+	PLUM: Oof. (suprised)
+	VINCENT: Are you okay? (worried)
+	PLUM: Yup!  
+	=> END
+
+else
+	PLUM: Who hangs up an empty picture (thinking)
+	PLUM: Maybe there's something behind the frame. (thinking)
+	VINCENT: What a stupid idea. (angry)
+	PLUM: Mean! (sad)
+	=> END

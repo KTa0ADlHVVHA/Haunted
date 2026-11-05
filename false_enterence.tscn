@@ -16,6 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://bu2bnd57hx2j3" path="res://words.png" id="12_u6rk5"]
 [ext_resource type="Texture2D" uid="uid://cwa4s6iv3pexp" path="res://Web.png" id="13_4rbut"]
 [ext_resource type="Resource" uid="uid://dissf0s4i846" path="res://Web.dialogue" id="13_u6rk5"]
+[ext_resource type="Texture2D" uid="uid://dlc5opj15vu6f" path="res://Rug.png" id="14_024bx"]
+[ext_resource type="Texture2D" uid="uid://cvm5rv3ook8bv" path="res://Holes.png" id="15_3bktk"]
 [ext_resource type="Texture2D" uid="uid://bsg6agvyuy8el" path="res://Door broken.png" id="16_n2u1p"]
 [ext_resource type="Texture2D" uid="uid://dg1ma5odexltf" path="res://Hole(1).png" id="17_m3lg6"]
 [ext_resource type="Resource" uid="uid://c0o5oyhapcwb7" path="res://hole.dialogue" id="17_s147b"]
@@ -28,6 +30,14 @@
 [ext_resource type="Texture2D" uid="uid://b42i2icid7rf3" path="res://Scripts/Broken .png" id="24_r3otx"]
 [ext_resource type="Resource" uid="uid://uyiiyglydak5" path="res://safe.dialogue" id="27_3p5qi"]
 [ext_resource type="Texture2D" uid="uid://cjq8qnupuxtqp" path="res://Scripts/Safe.png" id="27_q1wsu"]
+[ext_resource type="Resource" uid="uid://cnrhgrx038u8o" path="res://papers.dialogue" id="30_rdv0a"]
+[ext_resource type="Texture2D" uid="uid://736t8k2s4j4d" path="res://Paper.png" id="30_yeh8y"]
+[ext_resource type="Texture2D" uid="uid://iv67gix51xij" path="res://Newspaper.png" id="32_5u0ho"]
+[ext_resource type="Resource" uid="uid://de4g0wxhsv0qo" path="res://newspaper.dialogue" id="32_k50qq"]
+[ext_resource type="Resource" uid="uid://cmwy1layi17pq" path="res://box.dialogue" id="34_pbswi"]
+[ext_resource type="Texture2D" uid="uid://bhtxyix250b2v" path="res://Box 2.png" id="34_un6cr"]
+[ext_resource type="Resource" uid="uid://ipyd0lv2fpj8" path="res://items.dialogue" id="36_nvuxu"]
+[ext_resource type="Script" uid="uid://bibqn0xcyypta" path="res://holeinteraction.gd" id="38_djyyd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgcc"]
 size = Vector2(16, 32)
@@ -140,6 +150,18 @@ size = Vector2(16, 9.050003)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3p5qi"]
 size = Vector2(32, 14)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yeh8y"]
+size = Vector2(32, 33.000004)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k50qq"]
+size = Vector2(27, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pbswi"]
+size = Vector2(16, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_djyyd"]
+size = Vector2(48.66883, 52.813854)
+
 [node name="False enterence" type="Node2D" unique_id=989828036]
 z_as_relative = false
 y_sort_enabled = true
@@ -177,7 +199,7 @@ one_way_collision_margin = 0.0
 visible = false
 z_as_relative = false
 texture_filter = 1
-position = Vector2(-11.325, 30.99)
+position = Vector2(-3.69, 31.935)
 texture = ExtResource("4_3wnpn")
 offset = Vector2(0, -8.24)
 
@@ -222,8 +244,13 @@ z_index = -2
 y_sort_enabled = true
 texture_filter = 1
 use_parent_material = true
-tile_map_data = PackedByteArray("AAD8////AwABAAAAAAD9////AwADAAAAAAD+////AgAAAAAAAAD/////AgAAAAAAAAD8/wAAAwACAAAAAAD9/wAAAwAAAAAAAAD+/wAAAgAAAAAAAAD//wAAAgAAAAAAAAD8/wEAAgAAAAAAAAD9/wEAAgAAAAAAAAD+/wEAAgAAAAAAAAD//wEAAgAAAAAAAAD8/wIAAgAAAAAAAAD9/wIAAgAAAAAAAAD+/wIAAgAAAAAAAAD//wIAAgAAAAAAAAD8/wMAAgAAAAAAAAD9/wMAAgAAAAAAAAD+/wMAAgAAAAAAAAD//wMAAgAAAAAAAAD8/wQAAgAAAAAAAAD9/wQAAgAAAAAAAAD+/wQAAgAAAAAAAAD//wQAAgAAAAAAAAD8/wUAAgAAAAAAAAD9/wUAAgAAAAAAAAD+/wUAAgAAAAAAAAD//wUAAgAAAAAAAAD8/wYAAgAAAAAAAAD9/wYAAgAAAAAAAAD+/wYAAwABAAAAAAD//wYAAwAAAAAAAAAAAP//AgAAAAAAAAABAP//AgAAAAAAAAAAAAAAAgAAAAAAAAABAAAAAgAAAAAAAAAAAAEAAgAAAAAAAAABAAEAAgAAAAAAAAAAAAIAAgAAAAAAAAABAAIAAgAAAAAAAAAAAAMAAgAAAAAAAAABAAMAAgAAAAAAAAAAAAQAAgAAAAAAAAABAAQAAgAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAAAAAYAAgAAAAAAAAABAAYAAgAAAAAAAAD4/wEAAgAAAAAAAAD4/wIAAgAAAAAAAAD4/wMAAgAAAAAAAAD4/wQAAgAAAAAAAAD4/wUAAgAAAAAAAAD5/wEAAgAAAAAAAAD7/wEAAgAAAAAAAAD5/wIAAgAAAAAAAAD6/wIAAgAAAAAAAAD7/wIAAgAAAAAAAAD5/wMAAgAAAAAAAAD6/wMAAgAAAAAAAAD7/wMAAgAAAAAAAAD5/wQAAgAAAAAAAAD6/wQAAgAAAAAAAAD7/wQAAgAAAAAAAAD5/wUAAgAAAAAAAAD6/wUAAgAAAAAAAAD7/wUAAgAAAAAAAAD6/wYAAgAAAAAAAAD7/wYAAgAAAAAAAAACAAYAAgAAAAAAAAADAAYAAgAAAAAAAAD9/wcAAgAAAAAAAAD+/wcAAwACAAAAAAD//wcAAwAAAAAAAAAAAAcAAgAAAAAAAAACAAEAAgAAAAAAAAADAAEAAgAAAAAAAAAEAAEAAgAAAAAAAAAFAAEAAgAAAAAAAAACAAIAAgAAAAAAAAADAAIAAgAAAAAAAAAEAAIAAgAAAAAAAAAFAAIAAgAAAAAAAAACAAMAAgAAAAAAAAADAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAAFAAMAAgAAAAAAAAACAAQAAgAAAAAAAAADAAQAAgAAAAAAAAAEAAQAAgAAAAAAAAAFAAQAAgAAAAAAAAACAAUAAgAAAAAAAAADAAUAAgAAAAAAAAAEAAUAAgAAAAAAAAAFAAUAAgAAAAAAAAD4/wAAAgAAAAAAAAD5/wAAAgAAAAAAAAD6/wAAAgAAAAAAAAD7/wAAAgAAAAAAAAD8/wcAAgAAAAAAAAD6/wEAAgAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAD8////AgAAAAAAAAD9////AwADAAAAAAD+////AgAAAAAAAAD/////AgAAAAAAAAD8/wAAAgAAAAAAAAD9/wAAAgAAAAAAAAD+/wAAAgAAAAAAAAD//wAAAgAAAAAAAAD8/wEAAgAAAAAAAAD9/wEAAgAAAAAAAAD+/wEAAgAAAAAAAAD//wEAAgAAAAAAAAD8/wIAAgAAAAAAAAD9/wIAAgAAAAAAAAD+/wIAAgAAAAAAAAD//wIAAgAAAAAAAAD8/wMAAgAAAAAAAAD9/wMAAgAAAAAAAAD+/wMAAgAAAAAAAAD//wMAAgAAAAAAAAD8/wQAAgAAAAAAAAD9/wQAAgAAAAAAAAD+/wQAAgAAAAAAAAD//wQAAgAAAAAAAAD8/wUAAgAAAAAAAAD9/wUAAgAAAAAAAAD+/wUAAgAAAAAAAAD//wUAAgAAAAAAAAD8/wYAAgAAAAAAAAD9/wYAAgAAAAAAAAD+/wYAAgAAAAAAAAD//wYAAgAAAAAAAAAAAP//AgAAAAAAAAABAP//AgAAAAAAAAAAAAAAAgAAAAAAAAABAAAAAgAAAAAAAAAAAAEAAgAAAAAAAAABAAEAAgAAAAAAAAAAAAIAAgAAAAAAAAABAAIAAgAAAAAAAAAAAAMAAgAAAAAAAAABAAMAAgAAAAAAAAAAAAQAAgAAAAAAAAABAAQAAgAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAAAAAYAAgAAAAAAAAABAAYAAgAAAAAAAAD4/wEAAgAAAAAAAAD4/wIAAgAAAAAAAAD4/wMAAgAAAAAAAAD4/wQAAgAAAAAAAAD4/wUAAgAAAAAAAAD5/wEAAgAAAAAAAAD7/wEAAgAAAAAAAAD5/wIAAgAAAAAAAAD6/wIAAgAAAAAAAAD7/wIAAgAAAAAAAAD5/wMAAgAAAAAAAAD6/wMAAgAAAAAAAAD7/wMAAgAAAAAAAAD5/wQAAgAAAAAAAAD6/wQAAgAAAAAAAAD7/wQAAgAAAAAAAAD5/wUAAgAAAAAAAAD6/wUAAgAAAAAAAAD7/wUAAgAAAAAAAAD6/wYAAgAAAAAAAAD7/wYAAgAAAAAAAAACAAYAAgAAAAAAAAADAAYAAgAAAAAAAAD9/wcAAgAAAAAAAAD+/wcAAgAAAAAAAAD//wcAAgAAAAAAAAAAAAcAAgAAAAAAAAACAAEAAgAAAAAAAAADAAEAAgAAAAAAAAAEAAEAAgAAAAAAAAAFAAEAAgAAAAAAAAACAAIAAgAAAAAAAAADAAIAAgAAAAAAAAAEAAIAAgAAAAAAAAAFAAIAAgAAAAAAAAACAAMAAgAAAAAAAAADAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAAFAAMAAgAAAAAAAAACAAQAAgAAAAAAAAADAAQAAgAAAAAAAAAEAAQAAgAAAAAAAAAFAAQAAgAAAAAAAAACAAUAAgAAAAAAAAADAAUAAgAAAAAAAAAEAAUAAgAAAAAAAAAFAAUAAgAAAAAAAAD4/wAAAgAAAAAAAAD5/wAAAgAAAAAAAAD6/wAAAgAAAAAAAAD7/wAAAgAAAAAAAAD8/wcAAgAAAAAAAAD6/wEAAgAAAAAAAAD+/wgAAgAAAAAAAAD9/wgAAgAAAAAAAAA=")
 tile_set = SubResource("TileSet_wrxgv")
+
+[node name="Rug" type="Sprite2D" parent="Background stuff" unique_id=1098894833]
+z_index = -1
+position = Vector2(-13.625, 68.795)
+texture = ExtResource("14_024bx")
 
 [node name="words" type="StaticBody2D" parent="." unique_id=2048197927]
 z_index = 2
@@ -244,6 +271,7 @@ position = Vector2(-1.0449982, 7.27125)
 shape = SubResource("RectangleShape2D_805dt")
 
 [node name="Web" type="StaticBody2D" parent="." unique_id=1774556519]
+z_index = -1
 z_as_relative = false
 position = Vector2(78.375, 57.19)
 collision_layer = 513
@@ -364,3 +392,88 @@ texture = ExtResource("27_q1wsu")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Safe" unique_id=270624261]
 position = Vector2(-4.5600014, 10.249998)
 shape = SubResource("RectangleShape2D_3p5qi")
+
+[node name="Papers" type="StaticBody2D" parent="." unique_id=531126908]
+z_index = -1
+z_as_relative = false
+position = Vector2(-53.705, 79.48)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("10_qat1i")
+dialogue_resource = ExtResource("30_rdv0a")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Papers" unique_id=1593087216]
+texture_filter = 1
+position = Vector2(-4.709999, 1.7299957)
+texture = ExtResource("30_yeh8y")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Papers" unique_id=2065591536]
+position = Vector2(-3.9199982, 2.8149948)
+shape = SubResource("RectangleShape2D_yeh8y")
+one_way_collision = true
+one_way_collision_margin = 0.0
+
+[node name="newspaper" type="StaticBody2D" parent="." unique_id=924713164]
+z_index = -1
+z_as_relative = false
+position = Vector2(33.065, 68.945)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("10_qat1i")
+dialogue_resource = ExtResource("32_k50qq")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="newspaper" unique_id=1861511516]
+texture_filter = 1
+position = Vector2(-4.709999, 1.7299957)
+texture = ExtResource("32_5u0ho")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="newspaper" unique_id=1302372168]
+position = Vector2(-3.1899986, -0.15000153)
+shape = SubResource("RectangleShape2D_k50qq")
+one_way_collision = true
+one_way_collision_margin = 0.0
+
+[node name="Box" type="StaticBody2D" parent="." unique_id=1919730145]
+z_as_relative = false
+position = Vector2(79.12, 28.75)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("10_qat1i")
+dialogue_resource = ExtResource("34_pbswi")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Box" unique_id=1167944185]
+texture_filter = 1
+position = Vector2(-4.709999, 1.7299957)
+texture = ExtResource("34_un6cr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Box" unique_id=360240955]
+position = Vector2(-4.7450027, 5.044998)
+shape = SubResource("RectangleShape2D_pbswi")
+
+[node name="Hole2" type="StaticBody2D" parent="." unique_id=1499552363]
+z_index = -1
+position = Vector2(-101.74, 70.62)
+script = ExtResource("10_qat1i")
+dialogue_resource = ExtResource("36_nvuxu")
+
+[node name="sprite" type="Sprite2D" parent="Hole2" unique_id=1475426559]
+texture = ExtResource("15_3bktk")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hole2" unique_id=1572942221]
+scale = Vector2(1.155, 1.155)
+polygon = PackedVector2Array(-17, -20, -6, -20, -2, -23, 9, -23, 11.35498, -13.701309, 23, -1, 23, 11, 18, 17, 20, 21, 18, 23, 13, 22, 11, 20, -1, 21, -18, 22, -19, 23, -23, 24, -25, 21, -25, -15)
+
+[node name="StaticBody2area2dD" type="Area2D" parent="Hole2" unique_id=1759499839]
+scale = Vector2(1.155, 1.155)
+script = ExtResource("38_djyyd")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hole2/StaticBody2area2dD" unique_id=386670563]
+light_mask = 512
+visibility_layer = 512
+position = Vector2(-0.85822296, -0.28139496)
+shape = SubResource("RectangleShape2D_djyyd")
+one_way_collision = true
+one_way_collision_margin = 0.0
