@@ -48,7 +48,7 @@ VINCENT: Otherwise I guess I don't get paid for this job. (thinking)
 		VINCENT: Are you sure about this? (thinking) [screen=P_Letsgo]
 		PLUM: The building’s going to get demolished soon!! 
 		VINCENT: Stay next to me at all times, okay. (serious)
-
+ 
 		- I will!!
 			VINCENT: Good. (happy) [screen=P_Will] [scene=Outside]
 

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c37cbnynhla7s"
+path="res://.godot/imported/Broken mirror.dialogue-351f1aa0bf59f79e1b4dbfe24e1f9b2c.tres"
+
+[deps]
+
+source_file="res://Broken mirror.dialogue"
+dest_files=["res://.godot/imported/Broken mirror.dialogue-351f1aa0bf59f79e1b4dbfe24e1f9b2c.tres"]
+
+[params]
+
+defaults=true

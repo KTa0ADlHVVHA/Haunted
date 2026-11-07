@@ -6,6 +6,7 @@ if GameState.has_house_key
 	- Open the door and enter
 		You unlock the door with the house key.
 		VINCENT: This is it. Stay right next to me. (serious)
+		[scene=false_enterence]
 		=> END
 
 	- Explore some more

@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://b4wpnw8p54bn0"]
 
+[ext_resource type="Script" uid="uid://cjw22wjkmgtqw" path="res://outside.gd" id="1_v2hld"]
 [ext_resource type="PackedScene" uid="uid://w3vshkkefhkp" path="res://Scenes/plum.tscn" id="2_8md64"]
 [ext_resource type="Resource" uid="uid://cam33ia8xp2ok" path="res://broken door.dialogue" id="2_t8gos"]
 [ext_resource type="Texture2D" uid="uid://mbq31ooldmf0" path="res://Pixel art/Background/Wall.png" id="3_qat1i"]
@@ -38,6 +39,9 @@
 [ext_resource type="Texture2D" uid="uid://bhtxyix250b2v" path="res://Box 2.png" id="34_un6cr"]
 [ext_resource type="Resource" uid="uid://ipyd0lv2fpj8" path="res://items.dialogue" id="36_nvuxu"]
 [ext_resource type="Script" uid="uid://bibqn0xcyypta" path="res://holeinteraction.gd" id="38_djyyd"]
+[ext_resource type="Script" uid="uid://oxhjoq368hhf" path="res://Cutscene.gd" id="40_8wc7a"]
+[ext_resource type="Script" uid="uid://2rbthu8vx5wj" path="res://Leaving area.gd" id="41_rbstw"]
+[ext_resource type="Resource" uid="uid://d3gpr2588ro1p" path="res://falseinter.dialogue" id="42_8wc7a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgcc"]
 size = Vector2(16, 32)
@@ -162,10 +166,14 @@ size = Vector2(16, 10)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_djyyd"]
 size = Vector2(48.66883, 52.813854)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cuk6n"]
+size = Vector2(122, 45.5)
+
 [node name="False enterence" type="Node2D" unique_id=989828036]
 z_as_relative = false
 y_sort_enabled = true
 position = Vector2(-6.375, 32.205)
+script = ExtResource("1_v2hld")
 metadata/_edit_vertical_guides_ = [28.0]
 
 [node name="Broken door" type="StaticBody2D" parent="." unique_id=1007607855]
@@ -204,7 +212,7 @@ texture = ExtResource("4_3wnpn")
 offset = Vector2(0, -8.24)
 
 [node name="Plum" parent="." unique_id=591823023 instance=ExtResource("2_8md64")]
-position = Vector2(-14.34, 115.675)
+position = Vector2(-14.34, 127.72)
 friction = 1399.41
 
 [node name="Background stuff" type="Node2D" parent="." unique_id=1236275948]
@@ -477,3 +485,20 @@ position = Vector2(-0.85822296, -0.28139496)
 shape = SubResource("RectangleShape2D_djyyd")
 one_way_collision = true
 one_way_collision_margin = 0.0
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1226841718]
+position = Vector2(-13.95, 109.865)
+
+[node name="Node" type="Node" parent="." unique_id=652043340 node_paths=PackedStringArray("player", "waypoints")]
+script = ExtResource("40_8wc7a")
+player = NodePath("../Plum")
+waypoints = [NodePath("../Marker2D")]
+
+[node name="cutscene" type="Area2D" parent="Node" unique_id=914787706]
+position = Vector2(-2.16, -163.035)
+script = ExtResource("41_rbstw")
+dialogue_resource = ExtResource("42_8wc7a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/cutscene" unique_id=745431061]
+position = Vector2(-13.84, 285.035)
+shape = SubResource("RectangleShape2D_cuk6n")

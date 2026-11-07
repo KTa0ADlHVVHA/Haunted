@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://d3gpr2588ro1p"
+path="res://.godot/imported/falseinter.dialogue-bc12bb53f4a5116ad980084d6a6d97c6.tres"
+
+[deps]
+
+source_file="res://falseinter.dialogue"
+dest_files=["res://.godot/imported/falseinter.dialogue-bc12bb53f4a5116ad980084d6a6d97c6.tres"]
+
+[params]
+
+defaults=true

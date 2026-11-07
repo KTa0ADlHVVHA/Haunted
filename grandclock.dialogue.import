@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cahv3adikex5e"
+path="res://.godot/imported/grandclock.dialogue-1f484137eece69c433a084092d6c5b29.tres"
+
+[deps]
+
+source_file="res://grandclock.dialogue"
+dest_files=["res://.godot/imported/grandclock.dialogue-1f484137eece69c433a084092d6c5b29.tres"]
+
+[params]
+
+defaults=true

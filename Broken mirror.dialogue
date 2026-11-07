@@ -1,0 +1,15 @@
+
+~ start
+
+match interaction_count
+	when 1
+		PLUM: I can't see my reflection... (scared)
+		PLUM: Wa! (suprised)
+		VINCENT: Sorry... It gave me a bad feeling... (sad)
+		$> hide_node("Sprite2D")
+		$> show_node("Sprite2D2")
+		=> END
+
+	else
+		You don't want to spend time looking at this broken mirror.
+		=> END

@@ -1,0 +1,16 @@
+
+~ start
+
+match interaction_count
+	when 1
+		PLUM: She's really beautiful. (suprised)
+		PLUM: It looks like she's praying. (Happy)
+		VINCENT: ...
+		PLUM: Religon isn't real. Women are dumb. (angry)
+		VINCENT: I don't like looking at her.
+		=> END
+
+	else
+		PLUM: She's really pretty...
+		PLUM: I hope she's okay. (worried)
+		=> END

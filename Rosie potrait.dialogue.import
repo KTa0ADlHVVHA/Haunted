@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://ctlheyjsafeim"
+path="res://.godot/imported/Rosie potrait.dialogue-c3de2609440f530cb7233023f3ea0b2e.tres"
+
+[deps]
+
+source_file="res://Rosie potrait.dialogue"
+dest_files=["res://.godot/imported/Rosie potrait.dialogue-c3de2609440f530cb7233023f3ea0b2e.tres"]
+
+[params]
+
+defaults=true

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://qemvjlxlsicm"
+path="res://.godot/imported/weird plant.dialogue-3e4b826abcda10cd8679faf1b469ab46.tres"
+
+[deps]
+
+source_file="res://weird plant.dialogue"
+dest_files=["res://.godot/imported/weird plant.dialogue-3e4b826abcda10cd8679faf1b469ab46.tres"]
+
+[params]
+
+defaults=true
