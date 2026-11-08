@@ -1,0 +1,25 @@
+
+~ start
+
+PLUM: I'm not going to take a bath. (serious)
+PLUM: I kind of smell though... (embarassed)
+
+- Take a bath
+	You undress and sit in the bathtub.
+	You turn on the water.
+	PLUM: Ow. (sad)
+	The water stings your skin.
+	You try to ignore it but the burning only gets worse.
+	PLUM: It's too hot... (worried)
+	You reach for the tap, trying to turn it off.
+	Your feet slip.
+	Before you can catch yourself, your head falls beneath the water.
+	You struggle to pull yourself back up.
+	You try to call for your dad but only bubbles escape our mouth.
+	Eventually you stop struggling. 
+	[scene=game_over]
+	=> END
+
+- Don't
+	PLUM: I'll take a bath when I'm back home.
+	=> END

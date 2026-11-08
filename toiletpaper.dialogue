@@ -1,0 +1,11 @@
+
+~ start
+
+PLUM: It looks tasty
+
+- Eat it
+	PLUM: Yum! (happy)
+	=> END
+
+- Don't eat it
+	=> END

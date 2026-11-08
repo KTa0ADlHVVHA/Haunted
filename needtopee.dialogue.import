@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b662j77olxaxe"
+path="res://.godot/imported/needtopee.dialogue-1a82c1bf52ce9e98d8fa88c9a0c73d1d.tres"
+
+[deps]
+
+source_file="res://needtopee.dialogue"
+dest_files=["res://.godot/imported/needtopee.dialogue-1a82c1bf52ce9e98d8fa88c9a0c73d1d.tres"]
+
+[params]
+
+defaults=true

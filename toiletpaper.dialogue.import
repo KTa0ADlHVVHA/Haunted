@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://8lx6a7vfsnj8"
+path="res://.godot/imported/toiletpaper.dialogue-3b5dfc93faabbcd6adadc78f80af8324.tres"
+
+[deps]
+
+source_file="res://toiletpaper.dialogue"
+dest_files=["res://.godot/imported/toiletpaper.dialogue-3b5dfc93faabbcd6adadc78f80af8324.tres"]
+
+[params]
+
+defaults=true

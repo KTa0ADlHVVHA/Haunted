@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cwmafsoljqfdj"
+path="res://.godot/imported/alter.dialogue-7655f97054dadd781fd14f8bacf5cc40.tres"
+
+[deps]
+
+source_file="res://alter.dialogue"
+dest_files=["res://.godot/imported/alter.dialogue-7655f97054dadd781fd14f8bacf5cc40.tres"]
+
+[params]
+
+defaults=true

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dch17bfrxq5o7"
+path="res://.godot/imported/bathtub.dialogue-1e5bd93abf9a5ebf3deecda7320ca7c8.tres"
+
+[deps]
+
+source_file="res://bathtub.dialogue"
+dest_files=["res://.godot/imported/bathtub.dialogue-1e5bd93abf9a5ebf3deecda7320ca7c8.tres"]
+
+[params]
+
+defaults=true

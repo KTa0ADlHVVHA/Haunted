@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://ckvtuq05cnal"
+path="res://.godot/imported/Meeting rosie.dialogue-aacd82dbe9a72df0a9b5755e09674167.tres"
+
+[deps]
+
+source_file="res://Meeting rosie.dialogue"
+dest_files=["res://.godot/imported/Meeting rosie.dialogue-aacd82dbe9a72df0a9b5755e09674167.tres"]
+
+[params]
+
+defaults=true

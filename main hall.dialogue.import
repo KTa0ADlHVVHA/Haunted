@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dldumop14rkgb"
+path="res://.godot/imported/main hall.dialogue-43a36710131dea495a3d0b27e48099a2.tres"
+
+[deps]
+
+source_file="res://main hall.dialogue"
+dest_files=["res://.godot/imported/main hall.dialogue-43a36710131dea495a3d0b27e48099a2.tres"]
+
+[params]
+
+defaults=true

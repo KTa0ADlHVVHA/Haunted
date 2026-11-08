@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://j38macnomnep"
+path="res://.godot/imported/Trash.dialogue-df0bd6dcaa6280befd2a6c6c576ef59c.tres"
+
+[deps]
+
+source_file="res://Trash.dialogue"
+dest_files=["res://.godot/imported/Trash.dialogue-df0bd6dcaa6280befd2a6c6c576ef59c.tres"]
+
+[params]
+
+defaults=true

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c267fasqbdqua"
+path="res://.godot/imported/curtian.dialogue-741113a5512a561c85c48051b4b6c1dd.tres"
+
+[deps]
+
+source_file="res://curtian.dialogue"
+dest_files=["res://.godot/imported/curtian.dialogue-741113a5512a561c85c48051b4b6c1dd.tres"]
+
+[params]
+
+defaults=true

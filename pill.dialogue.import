@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bdp42mjkt8hxc"
+path="res://.godot/imported/pill.dialogue-2ccc2f758fe91053ca1049f4f101fead.tres"
+
+[deps]
+
+source_file="res://pill.dialogue"
+dest_files=["res://.godot/imported/pill.dialogue-2ccc2f758fe91053ca1049f4f101fead.tres"]
+
+[params]
+
+defaults=true

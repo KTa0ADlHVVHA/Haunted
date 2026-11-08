@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://ccojqwpdfasqr"
+path="res://.godot/imported/candle.dialogue-3f5679a4ff7cc5bafc57663d42fe31b8.tres"
+
+[deps]
+
+source_file="res://candle.dialogue"
+dest_files=["res://.godot/imported/candle.dialogue-3f5679a4ff7cc5bafc57663d42fe31b8.tres"]
+
+[params]
+
+defaults=true

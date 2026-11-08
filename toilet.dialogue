@@ -1,0 +1,11 @@
+~ start
+PLUM: I already pee'd! (happy)
+Flush the toilet?
+- Yes
+	You flushed the toilet
+	=> END
+
+- No
+	=> END
+
+=> END

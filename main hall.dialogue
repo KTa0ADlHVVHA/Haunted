@@ -1,0 +1,12 @@
+
+~ start
+
+Return to the main hall?
+
+- Yes
+	[scene=main_hall]
+	=> END
+
+- No
+	PLUM: I'll explore some more! (silly)
+	=> END

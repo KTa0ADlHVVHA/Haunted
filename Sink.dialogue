@@ -1,0 +1,37 @@
+
+~ start
+
+PLUM: It's a bit high for me to reach (thinking)
+
+- Turn on the sink
+	Nothing came out
+	PLUM: All that struggle for nothing... (embarassed)
+	=> END
+
+- Open the drawer
+	match get_choice_count("alcohol_taken")
+		when 0
+			There's rubbing alcohol in it.
+
+			- Take it
+				PLUM: Dad will love this. (sad)
+				PLUM: I'll take for him.
+				$> GameState.add_item("Rubbing Alcohol")
+				$> increment_choice("alcohol_taken")
+				=> END
+
+			- Drink it
+				PLUM: My dad drinks this stuff all the time. (Silly)
+				PLUM: My mouth feels weird. (sad)
+				Your stomach starts hurting badly.
+				PLUM: Ow. (Sad)
+				PLUM: Dad said to always throw it up. (thinking)
+				You throw it up. It feels even worse.
+				You don't have any energy to move.
+				You take a nap.
+				[scene=game_over]
+				=> END
+
+		else
+			just a few webs...
+			=> END

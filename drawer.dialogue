@@ -1,0 +1,32 @@
+
+~ start
+
+match get_choice_count("bottom_drawer")
+	when 0
+		PLUM: I wonder what's inside. (thinking)
+
+	else
+		You are not opening it again...
+
+- Open the top drawer
+	PLUM: These clothes are all so neatly folded! (happy)
+	PLUM: They look my size.
+	=> END
+
+- Open the bottom drawer
+	match get_choice_count("bottom_drawer")
+		when 0
+			$> increment_choice("bottom_drawer")
+			PLUM: Dad...? (scared)
+			VINCENT: Hey! Don't. (worried)
+			PLUM: I didn't expect it to... (Crying)
+			VINCENT: It's not your fault... Be careful where you're looking okay. (worried)
+			PLUM: I want to leave... (crying)
+			VINCENT: We'll leave soon...
+			=> END
+
+		else
+			=> start
+
+- Leave it alone
+	=> END

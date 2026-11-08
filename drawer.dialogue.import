@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bhsoiq4nxbvmi"
+path="res://.godot/imported/drawer.dialogue-ef42a18bc13d981cdbb3aced3518a177.tres"
+
+[deps]
+
+source_file="res://drawer.dialogue"
+dest_files=["res://.godot/imported/drawer.dialogue-ef42a18bc13d981cdbb3aced3518a177.tres"]
+
+[params]
+
+defaults=true

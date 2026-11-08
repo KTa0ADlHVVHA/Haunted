@@ -14,7 +14,8 @@ if GameState.has_item("Stool")
 	PLUM: This feels like it'd never end (tired)
 	PLUM: Oof. (suprised)
 	VINCENT: Are you okay? (worried)
-	PLUM: Yup!  
+	PLUM: Yup!
+	[scene=main_hall]  
 	=> END
 
 else

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dgyar7rbluvsq"
+path="res://.godot/imported/other bathroom.dialogue-b793defd27109a6cfcae318b754f83e3.tres"
+
+[deps]
+
+source_file="res://other bathroom.dialogue"
+dest_files=["res://.godot/imported/other bathroom.dialogue-b793defd27109a6cfcae318b754f83e3.tres"]
+
+[params]
+
+defaults=true
