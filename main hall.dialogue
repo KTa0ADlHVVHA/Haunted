@@ -3,7 +3,7 @@
 
 Return to the main hall?
 
-- Yes
+- Yes 
 	[scene=main_hall]
 	=> END
 
