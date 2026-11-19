@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://cpmxjgy1bj5ek"]
 
 [ext_resource type="PackedScene" uid="uid://w3vshkkefhkp" path="res://Scenes/plum.tscn" id="1_aq3fq"]
+[ext_resource type="Script" uid="uid://b5ef8r2r17nj6" path="res://mainhall.gd" id="1_tpqrf"]
 [ext_resource type="Texture2D" uid="uid://mbq31ooldmf0" path="res://Pixel art/Background/Wall.png" id="2_tncnc"]
 [ext_resource type="Texture2D" uid="uid://g3abmv4acj3c" path="res://Pixel art/Background/wall side 2.png" id="3_msrrb"]
 [ext_resource type="Texture2D" uid="uid://bba4b12vjxywf" path="res://Pixel art/Background/wall side.png" id="4_k3imw"]
@@ -13,26 +14,27 @@
 [ext_resource type="Texture2D" uid="uid://cwpbfspc2yinh" path="res://Carpet.png" id="10_msrrb"]
 [ext_resource type="Texture2D" uid="uid://j26ibn7dwm25" path="res://Pixel art/Items/Door.png" id="11_msrrb"]
 [ext_resource type="Script" uid="uid://c8lic5qyea1uc" path="res://Scripts/Items.gd" id="12_1fnan"]
-[ext_resource type="Resource" uid="uid://cahv3adikex5e" path="res://grandclock.dialogue" id="12_awcaw"]
-[ext_resource type="Resource" uid="uid://ctlheyjsafeim" path="res://Rosie potrait.dialogue" id="13_43dhh"]
+[ext_resource type="Resource" uid="uid://cahv3adikex5e" path="res://grandclock.dialogue" id="13_tpqrf"]
 [ext_resource type="Texture2D" uid="uid://c883vuvjevte7" path="res://grandfather clock.png" id="14_awcaw"]
+[ext_resource type="Resource" uid="uid://ctlheyjsafeim" path="res://Rosie potrait.dialogue" id="15_csjv4"]
 [ext_resource type="Texture2D" uid="uid://o1e812hib6uw" path="res://Weird plant.png" id="17_b4hid"]
-[ext_resource type="Resource" uid="uid://qemvjlxlsicm" path="res://weird plant.dialogue" id="17_bfgux"]
-[ext_resource type="Resource" uid="uid://ccojqwpdfasqr" path="res://candle.dialogue" id="18_h7ml6"]
-[ext_resource type="Resource" uid="uid://c37cbnynhla7s" path="res://Broken mirror.dialogue" id="18_oq8mt"]
+[ext_resource type="Resource" uid="uid://qemvjlxlsicm" path="res://weird plant.dialogue" id="18_nrhgq"]
 [ext_resource type="Texture2D" uid="uid://dlsnbcd1b0nrf" path="res://Mirror long.png" id="19_r3lby"]
-[ext_resource type="Resource" uid="uid://bhsoiq4nxbvmi" path="res://drawer.dialogue" id="20_oq8mt"]
+[ext_resource type="Resource" uid="uid://c37cbnynhla7s" path="res://Broken mirror.dialogue" id="20_crtc7"]
 [ext_resource type="Texture2D" uid="uid://d1cwar8mhetpa" path="res://Broken mirrors.png" id="20_xeps0"]
 [ext_resource type="Texture2D" uid="uid://bxxinfo04o10y" path="res://Heater.png" id="21_r3lby"]
-[ext_resource type="Resource" uid="uid://b2i6d8t16b1xy" path="res://fireplace.dialogue" id="21_xeps0"]
+[ext_resource type="Resource" uid="uid://bhsoiq4nxbvmi" path="res://drawer.dialogue" id="23_5waf1"]
 [ext_resource type="Texture2D" uid="uid://c6dojqorsqrbp" path="res://Table candle.png" id="23_c4q3n"]
 [ext_resource type="Script" uid="uid://oxhjoq368hhf" path="res://Cutscene.gd" id="24_fiiq7"]
+[ext_resource type="Resource" uid="uid://b2i6d8t16b1xy" path="res://fireplace.dialogue" id="24_tbusg"]
 [ext_resource type="Script" uid="uid://2rbthu8vx5wj" path="res://Leaving area.gd" id="25_8ntd6"]
 [ext_resource type="Resource" uid="uid://b662j77olxaxe" path="res://needtopee.dialogue" id="26_8ntd6"]
+[ext_resource type="Resource" uid="uid://ccojqwpdfasqr" path="res://candle.dialogue" id="26_p8bo8"]
 [ext_resource type="Resource" uid="uid://gvsj6ihny88j" path="res://Doors.dialogue" id="30_3qw66"]
-[ext_resource type="Resource" uid="uid://dgyar7rbluvsq" path="res://other bathroom.dialogue" id="30_17anv"]
+[ext_resource type="Resource" uid="uid://dgyar7rbluvsq" path="res://other bathroom.dialogue" id="31_7vb5d"]
 [ext_resource type="Texture2D" uid="uid://nbouespjqeo0" path="res://Alter.png" id="31_okur4"]
 [ext_resource type="Texture2D" uid="uid://dkmbuicerml48" path="res://Carpet long.png" id="32_rh16e"]
+[ext_resource type="Resource" uid="uid://cwmafsoljqfdj" path="res://alter.dialogue" id="33_csjv4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wsse3"]
 texture = ExtResource("2_tncnc")
@@ -159,6 +161,7 @@ load_path = "res://.godot/imported/Carpet long.png-6ed04f8f9f36456f7a36431961692
 
 [node name="Main hall" type="Node2D" unique_id=777225086]
 y_sort_enabled = true
+script = ExtResource("1_tpqrf")
 
 [node name="Plum" parent="." unique_id=444547423 instance=ExtResource("1_aq3fq")]
 position = Vector2(-3.775, 165.465)
@@ -230,7 +233,7 @@ position = Vector2(-175.775, 155.705)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("12_1fnan")
-dialogue_resource = ExtResource("12_awcaw")
+dialogue_resource = ExtResource("13_tpqrf")
 
 [node name="Sprite2D" type="Sprite2D" parent="clock" unique_id=1715824677]
 texture_filter = 1
@@ -246,7 +249,7 @@ position = Vector2(-1.4, 137.96)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("12_1fnan")
-dialogue_resource = ExtResource("13_43dhh")
+dialogue_resource = ExtResource("15_csjv4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Portrait" unique_id=2053378434]
 position = Vector2(0.9, -2.4725037)
@@ -268,7 +271,7 @@ position = Vector2(88, 181)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("12_1fnan")
-dialogue_resource = ExtResource("17_bfgux")
+dialogue_resource = ExtResource("18_nrhgq")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Plant" unique_id=1765213578]
@@ -285,7 +288,7 @@ position = Vector2(213.915, 131.19)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("12_1fnan")
-dialogue_resource = ExtResource("18_oq8mt")
+dialogue_resource = ExtResource("20_crtc7")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Mirror" unique_id=1515016376]
@@ -308,7 +311,7 @@ position = Vector2(-57, 122.85)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("12_1fnan")
-dialogue_resource = ExtResource("20_oq8mt")
+dialogue_resource = ExtResource("23_5waf1")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Wardrobe" unique_id=369995999]
@@ -325,7 +328,7 @@ position = Vector2(39.975, 101.695)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("12_1fnan")
-dialogue_resource = ExtResource("21_xeps0")
+dialogue_resource = ExtResource("24_tbusg")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Heater" unique_id=991886132]
@@ -342,7 +345,7 @@ position = Vector2(157, 206)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("12_1fnan")
-dialogue_resource = ExtResource("18_h7ml6")
+dialogue_resource = ExtResource("26_p8bo8")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Table" unique_id=1969805647]
@@ -412,7 +415,7 @@ position = Vector2(129, 31)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("12_1fnan")
-dialogue_resource = ExtResource("30_17anv")
+dialogue_resource = ExtResource("31_7vb5d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bathroom" unique_id=319225185]
 position = Vector2(0, 25.94)
@@ -424,35 +427,29 @@ offset = Vector2(0, 16.88)
 hframes = 8
 frame = 2
 
-[node name="StaticBody2D" type="Area2D" parent="." unique_id=1051557715]
-visible = false
+[node name="Area2d" type="Area2D" parent="." unique_id=1051557715]
 position = Vector2(250, 190)
 script = ExtResource("25_8ntd6")
 dialogue_resource = ExtResource("30_3qw66")
 start_node = "start"
 trigger_once = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1106382008]
-visible = false
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2d" unique_id=1106382008]
 position = Vector2(0, -34)
 shape = SubResource("RectangleShape2D_g4v7s")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=939882903]
-visible = false
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2d" unique_id=939882903]
 position = Vector2(-494.455, -34)
 shape = SubResource("RectangleShape2D_g4v7s")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=1262361279]
-visible = false
 position = Vector2(250, 190)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=2039578316]
-visible = false
 position = Vector2(9, -33)
 shape = SubResource("RectangleShape2D_g4v7s")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D2" unique_id=8122561]
-visible = false
 position = Vector2(-506, -35)
 shape = SubResource("RectangleShape2D_g4v7s")
 
@@ -461,6 +458,7 @@ position = Vector2(359, -17)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("12_1fnan")
+dialogue_resource = ExtResource("33_csjv4")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Alter" unique_id=833750619]
@@ -473,9 +471,13 @@ position = Vector2(0.5, 7.904997)
 shape = SubResource("RectangleShape2D_rh16e")
 
 [node name="CarpetLong" type="Sprite2D" parent="." unique_id=55406985]
-position = Vector2(356.62, 64)
+z_index = -1
+position = Vector2(356.62, 128.735)
 texture = ExtResource("32_rh16e")
+offset = Vector2(0, -69.765)
 
 [node name="CarpetLong2" type="Sprite2D" parent="." unique_id=1775241012]
-position = Vector2(356.62, 191)
+z_index = -1
+position = Vector2(356.62, 250.205)
 texture = SubResource("CompressedTexture2D_17anv")
+offset = Vector2(0, -64.265)

@@ -3,7 +3,8 @@
 
 Return to the main hall?
 
-- Yes 
+- Yes
+	$> GameState.mark_event_seen("hall_blockers_removed")
 	[scene=main_hall]
 	=> END
 

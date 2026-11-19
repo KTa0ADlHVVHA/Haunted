@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://b66cc6yqosbwl"]
 
 [ext_resource type="PackedScene" uid="uid://w3vshkkefhkp" path="res://Scenes/plum.tscn" id="1_2ykvt"]
+[ext_resource type="Script" uid="uid://btknl0u5aic1n" path="res://bathroom.gd" id="1_8bkkb"]
 [ext_resource type="Texture2D" uid="uid://mbq31ooldmf0" path="res://Pixel art/Background/Wall.png" id="2_fg2y2"]
 [ext_resource type="Texture2D" uid="uid://g3abmv4acj3c" path="res://Pixel art/Background/wall side 2.png" id="3_5tyio"]
 [ext_resource type="Texture2D" uid="uid://bba4b12vjxywf" path="res://Pixel art/Background/wall side.png" id="4_x68iw"]
@@ -11,24 +12,26 @@
 [ext_resource type="Texture2D" uid="uid://bwaocjw1a4vs" path="res://Pixel art/Background/Background.png" id="9_llciw"]
 [ext_resource type="Texture2D" uid="uid://cwpbfspc2yinh" path="res://Carpet.png" id="10_2ykvt"]
 [ext_resource type="Script" uid="uid://c8lic5qyea1uc" path="res://Scripts/Items.gd" id="11_x68iw"]
-[ext_resource type="Resource" uid="uid://c267fasqbdqua" path="res://curtian.dialogue" id="12_aen2i"]
+[ext_resource type="Resource" uid="uid://c267fasqbdqua" path="res://curtian.dialogue" id="13_g31bg"]
 [ext_resource type="Texture2D" uid="uid://c38ptyuleboyu" path="res://Curtain .png" id="13_quu23"]
-[ext_resource type="Resource" uid="uid://cj4twstg4li38" path="res://toilet.dialogue" id="14_llciw"]
 [ext_resource type="Texture2D" uid="uid://b2f35xq68bje8" path="res://Toilet.png" id="14_quu23"]
 [ext_resource type="Texture2D" uid="uid://be31gbii5o0e" path="res://Toilet paper.png" id="15_aen2i"]
-[ext_resource type="Resource" uid="uid://8lx6a7vfsnj8" path="res://toiletpaper.dialogue" id="15_wsdnj"]
+[ext_resource type="Resource" uid="uid://cj4twstg4li38" path="res://toilet.dialogue" id="15_b5v4u"]
 [ext_resource type="Texture2D" uid="uid://clwohxx040cu0" path="res://Carpet toilet.png" id="16_aen2i"]
-[ext_resource type="Resource" uid="uid://j38macnomnep" path="res://Trash.dialogue" id="19_g031k"]
+[ext_resource type="Resource" uid="uid://8lx6a7vfsnj8" path="res://toiletpaper.dialogue" id="17_oy3if"]
 [ext_resource type="Texture2D" uid="uid://c2wqi8lv5m8co" path="res://Toilet trash.png" id="19_wuelc"]
 [ext_resource type="Texture2D" uid="uid://cs07tl70a1uqm" path="res://Toilet sink.png" id="20_er6o3"]
-[ext_resource type="Resource" uid="uid://bgrsvhuky2pev" path="res://Sink.dialogue" id="21_8sq7k"]
+[ext_resource type="Resource" uid="uid://j38macnomnep" path="res://Trash.dialogue" id="20_jc3rf"]
+[ext_resource type="Resource" uid="uid://bgrsvhuky2pev" path="res://Sink.dialogue" id="22_sgbk6"]
 [ext_resource type="Texture2D" uid="uid://hgxhkm3gxoa4" path="res://Bathtub.png" id="23_0v1m8"]
-[ext_resource type="Resource" uid="uid://bdp42mjkt8hxc" path="res://pill.dialogue" id="24_0v1m8"]
+[ext_resource type="Resource" uid="uid://4o1uwjernu3n" path="res://Bathroom.dialogue" id="23_8sq7k"]
 [ext_resource type="Texture2D" uid="uid://f60qr5sxloec" path="res://Pills.png" id="24_8sq7k"]
+[ext_resource type="Resource" uid="uid://dch17bfrxq5o7" path="res://bathtub.dialogue" id="24_gxdr1"]
+[ext_resource type="Resource" uid="uid://bdp42mjkt8hxc" path="res://pill.dialogue" id="26_5jfdn"]
 [ext_resource type="Script" uid="uid://oxhjoq368hhf" path="res://Cutscene.gd" id="26_8ymwb"]
 [ext_resource type="Script" uid="uid://2rbthu8vx5wj" path="res://Leaving area.gd" id="27_rswuk"]
-[ext_resource type="Resource" uid="uid://4o1uwjernu3n" path="res://Bathroom.dialogue" id="28_rswuk"]
-[ext_resource type="Resource" uid="uid://dldumop14rkgb" path="res://main hall.dialogue" id="29_eivsf"]
+[ext_resource type="Resource" uid="uid://ckvtuq05cnal" path="res://Meeting rosie.dialogue" id="30_vjyp3"]
+[ext_resource type="Resource" uid="uid://dldumop14rkgb" path="res://main hall.dialogue" id="32_6e61r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_er6o3"]
 texture = ExtResource("2_fg2y2")
@@ -146,6 +149,7 @@ size = Vector2(27, 13.024994)
 
 [node name="Bathroom" type="Node2D" unique_id=2086868619]
 y_sort_enabled = true
+script = ExtResource("1_8bkkb")
 
 [node name="Plum" parent="." unique_id=444547423 instance=ExtResource("1_2ykvt")]
 position = Vector2(-23.53, 116.41)
@@ -203,7 +207,7 @@ position = Vector2(-25, -7)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_x68iw")
-dialogue_resource = ExtResource("12_aen2i")
+dialogue_resource = ExtResource("13_g31bg")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Curtian" unique_id=530504978]
@@ -221,7 +225,7 @@ position = Vector2(5, 20)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_x68iw")
-dialogue_resource = ExtResource("14_llciw")
+dialogue_resource = ExtResource("15_b5v4u")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="toilet" unique_id=1000599220]
@@ -239,7 +243,7 @@ position = Vector2(23, 9)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_x68iw")
-dialogue_resource = ExtResource("15_wsdnj")
+dialogue_resource = ExtResource("17_oy3if")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="toilet paper" unique_id=1632161347]
@@ -262,7 +266,7 @@ position = Vector2(40, 20)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_x68iw")
-dialogue_resource = ExtResource("19_g031k")
+dialogue_resource = ExtResource("20_jc3rf")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Trash" unique_id=2085962190]
@@ -278,7 +282,7 @@ position = Vector2(-60, 13)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_x68iw")
-dialogue_resource = ExtResource("21_8sq7k")
+dialogue_resource = ExtResource("22_sgbk6")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="sink" unique_id=1545612136]
@@ -295,7 +299,7 @@ position = Vector2(-57, 53)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_x68iw")
-dialogue_resource = ExtResource("21_8sq7k")
+dialogue_resource = ExtResource("24_gxdr1")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Bathutb" unique_id=1688321540]
@@ -319,7 +323,7 @@ position = Vector2(19, 79)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_x68iw")
-dialogue_resource = ExtResource("24_0v1m8")
+dialogue_resource = ExtResource("26_5jfdn")
 
 [node name="Sprite2D" type="Sprite2D" parent="pills" unique_id=605676]
 texture_filter = 1
@@ -345,7 +349,7 @@ waypoints = [NodePath("../Marker2D")]
 [node name="cutscene" type="Area2D" parent="Node" unique_id=51192959]
 position = Vector2(-2.16, -163.035)
 script = ExtResource("27_rswuk")
-dialogue_resource = ExtResource("28_rswuk")
+dialogue_resource = ExtResource("23_8sq7k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node/cutscene" unique_id=1351539916]
 position = Vector2(6.66, 186.16)
@@ -354,6 +358,8 @@ shape = SubResource("RectangleShape2D_eivsf")
 [node name="cutscene" type="Area2D" parent="." unique_id=716604330]
 position = Vector2(-2.16, -163.035)
 script = ExtResource("27_rswuk")
+dialogue_resource = ExtResource("30_vjyp3")
+require_exit_before_trigger = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="cutscene" unique_id=116140018]
 position = Vector2(-21.84, 289.035)
@@ -364,7 +370,7 @@ position = Vector2(129, 31)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_x68iw")
-dialogue_resource = ExtResource("29_eivsf")
+dialogue_resource = ExtResource("32_6e61r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Back to hall" unique_id=1041985187]
 position = Vector2(-154, 98)

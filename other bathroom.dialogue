@@ -1,5 +1,12 @@
-~ start 
-PLUM: Okay I'm going to pee! (embarassed)
-VINCENT: Don't take too long. [scene=bathroom]
 
-=> END
+~ start
+
+if not GameState.was_event_seen("bathroom_first_visit")
+	$> GameState.mark_event_seen("bathroom_first_visit")
+	PLUM: Okay I'm going to pee! (embarassed)
+	VINCENT: Don't take too long. [scene=bathroom]
+	=> END
+
+else
+	PLUM: I'm going to the bathroom again. (embarassed) [scene=bathroom]
+	=> END

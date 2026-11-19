@@ -1,41 +1,54 @@
 ~ start
 
-match get_choice_count("laid_flower")
-	when 0
-		match get_choice_count("paid_respect")
-			when 0
-				PLUM: The writing is impossible to read. (sad)
-				PLUM: I can only make out the words "I didn't" and "Rosie".
+if not GameState.was_event_seen("rosie_grave_seen")
+	$> GameState.mark_event_seen("rosie_grave_seen")
+	PLUM: The writing is impossible to read. (sad)
+	PLUM: I can only make out the words "I didn't" and "Rosie".
 
-				- Pay respect
-					$> increment_choice("paid_respect")
-					You pray for Rosie.
+	- Pay respect
+		$> GameState.mark_event_seen("rosie_grave_respected")
+		You pray for Rosie.
+		=> END
+
+	- Do nothing
+		=> END
+
+else
+	if GameState.was_event_seen("rosie_grave_flower")
+		$> show_node("Sprite2D2")
+		You don't know... but you think Rosie will appreciate this.
+		=> END
+
+	else
+		if GameState.was_event_seen("rosie_grave_respected")
+			if GameState.has_flower
+				You've already paid your respects here.
+
+				- Lay the flower here
+					$> GameState.has_flower = false
+					$> GameState.mark_event_seen("rosie_grave_flower")
+					$> show_node("Sprite2D2")
+					VINCENT: Are you done wasting time?
+					PLUM: Not wasting time! (angry)
+					You don't know... but you think Rosie will appreciate this.
 					=> END
 
-				- Do nothing
+				- Keep the flower to yourself
+					You didn't have to give the flower, but you still feel like a bad person.
 					=> END
 
 			else
-				if GameState.has_flower
-					You've already paid your respects here.
+				You've already paid your respects here.
+				=> END
 
-					- Lay the flower here
-						$> GameState.has_flower = false
-						$> increment_choice("laid_flower")
-						$> show_node("Sprite2D2")
-						VINCENT: Are you done wasting time?
-						PLUM: Not wasting time! (angry)
-						You don't know... but you think Rosie will appreciate this.
-						=> END
+		else
+			PLUM: The writing is impossible to read. (sad)
+			PLUM: I can only make out the words "I didn't" and "Rosie".
 
-					- Keep the flower to yourself
-						You didn't have to give the flower, but you still feel like a bad person.
-						=> END
+			- Pay respect
+				$> GameState.mark_event_seen("rosie_grave_respected")
+				You pray for Rosie.
+				=> END
 
-				else
-					You've already paid your respects here.
-					=> END
-
-	else
-		You don't know... but you think Rosie will appreciate this.
-		=> END
+			- Do nothing
+				=> END

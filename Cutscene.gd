@@ -2,26 +2,6 @@ extends Node
 
 
 # ============================================================
-# OPENING CUTSCENE
-# ============================================================
-#
-# Plum walks through a list of Marker2D waypoints.
-#
-# During the cutscene:
-# - Player controls are disabled
-# - Plum's CollisionShape2D nodes are found automatically
-# - Plum's collisions are temporarily disabled
-# - Existing walk animation is reused
-# - Vincent follows using the existing follower system
-#
-# After the final waypoint:
-# - Plum stops
-# - Collision comes back
-# - Player control comes back
-# ============================================================
-
-
-# ============================================================
 # PLAYER
 # ============================================================
 
@@ -32,15 +12,6 @@ extends Node
 # WAYPOINTS
 # ============================================================
 
-# Add Marker2Ds in the order Plum should visit them.
-#
-# Example:
-#
-# 0 -> Point1
-# 1 -> Point2
-# 2 -> Point3
-# 3 -> HouseEntrance
-#
 @export var waypoints: Array[Marker2D] = []
 
 
@@ -50,27 +21,58 @@ extends Node
 
 @export var auto_start: bool = true
 
-
-# Delay before the opening walk starts.
+# Delay before the cutscene begins.
 @export var start_delay: float = 0.5
-
 
 # Movement speed during the cutscene.
 @export var walk_speed: float = 90.0
 
-
 # How close Plum needs to get to a waypoint.
 @export var waypoint_distance: float = 2.0
 
-
 # Optional pause at each waypoint.
-#
-# 0.0 = immediately continue walking.
 @export var waypoint_pause: float = 0.0
 
-
-# Direction Plum faces when the whole cutscene finishes.
+# Direction Plum faces when the cutscene finishes.
 @export var ending_direction: Vector2 = Vector2.UP
+
+
+# ============================================================
+# STARTING DIRECTION
+# ============================================================
+
+enum FacingDirection {
+	DOWN,
+	RIGHT,
+	LEFT,
+	UP
+}
+
+
+# Turn this on if you want Plum to face a specific
+# direction at the start of this cutscene.
+@export var force_starting_facing: bool = false
+
+
+# Shows named options in the Inspector:
+# Down / Right / Left / Up
+@export var starting_facing: FacingDirection = FacingDirection.DOWN
+
+
+# Optional pause after Plum turns but before she starts walking.
+@export var starting_facing_pause: float = 0.0
+
+
+# ============================================================
+# PERSISTENCE
+# ============================================================
+
+# If enabled, this cutscene only plays once per playthrough.
+@export var play_once: bool = true
+
+
+# Remembers where Plum was standing in this room when leaving.
+@export var remember_room_position: bool = true
 
 
 # ============================================================
@@ -86,8 +88,10 @@ var current_waypoint: int = 0
 var waiting_at_waypoint: bool = false
 
 
-# Every CollisionShape2D found inside Plum's scene.
 var player_collisions: Array[CollisionShape2D] = []
+
+
+var _room_path: String = ""
 
 
 signal finished
@@ -98,15 +102,50 @@ signal finished
 # ============================================================
 
 func _ready() -> void:
+
+	_room_path = GameState.get_room_path_for_node(
+		self
+	)
+
+
+	# --------------------------------------------------------
+	# RESTORE PREVIOUS POSITION
+	# --------------------------------------------------------
+
+	_restore_previous_room_position()
+
+
+	# --------------------------------------------------------
+	# CUTSCENE ALREADY PLAYED
+	# --------------------------------------------------------
+
+	if (
+		play_once
+		and GameState.was_event_seen(
+			GameState.get_event_id(self)
+		)
+	):
+
+		cutscene_finished = true
+
+		return
+
+
+	# --------------------------------------------------------
+	# AUTO START
+	# --------------------------------------------------------
+
 	if not auto_start:
 		return
 
 
-	# Give Plum's instanced scene time to fully enter the tree.
 	await get_tree().process_frame
 
 
-	# Automatically find collision shapes inside Plum.
+	if not is_inside_tree():
+		return
+
+
 	_find_player_collisions()
 
 
@@ -114,10 +153,151 @@ func _ready() -> void:
 
 
 # ============================================================
+# EXIT TREE
+# ============================================================
+
+func _exit_tree() -> void:
+
+	if not remember_room_position:
+		return
+
+
+	if GameState.loading_from_save:
+		return
+
+
+	if not is_instance_valid(
+		player
+	):
+		return
+
+
+	GameState.remember_room_position(
+		_room_path,
+		player.global_position,
+		player.facing_dir
+	)
+
+
+# ============================================================
+# ROOM POSITION MEMORY
+# ============================================================
+
+func _restore_previous_room_position() -> void:
+
+	if not remember_room_position:
+		return
+
+
+	if player == null:
+		return
+
+
+	if _room_path.is_empty():
+		return
+
+
+	if (
+		GameState.skip_room_restore_path
+		== _room_path
+	):
+
+		return
+
+
+	var saved: Dictionary = (
+		GameState.get_remembered_room_position(
+			_room_path
+		)
+	)
+
+
+	if saved.is_empty():
+		return
+
+
+	player.global_position = Vector2(
+		float(
+			saved.get(
+				"x",
+				player.global_position.x
+			)
+		),
+		float(
+			saved.get(
+				"y",
+				player.global_position.y
+			)
+		)
+	)
+
+
+	player.facing_dir = Vector2(
+		float(
+			saved.get(
+				"facing_x",
+				player.facing_dir.x
+			)
+		),
+		float(
+			saved.get(
+				"facing_y",
+				player.facing_dir.y
+			)
+		)
+	)
+
+
+	player.velocity = Vector2.ZERO
+
+	player.anim_timer = 0.0
+
+
+	var player_sprite: Sprite2D = (
+		player.get_node_or_null(
+			"Sprite2D"
+		) as Sprite2D
+	)
+
+
+	if player_sprite != null:
+
+		player_sprite.frame = (
+			player.get_anim_offset(
+				player.facing_dir
+			)
+		)
+
+
+	var previous_steps = (
+		player.get(
+			"_position_history"
+		)
+	)
+
+
+	if previous_steps is Array:
+
+		previous_steps.clear()
+
+		previous_steps.push_front(
+			player.global_position
+		)
+
+
+	player.update_interaction_ray()
+
+	player.sync_follower_sprite(
+		0.0
+	)
+
+
+# ============================================================
 # FIND PLAYER COLLISIONS
 # ============================================================
 
 func _find_player_collisions() -> void:
+
 	player_collisions.clear()
 
 
@@ -125,20 +305,18 @@ func _find_player_collisions() -> void:
 		return
 
 
-	# Searches recursively through Plum's entire instanced scene.
-	#
-	# owned = false is important because some nodes may belong
-	# to the original instanced Character scene rather than the
-	# current Outside scene.
-	var found_nodes: Array[Node] = player.find_children(
-		"*",
-		"CollisionShape2D",
-		true,
-		false
+	var found_nodes: Array[Node] = (
+		player.find_children(
+			"*",
+			"CollisionShape2D",
+			true,
+			false
+		)
 	)
 
 
 	for node: Node in found_nodes:
+
 		if node is CollisionShape2D:
 
 			var collision: CollisionShape2D = (
@@ -152,8 +330,9 @@ func _find_player_collisions() -> void:
 
 
 	if player_collisions.is_empty():
+
 		push_warning(
-			"OpeningCutscene couldn't find any CollisionShape2D inside Plum."
+			"Cutscene couldn't find any CollisionShape2D inside Plum."
 		)
 
 
@@ -162,13 +341,17 @@ func _find_player_collisions() -> void:
 # ============================================================
 
 func _disable_player_collisions() -> void:
-	# Search again in case something was added after _ready().
+
 	if player_collisions.is_empty():
+
 		_find_player_collisions()
 
 
 	for collision: CollisionShape2D in player_collisions:
-		if is_instance_valid(collision):
+
+		if is_instance_valid(
+			collision
+		):
 
 			collision.set_deferred(
 				"disabled",
@@ -177,8 +360,12 @@ func _disable_player_collisions() -> void:
 
 
 func _enable_player_collisions() -> void:
+
 	for collision: CollisionShape2D in player_collisions:
-		if is_instance_valid(collision):
+
+		if is_instance_valid(
+			collision
+		):
 
 			collision.set_deferred(
 				"disabled",
@@ -191,6 +378,7 @@ func _enable_player_collisions() -> void:
 # ============================================================
 
 func _start_after_delay() -> void:
+
 	if start_delay > 0.0:
 
 		await get_tree().create_timer(
@@ -210,6 +398,7 @@ func _start_after_delay() -> void:
 # ============================================================
 
 func start_cutscene() -> void:
+
 	if cutscene_active:
 		return
 
@@ -218,17 +407,33 @@ func start_cutscene() -> void:
 		return
 
 
-	if player == null:
-		push_warning(
-			"OpeningCutscene has no player assigned."
+	if (
+		play_once
+		and GameState.was_event_seen(
+			GameState.get_event_id(self)
 		)
+	):
+
+		cutscene_finished = true
+
+		return
+
+
+	if player == null:
+
+		push_warning(
+			"Cutscene has no player assigned."
+		)
+
 		return
 
 
 	if waypoints.is_empty():
+
 		push_warning(
-			"OpeningCutscene has no waypoints assigned."
+			"Cutscene has no waypoints assigned."
 		)
+
 		return
 
 
@@ -237,6 +442,13 @@ func start_cutscene() -> void:
 	cutscene_active = true
 
 	waiting_at_waypoint = false
+
+
+	if play_once:
+
+		GameState.mark_event_seen(
+			GameState.get_event_id(self)
+		)
 
 
 	# ========================================================
@@ -257,10 +469,104 @@ func start_cutscene() -> void:
 
 
 	# ========================================================
-	# DISABLE PLUM'S COLLISION
+	# FORCE STARTING DIRECTION
+	# ========================================================
+
+	if force_starting_facing:
+
+		var start_direction: Vector2 = (
+			_get_starting_direction()
+		)
+
+
+		player.facing_dir = (
+			start_direction
+		)
+
+
+		player.anim_timer = 0.0
+
+
+		var player_sprite: Sprite2D = (
+			player.get_node_or_null(
+				"Sprite2D"
+			) as Sprite2D
+		)
+
+
+		if player_sprite != null:
+
+			player_sprite.frame = (
+				player.get_anim_offset(
+					start_direction
+				)
+			)
+
+
+		player.update_interaction_ray()
+
+
+		player.sync_follower_sprite(
+			0.0
+		)
+
+
+	# ========================================================
+	# DISABLE COLLISIONS
 	# ========================================================
 
 	_disable_player_collisions()
+
+
+	# ========================================================
+	# OPTIONAL TURN PAUSE
+	# ========================================================
+
+	if (
+		force_starting_facing
+		and starting_facing_pause > 0.0
+	):
+
+		waiting_at_waypoint = true
+
+
+		await get_tree().create_timer(
+			starting_facing_pause
+		).timeout
+
+
+		if not is_inside_tree():
+			return
+
+
+		waiting_at_waypoint = false
+
+
+# ============================================================
+# STARTING DIRECTION
+# ============================================================
+
+func _get_starting_direction() -> Vector2:
+
+	match starting_facing:
+
+		FacingDirection.DOWN:
+			return Vector2.DOWN
+
+
+		FacingDirection.RIGHT:
+			return Vector2.RIGHT
+
+
+		FacingDirection.LEFT:
+			return Vector2.LEFT
+
+
+		FacingDirection.UP:
+			return Vector2.UP
+
+
+	return Vector2.DOWN
 
 
 # ============================================================
@@ -283,20 +589,12 @@ func _physics_process(
 		return
 
 
-	# --------------------------------------------------------
-	# FINISHED ALL WAYPOINTS
-	# --------------------------------------------------------
-
 	if current_waypoint >= waypoints.size():
 
 		_finish_cutscene()
 
 		return
 
-
-	# --------------------------------------------------------
-	# CURRENT WAYPOINT
-	# --------------------------------------------------------
 
 	var target: Marker2D = (
 		waypoints[
@@ -312,10 +610,6 @@ func _physics_process(
 		return
 
 
-	# --------------------------------------------------------
-	# TARGET INFORMATION
-	# --------------------------------------------------------
-
 	var to_target: Vector2 = (
 		target.global_position
 		- player.global_position
@@ -327,10 +621,6 @@ func _physics_process(
 	)
 
 
-	# --------------------------------------------------------
-	# REACHED WAYPOINT
-	# --------------------------------------------------------
-
 	if distance <= waypoint_distance:
 
 		_reach_waypoint(
@@ -339,10 +629,6 @@ func _physics_process(
 
 		return
 
-
-	# --------------------------------------------------------
-	# MOVEMENT DIRECTION
-	# --------------------------------------------------------
 
 	var movement_direction: Vector2 = (
 		to_target.normalized()
@@ -356,15 +642,6 @@ func _physics_process(
 	)
 
 
-	# --------------------------------------------------------
-	# MOVE PLUM
-	# --------------------------------------------------------
-
-	# Direct movement is intentional here.
-	#
-	# Her normal collisions are disabled during this sequence,
-	# so she can pass through scenery that would usually block
-	# her.
 	player.global_position = (
 		player.global_position.move_toward(
 			target.global_position,
@@ -379,10 +656,6 @@ func _physics_process(
 	)
 
 
-	# --------------------------------------------------------
-	# FACING
-	# --------------------------------------------------------
-
 	player.facing_dir = (
 		animation_direction
 	)
@@ -391,20 +664,12 @@ func _physics_process(
 	player.update_interaction_ray()
 
 
-	# --------------------------------------------------------
-	# WALK ANIMATION
-	# --------------------------------------------------------
-
 	player.update_animation(
 		delta,
 		animation_direction,
 		true
 	)
 
-
-	# --------------------------------------------------------
-	# VINCENT
-	# --------------------------------------------------------
 
 	player.sync_follower_sprite(
 		delta
@@ -427,20 +692,12 @@ func _reach_waypoint(
 	current_waypoint += 1
 
 
-	# --------------------------------------------------------
-	# FINAL WAYPOINT
-	# --------------------------------------------------------
-
 	if current_waypoint >= waypoints.size():
 
 		_finish_cutscene()
 
 		return
 
-
-	# --------------------------------------------------------
-	# OPTIONAL PAUSE
-	# --------------------------------------------------------
 
 	if waypoint_pause > 0.0:
 
@@ -470,21 +727,31 @@ func _get_cardinal_direction(
 	direction: Vector2
 ) -> Vector2:
 
-	if absf(direction.x) > absf(direction.y):
+	if absf(
+		direction.x
+	) > absf(
+		direction.y
+	):
 
 		if direction.x > 0.0:
+
 			return Vector2.RIGHT
 
+
 		else:
+
 			return Vector2.LEFT
 
 
 	else:
 
 		if direction.y > 0.0:
+
 			return Vector2.DOWN
 
+
 		else:
+
 			return Vector2.UP
 
 
@@ -493,6 +760,7 @@ func _get_cardinal_direction(
 # ============================================================
 
 func _finish_cutscene() -> void:
+
 	if not cutscene_active:
 		return
 
@@ -503,10 +771,6 @@ func _finish_cutscene() -> void:
 
 	waiting_at_waypoint = false
 
-
-	# ========================================================
-	# STOP PLUM
-	# ========================================================
 
 	player.velocity = Vector2.ZERO
 
@@ -519,17 +783,19 @@ func _finish_cutscene() -> void:
 
 
 	var player_sprite: Sprite2D = (
-		player.get_node(
+		player.get_node_or_null(
 			"Sprite2D"
-		)
+		) as Sprite2D
 	)
 
 
-	player_sprite.frame = (
-		player.get_anim_offset(
-			ending_direction
+	if player_sprite != null:
+
+		player_sprite.frame = (
+			player.get_anim_offset(
+				ending_direction
+			)
 		)
-	)
 
 
 	player.update_interaction_ray()
@@ -540,16 +806,8 @@ func _finish_cutscene() -> void:
 	)
 
 
-	# ========================================================
-	# RESTORE COLLISION
-	# ========================================================
-
 	_enable_player_collisions()
 
-
-	# ========================================================
-	# RETURN CONTROL
-	# ========================================================
 
 	player.set_physics_process(
 		true
