@@ -3,12 +3,51 @@ extends Area2D
 ## Starts dialogue when Plum walks into this area.
 ## A one-time trigger can stay completed even when the room reloads.
 
+
 # ============================================================
 # DIALOGUE
 # ============================================================
 
 @export var dialogue_resource: DialogueResource
 @export var start_node: String = ""
+
+
+# ============================================================
+# CONDITION
+# ============================================================
+
+## Optional event that must have happened before this trigger works.
+##
+## Example:
+## met_rosie
+##
+## Leave empty if there is no condition.
+@export var required_event: String = ""
+
+
+# ============================================================
+# DIRECTION
+# ============================================================
+
+enum FacingDirection {
+	DOWN,
+	RIGHT,
+	LEFT,
+	UP
+}
+
+
+## Turn this on if Plum should face a specific direction
+## before the dialogue begins.
+@export var force_starting_facing: bool = false
+
+
+## Direction Plum faces when the trigger activates.
+@export var starting_facing: FacingDirection = FacingDirection.DOWN
+
+
+## Optional pause after Plum turns before dialogue starts.
+@export var starting_facing_pause: float = 0.0
 
 
 # ============================================================
@@ -20,20 +59,13 @@ extends Area2D
 @export var start_delay: float = 0.0
 
 
-# Turn this off for a one-time trigger that SHOULD reset
-# when the room is re-entered.
+## Turn this off for a one-time trigger that SHOULD reset
+## when the room is re-entered.
 @export var remember_between_visits: bool = true
 
 
-# If enabled:
-#
-# Plum starting INSIDE this Area2D will NOT trigger it.
-#
-# She must first:
-# 1. Leave the Area2D
-# 2. Re-enter the Area2D
-#
-# Then the dialogue will begin.
+## If enabled, Plum must leave this Area2D and then
+## enter it again before it can activate.
 @export var require_exit_before_trigger: bool = false
 
 
@@ -45,11 +77,6 @@ var has_triggered: bool = false
 
 var starting_dialogue: bool = false
 
-
-# Normally the trigger is armed immediately.
-#
-# If require_exit_before_trigger is enabled,
-# this starts false and becomes true after Plum leaves.
 var trigger_armed: bool = true
 
 
@@ -98,6 +125,201 @@ func _ready() -> void:
 
 
 # ============================================================
+# CHECK CONDITION
+# ============================================================
+
+func _condition_is_met() -> bool:
+
+	var event_name: String = (
+		required_event.strip_edges()
+	)
+
+
+	# Empty = no condition.
+	if event_name.is_empty():
+		return true
+
+
+	return GameState.was_event_seen(
+		event_name
+	)
+
+
+# ============================================================
+# GET STARTING DIRECTION
+# ============================================================
+
+func _get_starting_direction() -> Vector2:
+
+	match starting_facing:
+
+		FacingDirection.DOWN:
+			return Vector2.DOWN
+
+		FacingDirection.RIGHT:
+			return Vector2.RIGHT
+
+		FacingDirection.LEFT:
+			return Vector2.LEFT
+
+		FacingDirection.UP:
+			return Vector2.UP
+
+
+	return Vector2.DOWN
+
+
+# ============================================================
+# LOCK PLAYER
+# ============================================================
+
+func _lock_player(
+	body: Node2D
+) -> void:
+
+	if body is CharacterBody2D:
+
+		var character: CharacterBody2D = (
+			body as CharacterBody2D
+		)
+
+		character.velocity = Vector2.ZERO
+
+
+	# Stop Character.gd from immediately changing
+	# the direction again.
+	body.set_physics_process(
+		false
+	)
+
+
+	body.set_process_input(
+		false
+	)
+
+
+# ============================================================
+# UNLOCK PLAYER
+# ============================================================
+
+func _unlock_player(
+	body: Node2D
+) -> void:
+
+	if not is_instance_valid(body):
+		return
+
+
+	body.set_physics_process(
+		true
+	)
+
+
+	body.set_process_input(
+		true
+	)
+
+
+# ============================================================
+# FORCE PLAYER FACING
+# ============================================================
+
+func _force_player_facing(
+	body: Node2D
+) -> void:
+
+	var direction: Vector2 = (
+		_get_starting_direction()
+	)
+
+
+	# --------------------------------------------------------
+	# STOP MOVEMENT
+	# --------------------------------------------------------
+
+	if body is CharacterBody2D:
+
+		var character: CharacterBody2D = (
+			body as CharacterBody2D
+		)
+
+		character.velocity = Vector2.ZERO
+
+
+	# --------------------------------------------------------
+	# CHANGE FACING
+	# --------------------------------------------------------
+
+	body.set(
+		"facing_dir",
+		direction
+	)
+
+
+	body.set(
+		"last_dir",
+		Vector2.ZERO
+	)
+
+
+	body.set(
+		"anim_timer",
+		0.0
+	)
+
+
+	# --------------------------------------------------------
+	# CHANGE SPRITE
+	# --------------------------------------------------------
+
+	var sprite: Sprite2D = (
+		body.get_node_or_null(
+			"Sprite2D"
+		) as Sprite2D
+	)
+
+
+	if (
+		sprite != null
+		and body.has_method(
+			"get_anim_offset"
+		)
+	):
+
+		sprite.frame = body.call(
+			"get_anim_offset",
+			direction
+		)
+
+
+	# --------------------------------------------------------
+	# UPDATE INTERACTION RAY
+	# --------------------------------------------------------
+
+	if body.has_method(
+		"update_interaction_ray"
+	):
+
+		body.call(
+			"update_interaction_ray"
+		)
+
+
+	# --------------------------------------------------------
+	# UPDATE VINCENT
+	# --------------------------------------------------------
+
+	if body.has_method(
+		"sync_follower_sprite"
+	):
+
+		body.call(
+			"sync_follower_sprite",
+			0.0
+		)
+
+
+# ============================================================
 # BODY EXITED
 # ============================================================
 
@@ -105,15 +327,14 @@ func _on_body_exited(
 	body: Node2D
 ) -> void:
 
-	# Make sure this is Plum / the player.
+	# Make sure this is Plum.
 	if not body.has_method(
 		"try_interact"
 	):
 		return
 
 
-	# Once Plum has left the area,
-	# she is now allowed to trigger it by re-entering.
+	# Plum has now left the Area2D.
 	trigger_armed = true
 
 
@@ -126,7 +347,7 @@ func _on_body_entered(
 ) -> void:
 
 	# --------------------------------------------------------
-	# MAKE SURE THIS IS THE PLAYER
+	# MAKE SURE THIS IS PLUM
 	# --------------------------------------------------------
 
 	if not body.has_method(
@@ -136,10 +357,21 @@ func _on_body_entered(
 
 
 	# --------------------------------------------------------
-	# WAIT UNTIL PLAYER HAS LEFT FIRST
+	# CHECK CONDITION
 	# --------------------------------------------------------
 
-	if require_exit_before_trigger and not trigger_armed:
+	if not _condition_is_met():
+		return
+
+
+	# --------------------------------------------------------
+	# REQUIRE EXIT FIRST
+	# --------------------------------------------------------
+
+	if (
+		require_exit_before_trigger
+		and not trigger_armed
+	):
 		return
 
 
@@ -172,10 +404,10 @@ func _on_body_entered(
 		return
 
 
-	# Player has entered.
-	#
-	# If this is a repeatable trigger, they must leave
-	# before another entry can trigger it again.
+	# --------------------------------------------------------
+	# DISARM
+	# --------------------------------------------------------
+
 	if require_exit_before_trigger:
 
 		trigger_armed = false
@@ -184,9 +416,9 @@ func _on_body_entered(
 	starting_dialogue = true
 
 
-	# --------------------------------------------------------
-	# OPTIONAL DELAY
-	# --------------------------------------------------------
+	# ========================================================
+	# START DELAY
+	# ========================================================
 
 	if start_delay > 0.0:
 
@@ -196,11 +428,13 @@ func _on_body_entered(
 
 
 		if not is_inside_tree():
+
+			starting_dialogue = false
+
 			return
 
 
-		# Don't play the dialogue if Plum walked back out
-		# during the delay.
+		# Plum walked away during the delay.
 		if (
 			not is_instance_valid(body)
 			or not overlaps_body(body)
@@ -212,6 +446,82 @@ func _on_body_entered(
 
 
 	# --------------------------------------------------------
+	# CHECK CONDITION AGAIN
+	# --------------------------------------------------------
+
+	if not _condition_is_met():
+
+		starting_dialogue = false
+
+		return
+
+
+	# ========================================================
+	# FORCE DIRECTION
+	# ========================================================
+
+	if force_starting_facing:
+
+		# Freeze Plum first so Character.gd can't
+		# immediately turn her back.
+		_lock_player(
+			body
+		)
+
+
+		_force_player_facing(
+			body
+		)
+
+
+	# ========================================================
+	# OPTIONAL PAUSE AFTER TURNING
+	# ========================================================
+
+	if (
+		force_starting_facing
+		and starting_facing_pause > 0.0
+	):
+
+		await get_tree().create_timer(
+			starting_facing_pause
+		).timeout
+
+
+		if not is_inside_tree():
+
+			_unlock_player(
+				body
+			)
+
+			return
+
+
+		if not is_instance_valid(body):
+
+			return
+
+
+	# --------------------------------------------------------
+	# CHECK CONDITION AGAIN
+	# --------------------------------------------------------
+
+	if not _condition_is_met():
+
+		starting_dialogue = false
+
+
+		if force_starting_facing:
+
+			_unlock_player(
+				body
+			)
+
+
+		return
+
+
+	# --------------------------------------------------------
 	# ANOTHER DIALOGUE STARTED
 	# --------------------------------------------------------
 
@@ -219,12 +529,20 @@ func _on_body_entered(
 
 		starting_dialogue = false
 
+
+		if force_starting_facing:
+
+			_unlock_player(
+				body
+			)
+
+
 		return
 
 
-	# --------------------------------------------------------
-	# TRIGGER
-	# --------------------------------------------------------
+	# ========================================================
+	# MARK AS TRIGGERED
+	# ========================================================
 
 	has_triggered = true
 
@@ -238,7 +556,33 @@ func _on_body_entered(
 		)
 
 
+	# ========================================================
+	# START DIALOGUE
+	# ========================================================
+
 	DialogueManager.show_dialogue_balloon(
 		dialogue_resource,
 		start_node
 	)
+
+
+	# ========================================================
+	# WAIT FOR DIALOGUE MODE TO TAKE OVER
+	# ========================================================
+
+	if force_starting_facing:
+
+		# Give DialogueManager a few frames to set
+		# GameState.in_dialogue before Character.gd resumes.
+		for i: int in range(5):
+
+			await get_tree().process_frame
+
+
+			if GameState.in_dialogue:
+				break
+
+
+		_unlock_player(
+			body
+		)

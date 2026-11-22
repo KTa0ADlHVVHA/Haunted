@@ -163,7 +163,7 @@ z_index = -1
 y_sort_enabled = true
 texture_filter = 1
 use_parent_material = true
-tile_map_data = PackedByteArray("AAD5/wQABAAAAAAAAAD5/wUABAAAAAAAAAD5/wYABAAAAAAAAAACAAcABQAAAAAAAAADAAQABQAAAAAAAAADAAUABQAAAAAAAAD5/wMABAAAAAAAAAACAAYABQAAAAAAAAADAAMABQAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAD5/wQABAAAAAAAAAD5/wUABAAAAAAAAAD5/wYABAAAAAAAAAACAAcABQAAAAAAAAADAAQABQAAAAAAAAADAAUABQAAAAAAAAD5/wMABAAAAAAAAAACAAYABQAAAAAAAAADAAMABQAAAAAAAAD//wkABQAAAAAAAAD9/wkABAAAAAAAAAA=")
 tile_set = SubResource("TileSet_g031k")
 
 [node name="Layer2" type="TileMapLayer" parent="Background stuff" unique_id=2119145695]
@@ -359,6 +359,8 @@ shape = SubResource("RectangleShape2D_eivsf")
 position = Vector2(-2.16, -163.035)
 script = ExtResource("27_rswuk")
 dialogue_resource = ExtResource("30_vjyp3")
+force_starting_facing = true
+starting_facing = 3
 require_exit_before_trigger = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="cutscene" unique_id=116140018]

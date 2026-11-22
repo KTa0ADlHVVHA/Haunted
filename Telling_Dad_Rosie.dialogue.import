@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dfl2dokvn2ti4"
+path="res://.godot/imported/Telling_Dad_Rosie.dialogue-557071c3f88c724c499c255da5bf660e.tres"
+
+[deps]
+
+source_file="res://Telling_Dad_Rosie.dialogue"
+dest_files=["res://.godot/imported/Telling_Dad_Rosie.dialogue-557071c3f88c724c499c255da5bf660e.tres"]
+
+[params]
+
+defaults=true

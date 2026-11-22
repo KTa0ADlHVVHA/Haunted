@@ -35,6 +35,8 @@
 [ext_resource type="Texture2D" uid="uid://nbouespjqeo0" path="res://Alter.png" id="31_okur4"]
 [ext_resource type="Texture2D" uid="uid://dkmbuicerml48" path="res://Carpet long.png" id="32_rh16e"]
 [ext_resource type="Resource" uid="uid://cwmafsoljqfdj" path="res://alter.dialogue" id="33_csjv4"]
+[ext_resource type="Resource" uid="uid://dfl2dokvn2ti4" path="res://Telling_Dad_Rosie.dialogue" id="36_nrhgq"]
+[ext_resource type="Resource" uid="uid://bewuyub87pdm" path="res://Work_Room.dialogue" id="37_crtc7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wsse3"]
 texture = ExtResource("2_tncnc")
@@ -148,7 +150,7 @@ size = Vector2(14, 6.162491)
 size = Vector2(122, 45.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfgux"]
-size = Vector2(27, 13.024994)
+size = Vector2(8.5, 30.999996)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
 size = Vector2(20, 88)
@@ -158,6 +160,9 @@ size = Vector2(45, 5.8099937)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_17anv"]
 load_path = "res://.godot/imported/Carpet long.png-6ed04f8f9f36456f7a364319616924e6.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_crtc7"]
+size = Vector2(31, 40.839996)
 
 [node name="Main hall" type="Node2D" unique_id=777225086]
 y_sort_enabled = true
@@ -481,3 +486,27 @@ z_index = -1
 position = Vector2(356.62, 250.205)
 texture = SubResource("CompressedTexture2D_17anv")
 offset = Vector2(0, -64.265)
+
+[node name="cutscene" type="Area2D" parent="." unique_id=1026879949]
+position = Vector2(150, -223)
+script = ExtResource("25_8ntd6")
+dialogue_resource = ExtResource("36_nrhgq")
+required_event = "met_rosie"
+force_starting_facing = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="cutscene" unique_id=183555933]
+position = Vector2(-21.839996, 294.58002)
+shape = SubResource("RectangleShape2D_crtc7")
+
+[node name="WorkRoom" type="StaticBody2D" parent="." unique_id=458695223]
+position = Vector2(439, 216)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("12_1fnan")
+dialogue_resource = ExtResource("37_crtc7")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorkRoom" unique_id=578638198]
+position = Vector2(9.25, 0.5)
+shape = SubResource("RectangleShape2D_bfgux")

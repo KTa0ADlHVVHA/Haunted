@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cmockivlkt04b"
+path="res://.godot/imported/Worktomainhaul.dialogue-c2001ea8e9fb973d8f05a8347938b488.tres"
+
+[deps]
+
+source_file="res://Worktomainhaul.dialogue"
+dest_files=["res://.godot/imported/Worktomainhaul.dialogue-c2001ea8e9fb973d8f05a8347938b488.tres"]
+
+[params]
+
+defaults=true

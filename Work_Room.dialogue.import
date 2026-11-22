@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bewuyub87pdm"
+path="res://.godot/imported/Work_Room.dialogue-9632381edc52b02666fb8593446c4c39.tres"
+
+[deps]
+
+source_file="res://Work_Room.dialogue"
+dest_files=["res://.godot/imported/Work_Room.dialogue-9632381edc52b02666fb8593446c4c39.tres"]
+
+[params]
+
+defaults=true

@@ -26,6 +26,7 @@ y_sort_enabled = true
 script = ExtResource("1_yjcpj")
 
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=521523758]
+visible = false
 texture_filter = 1
 texture = ExtResource("3_li0uo")
 hframes = 4
