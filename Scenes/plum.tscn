@@ -147,6 +147,7 @@ metadata/_edit_use_anchors_ = true
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1422279359]
 
 [node name="Label" type="Label" parent="CanvasLayer" unique_id=1938541893]
+visible = false
 offset_left = -8.0
 offset_top = -24.0
 offset_right = 32.0

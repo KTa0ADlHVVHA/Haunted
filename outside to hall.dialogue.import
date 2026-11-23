@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c40ftvnaxg2km"
+path="res://.godot/imported/outside to hall.dialogue-856db0dae69bbdf2803561a48100e7bc.tres"
+
+[deps]
+
+source_file="res://outside to hall.dialogue"
+dest_files=["res://.godot/imported/outside to hall.dialogue-856db0dae69bbdf2803561a48100e7bc.tres"]
+
+[params]
+
+defaults=true

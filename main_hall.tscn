@@ -37,6 +37,7 @@
 [ext_resource type="Resource" uid="uid://cwmafsoljqfdj" path="res://alter.dialogue" id="33_csjv4"]
 [ext_resource type="Resource" uid="uid://dfl2dokvn2ti4" path="res://Telling_Dad_Rosie.dialogue" id="36_nrhgq"]
 [ext_resource type="Resource" uid="uid://bewuyub87pdm" path="res://Work_Room.dialogue" id="37_crtc7"]
+[ext_resource type="Resource" uid="uid://b6vvv4p05ck77" path="res://outside.dialogue" id="38_5waf1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wsse3"]
 texture = ExtResource("2_tncnc")
@@ -164,6 +165,9 @@ load_path = "res://.godot/imported/Carpet long.png-6ed04f8f9f36456f7a36431961692
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_crtc7"]
 size = Vector2(31, 40.839996)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5waf1"]
+size = Vector2(19.25, 16.499998)
+
 [node name="Main hall" type="Node2D" unique_id=777225086]
 y_sort_enabled = true
 script = ExtResource("1_tpqrf")
@@ -224,14 +228,6 @@ z_index = -2
 position = Vector2(128.48, 133.175)
 texture = ExtResource("10_msrrb")
 offset = Vector2(0, -36.86)
-
-[node name="Door" type="Sprite2D" parent="." unique_id=990147791]
-z_index = -1
-position = Vector2(-126.869995, 71.695)
-texture = ExtResource("11_msrrb")
-offset = Vector2(0, -24.04)
-hframes = 8
-frame = 2
 
 [node name="clock" type="StaticBody2D" parent="." unique_id=1716253631]
 position = Vector2(-175.775, 155.705)
@@ -510,3 +506,21 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorkRoom" unique_id=578638198]
 position = Vector2(9.25, 0.5)
 shape = SubResource("RectangleShape2D_bfgux")
+
+[node name="Outside" type="StaticBody2D" parent="." unique_id=143159462]
+position = Vector2(-128, 72)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("12_1fnan")
+dialogue_resource = ExtResource("38_5waf1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Outside" unique_id=749021615]
+position = Vector2(0.375, -16.25)
+shape = SubResource("RectangleShape2D_5waf1")
+
+[node name="Door" type="Sprite2D" parent="Outside" unique_id=1140665183]
+z_index = -1
+texture = ExtResource("11_msrrb")
+offset = Vector2(0, -24.04)
+hframes = 8
+frame = 2
