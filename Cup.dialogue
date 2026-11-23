@@ -1,0 +1,22 @@
+ 
+~ start
+
+if GameState.hide_chase_active
+	The cup won't help you right now.
+	=> END
+
+else
+	PLUM: A cup of water. (Happy)
+
+	- Take the cup of water
+		The cup of water was added to your items.
+		VINCENT: Nope! (Angry)
+		Vincent removed the cup of water from your items.
+		PLUM: Hey! (angry)
+		VINCENT: I don't want you drinking anything old from here.
+		PLUM: I wasn't going to drink it. (embarassed)
+		=> END
+
+	- Leave the cup of water
+		=> END
+ 

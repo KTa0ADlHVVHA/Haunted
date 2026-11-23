@@ -1,0 +1,12 @@
+ 
+~ start
+
+if GameState.hide_chase_active
+	You can't keep hiding on the internet, {{GameState.windows_username}}.
+	=> END
+
+else
+	PLUM: A old persons computer! (suprised)
+	PLUM: It isn't plugged in...
+	=> END
+ 

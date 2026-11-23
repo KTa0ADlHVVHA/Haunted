@@ -1,0 +1,13 @@
+ 
+~ start
+
+if GameState.hide_chase_active
+	You don't think you could hide here.
+	=> END
+
+else
+	PLUM: Last time I stepped on a chair it broke... (sad) 
+	VINCENT: Guess you need to lose weight. (silly)
+	PLUM: Hey! (angry)
+	=> END
+ 

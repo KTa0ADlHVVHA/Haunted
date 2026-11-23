@@ -1,4 +1,3 @@
-
 extends StaticBody2D
 
 
@@ -18,9 +17,148 @@ var interaction_count: int = 0
 
 var choice_counts: Dictionary = {}
 
+# Remembers visibility changes made using show_node / hide_node.
+#
+# Example:
+# {
+#     "Sprite2D": false,
+#     "Sprite2D2": true
+# }
+var node_visibility: Dictionary = {}
+
+
+var _state_id: String = ""
+
 
 # Remember the player who interacted with this object.
 var interacting_player: CharacterBody2D = null
+
+
+# ============================================================
+# READY
+# ============================================================
+
+func _ready() -> void:
+
+	_state_id = GameState.get_event_id(
+		self
+	)
+
+	_restore_interaction_state()
+
+
+# ============================================================
+# RESTORE STATE
+# ============================================================
+
+func _restore_interaction_state() -> void:
+
+	if _state_id.is_empty():
+		return
+
+
+	var saved: Dictionary = (
+		GameState.get_interaction_state(
+			_state_id
+		)
+	)
+
+
+	if saved.is_empty():
+		return
+
+
+	# ========================================================
+	# INTERACTION COUNT
+	# ========================================================
+
+	interaction_count = int(
+		saved.get(
+			"interaction_count",
+			0
+		)
+	)
+
+
+	# ========================================================
+	# CHOICE COUNTERS
+	# ========================================================
+
+	var saved_choices = saved.get(
+		"choice_counts",
+		{}
+	)
+
+
+	if saved_choices is Dictionary:
+
+		choice_counts = (
+			saved_choices.duplicate(true)
+		)
+
+
+	# ========================================================
+	# NODE VISIBILITY
+	# ========================================================
+
+	var saved_visibility = saved.get(
+		"node_visibility",
+		{}
+	)
+
+
+	if saved_visibility is Dictionary:
+
+		node_visibility = (
+			saved_visibility.duplicate(true)
+		)
+
+
+		for node_path in node_visibility:
+
+			var target: Node = get_node_or_null(
+				NodePath(
+					str(node_path)
+				)
+			)
+
+
+			if target == null:
+				continue
+
+
+			if target is CanvasItem:
+
+				target.visible = bool(
+					node_visibility[
+						node_path
+					]
+				)
+
+
+# ============================================================
+# SAVE STATE
+# ============================================================
+
+func _save_interaction_state() -> void:
+
+	if _state_id.is_empty():
+
+		_state_id = GameState.get_event_id(
+			self
+		)
+
+
+	if _state_id.is_empty():
+		return
+
+
+	GameState.save_interaction_state(
+		_state_id,
+		interaction_count,
+		choice_counts,
+		node_visibility
+	)
 
 
 # ============================================================
@@ -28,25 +166,56 @@ var interacting_player: CharacterBody2D = null
 # ============================================================
 
 func interact(_player = null) -> void:
+
 	if GameState.in_dialogue:
 		return
 
+
 	if dialogue_resource == null:
+
 		push_warning(
 			"Interactable has no DialogueResource assigned."
 		)
+
 		return
 
-	# Remember who interacted with us.
+
+	# --------------------------------------------------------
+	# REMEMBER PLAYER
+	# --------------------------------------------------------
+
 	if _player is CharacterBody2D:
+
 		interacting_player = _player
+
+
+	# --------------------------------------------------------
+	# INCREASE INTERACTION COUNT
+	# --------------------------------------------------------
 
 	interaction_count += 1
 
-	var title: String = start_node.strip_edges()
+
+	_save_interaction_state()
+
+
+	# --------------------------------------------------------
+	# DIALOGUE START NODE
+	# --------------------------------------------------------
+
+	var title: String = (
+		start_node.strip_edges()
+	)
+
 
 	if title.is_empty():
+
 		title = "start"
+
+
+	# --------------------------------------------------------
+	# SHOW DIALOGUE
+	# --------------------------------------------------------
 
 	DialogueManager.show_dialogue_balloon(
 		dialogue_resource,
@@ -60,18 +229,28 @@ func interact(_player = null) -> void:
 # ============================================================
 
 func get_interaction_count() -> int:
+
 	return interaction_count
 
 
 func reset_interaction_count() -> void:
+
 	interaction_count = 0
 
+	_save_interaction_state()
 
-func set_interaction_count(value: int) -> void:
+
+func set_interaction_count(
+	value: int
+) -> void:
+
 	interaction_count = maxi(
 		value,
 		0
 	)
+
+
+	_save_interaction_state()
 
 
 # ============================================================
@@ -94,13 +273,19 @@ func increment_choice(
 	choice_name: String
 ) -> void:
 
-	var current_count: int = get_choice_count(
-		choice_name
+	var current_count: int = (
+		get_choice_count(
+			choice_name
+		)
 	)
+
 
 	choice_counts[
 		choice_name
 	] = current_count + 1
+
+
+	_save_interaction_state()
 
 
 func set_choice_count(
@@ -116,6 +301,9 @@ func set_choice_count(
 	)
 
 
+	_save_interaction_state()
+
+
 func reset_choice(
 	choice_name: String
 ) -> void:
@@ -125,15 +313,20 @@ func reset_choice(
 	)
 
 
+	_save_interaction_state()
+
+
 func reset_all_choices() -> void:
+
 	choice_counts.clear()
+
+
+	_save_interaction_state()
 
 
 # ============================================================
 # NODE VISIBILITY
 # ============================================================
-
-# Supports Sprite2D, Polygon2D and other CanvasItem nodes.
 
 func show_node(
 	node_path: String
@@ -143,14 +336,29 @@ func show_node(
 		NodePath(node_path)
 	)
 
+
 	if target == null:
+
 		push_warning(
-			"Could not find node: " + node_path
+			"Could not find node: "
+			+ node_path
 		)
+
 		return
 
+
 	if target is CanvasItem:
+
 		target.visible = true
+
+
+		# Remember that this node should remain visible.
+		node_visibility[
+			node_path
+		] = true
+
+
+		_save_interaction_state()
 
 
 func hide_node(
@@ -161,14 +369,53 @@ func hide_node(
 		NodePath(node_path)
 	)
 
+
 	if target == null:
+
 		push_warning(
-			"Could not find node: " + node_path
+			"Could not find node: "
+			+ node_path
 		)
+
 		return
 
+
 	if target is CanvasItem:
+
 		target.visible = false
+
+
+		# Remember that this node should remain hidden.
+		node_visibility[
+			node_path
+		] = false
+
+
+		_save_interaction_state()
+
+
+# ============================================================
+# RESET NODE VISIBILITY MEMORY
+# ============================================================
+
+func reset_node_visibility(
+	node_path: String
+) -> void:
+
+	node_visibility.erase(
+		node_path
+	)
+
+
+	_save_interaction_state()
+
+
+func reset_all_node_visibility() -> void:
+
+	node_visibility.clear()
+
+
+	_save_interaction_state()
 
 
 # ============================================================
@@ -176,16 +423,21 @@ func hide_node(
 # ============================================================
 
 func make_walkable() -> void:
+
 	if interacting_player == null:
+
 		push_warning(
 			"make_walkable() could not find the interacting player."
 		)
+
 		return
+
 
 	# Make the object ignore the player.
 	add_collision_exception_with(
 		interacting_player
 	)
+
 
 	# Also make the player ignore this object.
 	interacting_player.add_collision_exception_with(
@@ -194,15 +446,20 @@ func make_walkable() -> void:
 
 
 func make_solid() -> void:
+
 	if interacting_player == null:
+
 		push_warning(
 			"make_solid() could not find the interacting player."
 		)
+
 		return
+
 
 	remove_collision_exception_with(
 		interacting_player
 	)
+
 
 	interacting_player.remove_collision_exception_with(
 		self
@@ -213,10 +470,6 @@ func make_solid() -> void:
 # COLLISION HELPERS
 # ============================================================
 
-# Supports:
-# - CollisionShape2D
-# - CollisionPolygon2D
-
 func disable_collision(
 	node_path: String
 ) -> void:
@@ -225,18 +478,29 @@ func disable_collision(
 		NodePath(node_path)
 	)
 
+
 	if target == null:
+
 		push_warning(
-			"Could not find collision node: " + node_path
+			"Could not find collision node: "
+			+ node_path
 		)
+
 		return
 
-	if target is CollisionShape2D or target is CollisionPolygon2D:
+
+	if (
+		target is CollisionShape2D
+		or target is CollisionPolygon2D
+	):
+
 		target.set_deferred(
 			"disabled",
 			true
 		)
+
 	else:
+
 		push_warning(
 			"Node is not a CollisionShape2D or CollisionPolygon2D: "
 			+ node_path
@@ -251,18 +515,29 @@ func enable_collision(
 		NodePath(node_path)
 	)
 
+
 	if target == null:
+
 		push_warning(
-			"Could not find collision node: " + node_path
+			"Could not find collision node: "
+			+ node_path
 		)
+
 		return
 
-	if target is CollisionShape2D or target is CollisionPolygon2D:
+
+	if (
+		target is CollisionShape2D
+		or target is CollisionPolygon2D
+	):
+
 		target.set_deferred(
 			"disabled",
 			false
 		)
+
 	else:
+
 		push_warning(
 			"Node is not a CollisionShape2D or CollisionPolygon2D: "
 			+ node_path
@@ -273,14 +548,20 @@ func enable_collision(
 # NODE SKEW
 # ============================================================
 
-# Supports Sprite2D, Polygon2D and other Node2D nodes.
-
 func set_node_skew(
 	node_path: String,
 	degrees: float
 ) -> void:
 
-	var sprite := get_node_or_null(node_path) as Node2D
+	var sprite := (
+		get_node_or_null(
+			NodePath(node_path)
+		) as Node2D
+	)
+
 
 	if sprite != null:
-		sprite.skew = deg_to_rad(degrees)
+
+		sprite.skew = deg_to_rad(
+			degrees
+		)

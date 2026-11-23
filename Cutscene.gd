@@ -377,17 +377,39 @@ func _enable_player_collisions() -> void:
 # START DELAY
 # ============================================================
 
+# ============================================================
+# START DELAY
+# ============================================================
+
 func _start_after_delay() -> void:
 
 	if start_delay > 0.0:
 
+		# IMPORTANT:
+		# process_always = false
+		#
+		# This means the timer PAUSES when the game is paused.
+		# So pressing X before a cutscene can no longer cause
+		# the cutscene to start while the pause menu is open.
 		await get_tree().create_timer(
-			start_delay
+			start_delay,
+			false
 		).timeout
 
 
 	if not is_inside_tree():
 		return
+
+
+	# Extra safety:
+	# Never begin a cutscene while the scene tree is paused.
+	while get_tree().paused:
+
+		await get_tree().process_frame
+
+
+		if not is_inside_tree():
+			return
 
 
 	start_cutscene()

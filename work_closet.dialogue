@@ -1,0 +1,49 @@
+~ start
+
+if GameState.hide_chase_active
+	PLUM: The right side of the closet doesn't close... (scared)
+	PLUM: I don't think we should hide here. (worried)
+
+	Hide in the closet?
+
+	- Yes
+		$> GameState.cancel_hide_chase()
+		You hide in the closet.
+		It's really cramped.
+		PLUM: I'm scared... (crying)
+		VINCENT: Hey, I'm here.
+		You hear a loud bang outside the closet.
+
+		- Peek out
+			You peek out.
+			???: Found you.
+			[scene=game_over]
+			=> END
+
+		- Stay hidden
+			$> GameState.mark_event_seen("workroom_chase_survived")
+			You stay hidden...
+			After a while there's no sound.
+			You get out of the closet.
+			VINCENT: What was that? (worried)
+			VINCENT: We have to get out of here...
+			VINCENT: Be safe okay? (worried) // scene of him kissing her
+			=> END 
+
+	- No
+		You need to hurry up...
+		=> END
+
+else
+	PLUM: There's nothing in the closet.
+
+	- Open the left side
+		You pull on the door.
+		Nothing happens.
+		=> END
+
+	- Open the right side
+		PLUM: There's enough space for me and dad to go inside. (silly)
+		You pull on the door.
+		Nothing happens.
+		=> END

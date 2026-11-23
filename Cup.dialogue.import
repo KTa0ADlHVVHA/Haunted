@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cwafsvkcf7f53"
+path="res://.godot/imported/Cup.dialogue-03129ee81a956a3a3c8cdc40847daf5b.tres"
+
+[deps]
+
+source_file="res://Cup.dialogue"
+dest_files=["res://.godot/imported/Cup.dialogue-03129ee81a956a3a3c8cdc40847daf5b.tres"]
+
+[params]
+
+defaults=true

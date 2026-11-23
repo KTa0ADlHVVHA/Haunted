@@ -1,12 +1,22 @@
 
 extends Node
 
+var interaction_states: Dictionary = {}
 # General game state
 var pov: String = "father"
 var in_dialogue: bool = false
 var has_vincent: bool = false
 var total_playtime: float = 0.0
 var in_game: bool = true
+var windows_username: String = OS.get_environment("USERNAME")
+# ============================================================
+# HIDE / CHASE EVENT
+# ============================================================
+
+var hide_chase_active: bool = false
+var hide_chase_time_left: float = 0.0
+
+var _hide_chase_id: int = 0
 
 # Story / inventory
 var has_flower: bool = false
@@ -188,3 +198,255 @@ func reset_story_state() -> void:
 	room_positions.clear()
 	loading_from_save = false
 	skip_room_restore_path = ""
+	interaction_states.clear()
+	
+ 
+
+# ============================================================
+# START HIDE CHASE
+# ============================================================
+
+func start_hide_chase(
+	seconds: float = 15.0,
+	failure_dialogue_path: String = "",
+	failure_start_node: String = "start"
+) -> void:
+
+	# Cancel any previous chase timer.
+	_hide_chase_id += 1
+
+	var this_chase_id: int = _hide_chase_id
+
+
+	hide_chase_active = false
+
+	hide_chase_time_left = seconds
+
+
+	_run_hide_chase(
+		seconds,
+		failure_dialogue_path,
+		failure_start_node,
+		this_chase_id
+	)
+
+
+# ============================================================
+# RUN HIDE CHASE
+# ============================================================
+
+func _run_hide_chase(
+	seconds: float,
+	failure_dialogue_path: String,
+	failure_start_node: String,
+	chase_id: int
+) -> void:
+
+	# --------------------------------------------------------
+	# WAIT FOR INTRO DIALOGUE TO CLOSE
+	# --------------------------------------------------------
+
+	while in_dialogue:
+
+		await get_tree().process_frame
+
+
+		if chase_id != _hide_chase_id:
+			return
+
+
+	# --------------------------------------------------------
+	# START TIMER
+	# --------------------------------------------------------
+
+	hide_chase_active = true
+
+	hide_chase_time_left = seconds
+
+
+	# --------------------------------------------------------
+	# COUNTDOWN
+	# --------------------------------------------------------
+
+	while hide_chase_time_left > 0.0:
+
+		await get_tree().process_frame
+
+
+		# A newer chase replaced this one.
+		if chase_id != _hide_chase_id:
+			return
+
+
+		# Player successfully hid.
+		if not hide_chase_active:
+			return
+
+
+		# Pause timer while the player is reading dialogue.
+		if in_dialogue:
+			continue
+
+
+		hide_chase_time_left -= (
+			get_process_delta_time()
+		)
+
+
+	# ========================================================
+	# TIMER RAN OUT
+	# ========================================================
+
+	if chase_id != _hide_chase_id:
+		return
+
+
+	if not hide_chase_active:
+		return
+
+
+	hide_chase_active = false
+
+	hide_chase_time_left = 0.0
+
+
+	# ========================================================
+	# PLAY FAILURE DIALOGUE
+	# ========================================================
+
+	_play_hide_failure_dialogue(
+		failure_dialogue_path,
+		failure_start_node
+	)
+
+
+# ============================================================
+# FAILURE DIALOGUE
+# ============================================================
+
+func _play_hide_failure_dialogue(
+	dialogue_path: String,
+	start_node: String
+) -> void:
+
+	if dialogue_path.strip_edges().is_empty():
+
+		push_warning(
+			"Hide chase ended, but no failure dialogue was assigned."
+		)
+
+		return
+
+
+	if not ResourceLoader.exists(
+		dialogue_path
+	):
+
+		push_warning(
+			"Hide chase failure dialogue doesn't exist: "
+			+ dialogue_path
+		)
+
+		return
+
+
+	var dialogue_resource = load(
+		dialogue_path
+	)
+
+
+	if dialogue_resource == null:
+
+		push_warning(
+			"Couldn't load hide chase failure dialogue: "
+			+ dialogue_path
+		)
+
+		return
+
+
+	DialogueManager.show_dialogue_balloon(
+		dialogue_resource,
+		start_node
+	)
+
+
+# ============================================================
+# SUCCESSFULLY HIDE
+# ============================================================
+
+func complete_hide_chase(
+	completion_event: String = ""
+) -> void:
+
+	if not hide_chase_active:
+		return
+
+
+	hide_chase_active = false
+
+	hide_chase_time_left = 0.0
+
+
+	# Stop the existing timer.
+	_hide_chase_id += 1
+
+
+	if not completion_event.strip_edges().is_empty():
+
+		mark_event_seen(
+			completion_event.strip_edges()
+		)
+
+
+# ============================================================
+# CANCEL HIDE CHASE
+# ============================================================
+
+func cancel_hide_chase() -> void:
+
+	hide_chase_active = false
+
+	hide_chase_time_left = 0.0
+
+	_hide_chase_id += 1
+func start_workroom_chase() -> void:
+	start_hide_chase(
+		15.0,
+		"res://workroom_chase_death.dialogue",
+		"start"
+	)
+	
+func save_interaction_state(
+	event_id: String,
+	interaction_count: int,
+	choice_counts: Dictionary,
+	node_visibility: Dictionary = {}
+) -> void:
+
+	if event_id.is_empty():
+		return
+
+	interaction_states[event_id] = {
+		"interaction_count": interaction_count,
+		"choice_counts": choice_counts.duplicate(true),
+		"node_visibility": node_visibility.duplicate(true)
+	}
+
+
+func get_interaction_state(
+	event_id: String
+) -> Dictionary:
+
+	if event_id.is_empty():
+		return {}
+
+	var state = interaction_states.get(
+		event_id,
+		{}
+	)
+
+	if state is Dictionary:
+		return state
+
+	return {}

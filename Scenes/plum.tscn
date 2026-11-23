@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://d2ul5j5xt8p78" path="res://Pixel art/UI/Options.png" id="5_ij5j4"]
 [ext_resource type="Texture2D" uid="uid://dc2lnlningyfd" path="res://Pixel art/UI/Items.png" id="6_li0uo"]
 [ext_resource type="Shader" uid="uid://hqob2phnqtc6" path="res://saturation.gdshader" id="8_ij5j4"]
+[ext_resource type="Script" uid="uid://dchvcnn6ae0nw" path="res://Scenes/label.gd" id="10_6tx2w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_li0uo"]
 radius = 3.8078868
@@ -142,3 +143,14 @@ offset_top = -329.0
 offset_right = 418.0
 offset_bottom = 302.0
 metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1422279359]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1938541893]
+offset_left = -8.0
+offset_top = -24.0
+offset_right = 32.0
+offset_bottom = -1.0
+theme_override_fonts/font = ExtResource("4_ij5j4")
+text = "15"
+script = ExtResource("10_6tx2w")

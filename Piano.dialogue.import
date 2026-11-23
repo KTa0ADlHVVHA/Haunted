@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://q6eca344k8by"
+path="res://.godot/imported/Piano.dialogue-cdfc843fd0996d4b27904d9da7eb190f.tres"
+
+[deps]
+
+source_file="res://Piano.dialogue"
+dest_files=["res://.godot/imported/Piano.dialogue-cdfc843fd0996d4b27904d9da7eb190f.tres"]
+
+[params]
+
+defaults=true

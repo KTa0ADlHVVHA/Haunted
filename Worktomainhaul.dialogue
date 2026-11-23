@@ -1,3 +1,10 @@
+
 ~ start
-[scene=main_hall]
-=> END
+
+if GameState.hide_chase_active
+	You need to hide.
+	=> END
+
+else
+	[scene=main_hall]
+	=> END

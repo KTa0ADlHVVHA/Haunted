@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://tt4m2bvudlxw"
+path="res://.godot/imported/work_closet.dialogue-67d54775b679ab9e48f71015f9ad2ee9.tres"
+
+[deps]
+
+source_file="res://work_closet.dialogue"
+dest_files=["res://.godot/imported/work_closet.dialogue-67d54775b679ab9e48f71015f9ad2ee9.tres"]
+
+[params]
+
+defaults=true

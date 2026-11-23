@@ -1,0 +1,26 @@
+```text
+~ start
+
+if GameState.hide_chase_active
+	Hide behind the plant?
+
+	- Yes
+		$> GameState.cancel_hide_chase()
+		You hide behind the plant...
+		You're somehow confident that whatever that thing is won't be able to find you here.
+		VINCENT: Are you sure we needed to hide?
+		It found you.
+		[scene=game_over]
+		=> END
+
+	- No
+		You need to hurry up...
+		=> END
+
+else
+	VINCENT: Oh god! (suprised)
+	VINCENT: It's a real plant. (Happy)
+	PLUM: It looks tastsy... (silly)
+	VINCENT: I'll get you something to eat later.
+	=> END
+```

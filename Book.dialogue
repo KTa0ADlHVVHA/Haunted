@@ -1,0 +1,13 @@
+ 
+~ start
+
+if GameState.hide_chase_active
+	You fail to see how this book will help you hide.
+	=> END
+
+else
+	PLUM: It's a book! (happy)
+	The pages seem to be stuck together.
+	VINCENT: Don't touch that thing. (worried)
+	=> END
+ 

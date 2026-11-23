@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cnev6soqxdaei"
+path="res://.godot/imported/note.dialogue-fdc5768990dcb0dd5dbfe3ac84bc047a.tres"
+
+[deps]
+
+source_file="res://note.dialogue"
+dest_files=["res://.godot/imported/note.dialogue-fdc5768990dcb0dd5dbfe3ac84bc047a.tres"]
+
+[params]
+
+defaults=true

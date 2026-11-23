@@ -1,0 +1,12 @@
+ 
+~ start
+
+if GameState.hide_chase_active
+	There's nothing useful on these notes.
+	=> END
+
+else
+	VINCENT: It feels like someone was collecting some sort of data. (thinking)
+	VINCENT: We might have gotten into something bigger than we though... (worried)
+	=> END
+ 

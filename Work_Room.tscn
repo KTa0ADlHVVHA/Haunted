@@ -11,17 +11,27 @@
 [ext_resource type="Texture2D" uid="uid://bwaocjw1a4vs" path="res://Pixel art/Background/Background.png" id="9_rpo0l"]
 [ext_resource type="Texture2D" uid="uid://cwpbfspc2yinh" path="res://Carpet.png" id="10_mx7ka"]
 [ext_resource type="Script" uid="uid://c8lic5qyea1uc" path="res://Scripts/Items.gd" id="11_23t03"]
+[ext_resource type="Resource" uid="uid://tt4m2bvudlxw" path="res://work_closet.dialogue" id="12_4n4y8"]
 [ext_resource type="Texture2D" uid="uid://dyda1u2jlckn4" path="res://Wardrobe 2.png" id="13_p70u6"]
 [ext_resource type="Texture2D" uid="uid://ccyutsqa50iio" path="res://Plant work.png" id="14_1bnxu"]
+[ext_resource type="Resource" uid="uid://2mx6m26hywbv" path="res://real_plant.dialogue" id="14_3mbcs"]
 [ext_resource type="Texture2D" uid="uid://byg603g5wf1kv" path="res://Book.png" id="14_p70u6"]
 [ext_resource type="Texture2D" uid="uid://db0nduc3b2h8n" path="res://Computer on table .png" id="15_fe305"]
+[ext_resource type="Resource" uid="uid://boykprm07va2g" path="res://Book.dialogue" id="16_kk7iq"]
 [ext_resource type="Texture2D" uid="uid://lfqj6n7osppn" path="res://Art/Note on table.png" id="16_vxw22"]
 [ext_resource type="Texture2D" uid="uid://ca83r3q1rwuy5" path="res://Chair .png" id="17_vxw22"]
+[ext_resource type="Resource" uid="uid://cnev6soqxdaei" path="res://note.dialogue" id="18_qc331"]
 [ext_resource type="Texture2D" uid="uid://0vumnlf17bo1" path="res://Notes.png" id="18_rpo0l"]
+[ext_resource type="Resource" uid="uid://bxehp1qcx1qky" path="res://notes.dialogue" id="19_1jl8q"]
 [ext_resource type="Texture2D" uid="uid://ddfi5xj6pdj4w" path="res://Palm tree.png" id="19_mx7ka"]
+[ext_resource type="Resource" uid="uid://cwafsvkcf7f53" path="res://Cup.dialogue" id="19_rv0ow"]
 [ext_resource type="Texture2D" uid="uid://ck0fc6dewogc0" path="res://Piano top.png" id="20_kuqsh"]
+[ext_resource type="Resource" uid="uid://b2hd3wiiqpe2w" path="res://Chair 2.dialogue" id="20_n03kh"]
+[ext_resource type="Resource" uid="uid://dj3bxkwmq0d2p" path="res://Computer.dialogue" id="20_qkhx4"]
 [ext_resource type="Texture2D" uid="uid://xq11fxwn5leq" path="res://Piano seat .png" id="21_h30ar"]
+[ext_resource type="Resource" uid="uid://q6eca344k8by" path="res://Piano.dialogue" id="22_f3mgq"]
 [ext_resource type="Resource" uid="uid://cmockivlkt04b" path="res://Worktomainhaul.dialogue" id="22_lhdtw"]
+[ext_resource type="Resource" uid="uid://c2usnhldnm0ql" path="res://real_plant_2.dialogue" id="22_wbtvw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kuqsh"]
 texture = ExtResource("2_8b0s8")
@@ -122,7 +132,10 @@ size = Vector2(16, 11.68)
 size = Vector2(16, 6.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rpo0l"]
-size = Vector2(16, 31)
+size = Vector2(16, 17.844997)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rv0ow"]
+size = Vector2(16, 12.844999)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mx7ka"]
 size = Vector2(16, 14)
@@ -205,6 +218,7 @@ position = Vector2(-16, -30.585)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_23t03")
+dialogue_resource = ExtResource("12_4n4y8")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Waredrope" unique_id=1254749861]
@@ -222,6 +236,7 @@ position = Vector2(-5, 59)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_23t03")
+dialogue_resource = ExtResource("14_3mbcs")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Plant" unique_id=1258105780]
@@ -239,6 +254,7 @@ position = Vector2(-72, 71)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_23t03")
+dialogue_resource = ExtResource("16_kk7iq")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Book" unique_id=695589774]
@@ -249,22 +265,40 @@ texture = ExtResource("14_p70u6")
 position = Vector2(0, 1.75)
 shape = SubResource("RectangleShape2D_vxw22")
 
-[node name="Table" type="StaticBody2D" parent="." unique_id=551068896]
+[node name="Note" type="StaticBody2D" parent="." unique_id=551068896]
 y_sort_enabled = true
 position = Vector2(46, 32.405)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_23t03")
+dialogue_resource = ExtResource("18_qc331")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Table" unique_id=522046429]
+[node name="Sprite2D" type="Sprite2D" parent="Note" unique_id=522046429]
 texture_filter = 1
 texture = ExtResource("16_vxw22")
 offset = Vector2(0, 15.1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Table" unique_id=1316403891]
-position = Vector2(0, 14.94)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Note" unique_id=1316403891]
+position = Vector2(0, 21.517502)
 shape = SubResource("RectangleShape2D_rpo0l")
+
+[node name="Cup" type="StaticBody2D" parent="Note" unique_id=1045519141]
+y_sort_enabled = true
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("11_23t03")
+dialogue_resource = ExtResource("19_rv0ow")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Note/Cup" unique_id=668263759]
+texture_filter = 1
+texture = ExtResource("16_vxw22")
+offset = Vector2(0, 15.1)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Note/Cup" unique_id=1817998207]
+position = Vector2(0, 6.017502)
+shape = SubResource("RectangleShape2D_rv0ow")
 
 [node name="Computer" type="StaticBody2D" parent="." unique_id=163016049]
 y_sort_enabled = true
@@ -272,6 +306,7 @@ position = Vector2(-40, 93)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_23t03")
+dialogue_resource = ExtResource("20_qkhx4")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Computer" unique_id=75747577]
@@ -288,6 +323,7 @@ position = Vector2(77, 39)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_23t03")
+dialogue_resource = ExtResource("20_n03kh")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Chair" unique_id=901837994]
@@ -305,6 +341,7 @@ position = Vector2(-74, -57)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_23t03")
+dialogue_resource = ExtResource("19_1jl8q")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Notes" unique_id=1958448981]
@@ -321,6 +358,7 @@ position = Vector2(70, 103)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_23t03")
+dialogue_resource = ExtResource("22_wbtvw")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Plant2" unique_id=2117960157]
@@ -337,6 +375,7 @@ position = Vector2(48, -25)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_23t03")
+dialogue_resource = ExtResource("22_f3mgq")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D2" type="Sprite2D" parent="Piano" unique_id=267044546]

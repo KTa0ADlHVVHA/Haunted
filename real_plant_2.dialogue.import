@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c2usnhldnm0ql"
+path="res://.godot/imported/real_plant_2.dialogue-92dbf22cab6f1b2e0d449b29cb6c45f4.tres"
+
+[deps]
+
+source_file="res://real_plant_2.dialogue"
+dest_files=["res://.godot/imported/real_plant_2.dialogue-92dbf22cab6f1b2e0d449b29cb6c45f4.tres"]
+
+[params]
+
+defaults=true

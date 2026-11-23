@@ -1,0 +1,13 @@
+ 
+~ start
+
+if GameState.hide_chase_active
+	There's no space behind this plant.
+	=> END
+
+else
+	VINCENT: Whoever made this room has great taste. (suprised)
+	PLUM: Maybe we could move here. (silly)
+	VINCENT: What's wrong with our house. (thinking)
+	=> END
+ 

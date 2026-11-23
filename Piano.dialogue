@@ -1,0 +1,13 @@
+ 
+~ start
+
+if GameState.hide_chase_active
+	There's no time to play the piano.
+	=> END
+
+else
+	PLUM: Oh my gosh! (suprised)
+	VINCENT: Go on... You can play it. (Happy)
+	You play the piano.
+	=> END
+ 

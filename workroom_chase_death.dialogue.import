@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://hgt87r1k65r0"
+path="res://.godot/imported/workroom_chase_death.dialogue-0fa389c05a05bad5ea7964d206a1a7b2.tres"
+
+[deps]
+
+source_file="res://workroom_chase_death.dialogue"
+dest_files=["res://.godot/imported/workroom_chase_death.dialogue-0fa389c05a05bad5ea7964d206a1a7b2.tres"]
+
+[params]
+
+defaults=true

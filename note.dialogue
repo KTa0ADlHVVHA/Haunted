@@ -1,0 +1,22 @@
+~ start
+
+if GameState.hide_chase_active
+	You need to hide.
+	=> END
+
+else
+	PLUM: The handwriting is really bad.
+	VINCENT: Let me read it.
+	VINCENT: 'I'm sorry but I had to do it.' 
+	VINCENT: 'That girl was posessed, I tried my best to... Rosie... please forgive me...'
+	VINCENT: I can't read the rest of this (worried)
+	GORUHGHTEHIFHFI 
+	PLUM: What was that. (scared)
+	VINCENT: It was probally nothing... (worried)
+	ROSIE: You have to hide! 
+	PLUM: Dad! We have to hide... (scared)
+	VINCENT: What? Where did that come from? (worried)
+	PLUM: Hide! (scared)
+
+	$> GameState.start_workroom_chase()
+	=> END
