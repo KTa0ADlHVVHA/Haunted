@@ -150,6 +150,10 @@ size = Vector2(27, 13.024994)
 [node name="Bathroom" type="Node2D" unique_id=2086868619]
 y_sort_enabled = true
 script = ExtResource("1_8bkkb")
+min_working_time = 2.535
+max_working_time = 5.72
+min_failure_time = 0.98
+max_failure_time = 2.185
 
 [node name="Plum" parent="." unique_id=444547423 instance=ExtResource("1_2ykvt")]
 position = Vector2(-23.53, 116.41)
@@ -377,3 +381,6 @@ dialogue_resource = ExtResource("32_6e61r")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Back to hall" unique_id=1041985187]
 position = Vector2(-154, 98)
 shape = SubResource("RectangleShape2D_8bkkb")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=645145370]
+color = Color(0.15686275, 0.15686275, 0.15686275, 1)

@@ -12,7 +12,7 @@ var windows_username: String = OS.get_environment("USERNAME")
 # ============================================================
 # HIDE / CHASE EVENT
 # ============================================================
-
+var room_transition_active: bool = false
 var hide_chase_active: bool = false
 var hide_chase_time_left: float = 0.0
 
@@ -67,11 +67,10 @@ func _on_dialogue_started(_resource = null) -> void:
 
 func _on_dialogue_ended(_resource = null) -> void:
 	in_dialogue = false
-
-func _on_scene_changed(_new_scene: Node) -> void:
-	# Runs after the incoming scene has finished _ready().
+func _on_scene_changed(_new_scene = null) -> void:
 	loading_from_save = false
 	skip_room_restore_path = ""
+	room_transition_active = false
 
 func get_playtime() -> int:
 	return int(total_playtime)

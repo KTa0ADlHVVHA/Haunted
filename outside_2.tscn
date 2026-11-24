@@ -124,7 +124,7 @@ sources/0 = SubResource("TileSetAtlasSource_ndlt4")
 size = Vector2(20, 18.75)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2bsyc"]
-size = Vector2(43.25, 6.625)
+size = Vector2(43.25, 5.625)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_16r06"]
 size = Vector2(20.25, 17.5)
@@ -221,7 +221,7 @@ script = ExtResource("14_1vv88")
 dialogue_resource = ExtResource("15_vpn4y")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Main hall" unique_id=1659953981]
-position = Vector2(127.625, 53.3125)
+position = Vector2(127.625, 53.8125)
 shape = SubResource("RectangleShape2D_2bsyc")
 
 [node name="Gloves" type="StaticBody2D" parent="." unique_id=1859083288]
@@ -353,3 +353,6 @@ texture = ExtResource("27_ip42n")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Windows" unique_id=1767918800]
 position = Vector2(0, 16.5)
 shape = SubResource("RectangleShape2D_a3aej")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1964853764]
+color = Color(0.2509804, 0.2509804, 0.2509804, 1)

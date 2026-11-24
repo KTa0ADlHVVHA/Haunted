@@ -32,6 +32,7 @@
 [ext_resource type="Resource" uid="uid://q6eca344k8by" path="res://Piano.dialogue" id="22_f3mgq"]
 [ext_resource type="Resource" uid="uid://cmockivlkt04b" path="res://Worktomainhaul.dialogue" id="22_lhdtw"]
 [ext_resource type="Resource" uid="uid://c2usnhldnm0ql" path="res://real_plant_2.dialogue" id="22_wbtvw"]
+[ext_resource type="Script" uid="uid://3gwnmlk8c4uc" path="res://chase.gd" id="33_08ykn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qc331"]
 texture = ExtResource("2_8b0s8")
@@ -419,3 +420,7 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorkRoom" unique_id=1332025302]
 position = Vector2(9.25, 0.5)
 shape = SubResource("RectangleShape2D_f3mgq")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1492942585]
+color = Color(0.2509804, 0.2509804, 0.2509804, 1)
+script = ExtResource("33_08ykn")

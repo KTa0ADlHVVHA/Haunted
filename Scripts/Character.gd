@@ -213,8 +213,13 @@ func _input(event: InputEvent) -> void:
 	if not is_inside_tree():
 		return
 
+	if GameState.room_transition_active:
+		return
 
 	if GameState.in_dialogue:
+		return
+
+	if event.is_echo():
 		return
 
 

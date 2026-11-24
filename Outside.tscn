@@ -618,3 +618,6 @@ dialogue_resource = ExtResource("44_beim8")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node/cutscene" unique_id=1755396116]
 position = Vector2(-9, 79.25)
 shape = SubResource("RectangleShape2D_202ee")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=725349156]
+color = Color(0.2509804, 0.2509804, 0.2509804, 1)
