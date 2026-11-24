@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cgy5mdg71p0qu"
+path="res://.godot/imported/Shovel.dialogue-3f47f2bf241f3811983b2b018d4af532.tres"
+
+[deps]
+
+source_file="res://Shovel.dialogue"
+dest_files=["res://.godot/imported/Shovel.dialogue-3f47f2bf241f3811983b2b018d4af532.tres"]
+
+[params]
+
+defaults=true

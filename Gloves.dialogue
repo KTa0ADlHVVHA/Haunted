@@ -1,0 +1,53 @@
+
+~ start
+
+
+if GameState.was_event_seen("gloves_disinfected")
+	$> hide_node("Sprite2D")
+	$> show_node("Sprite2D2")
+
+	PLUM: The gloves look way better now! (happy)
+
+	- Take them
+		$> GameState.add_item("Gloves")
+		$> GameState.mark_event_seen("gloves_taken")
+		$> hide_node("Sprite2D")
+		$> hide_node("Sprite2D2")
+		The gloves were added to your inventory.
+		=> END
+
+	- Leave them
+		=> END
+
+else
+	PLUM: Gloves! They look gross. (worried)
+	VINCENT: They look fine. (thinking)
+
+	if GameState.has_item("Rubbing Alcohol")
+		- Disinfect the gloves
+			$> GameState.remove_item("Rubbing Alcohol")
+			$> GameState.mark_event_seen("gloves_disinfected")
+			$> hide_node("Sprite2D")
+			$> show_node("Sprite2D2")
+			You pour some rubbing alcohol over the gloves.
+			PLUM: All better! (happy)
+			VINCENT: Drama queen... (smug)
+			=> END
+
+		- Leave them alone
+			=> END
+
+	else
+		- Put them on
+			You put on the gloves.
+			PLUM: They feel weird... (worried)
+			You feel something moving.
+			PLUM: Ew! Gross. (scared)
+			A bunch of tiny worms crawl over your hand.
+			VINCENT: They're just worms... (scared)
+			They start eating your flesh bit by bit...
+			[scene=game_over]
+			=> END
+
+		- Leave them alone
+			=> END

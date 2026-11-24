@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c8clqswtfose0"
+path="res://.godot/imported/Random_Stuff.dialogue-1438187e8ffa92c38b2898588a9fd8cc.tres"
+
+[deps]
+
+source_file="res://Random_Stuff.dialogue"
+dest_files=["res://.godot/imported/Random_Stuff.dialogue-1438187e8ffa92c38b2898588a9fd8cc.tres"]
+
+[params]
+
+defaults=true

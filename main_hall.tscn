@@ -405,7 +405,7 @@ offset = Vector2(3.275, 4.05)
 
 [node name="Door3" type="Sprite2D" parent="." unique_id=1871850365]
 z_index = -1
-position = Vector2(-384, 56)
+position = Vector2(-127, 72)
 texture = ExtResource("11_msrrb")
 offset = Vector2(0, -24.04)
 hframes = 8
@@ -508,11 +508,12 @@ position = Vector2(9.25, 0.5)
 shape = SubResource("RectangleShape2D_bfgux")
 
 [node name="Outside" type="StaticBody2D" parent="." unique_id=143159462]
-position = Vector2(-128, 72)
+position = Vector2(-384, 56)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("12_1fnan")
 dialogue_resource = ExtResource("38_5waf1")
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Outside" unique_id=749021615]
 position = Vector2(0.375, -16.25)

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dluivmgvlxr1v"
+path="res://.godot/imported/coat.dialogue-9c56d259f7871e8e9e5871bf686449b5.tres"
+
+[deps]
+
+source_file="res://coat.dialogue"
+dest_files=["res://.godot/imported/coat.dialogue-9c56d259f7871e8e9e5871bf686449b5.tres"]
+
+[params]
+
+defaults=true

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cn7kxt1v0cvde"
+path="res://.godot/imported/Gloves.dialogue-c52f18f2fe6780b880d502f4cceeb204.tres"
+
+[deps]
+
+source_file="res://Gloves.dialogue"
+dest_files=["res://.godot/imported/Gloves.dialogue-c52f18f2fe6780b880d502f4cceeb204.tres"]
+
+[params]
+
+defaults=true
