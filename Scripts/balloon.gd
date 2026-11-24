@@ -1770,14 +1770,11 @@ func _change_scene_safe(
 	# Make sure the incoming Character isn't locked because
 	# Dialogue Manager hasn't finished cleaning up yet.
 	GameState.room_transition_active = true
-	GameState.in_dialogue = false
-
 	get_tree().paused = false
-
 	await get_tree().process_frame
-
 	if not is_inside_tree():
 		return
+	GameState.in_dialogue = false
 
 
 	var error: Error = (

@@ -1,7 +1,7 @@
 extends Area2D
 
 ## Starts dialogue when Plum walks into this area.
-## A one-time trigger can stay completed even when the room reloads.
+## One-time triggers can remain completed between room visits.
 
 
 # ============================================================
@@ -16,11 +16,7 @@ extends Area2D
 # CONDITION
 # ============================================================
 
-## Optional event that must have happened before this trigger works.
-##
-## Example:
-## met_rosie
-##
+## Example: met_rosie
 ## Leave empty if there is no condition.
 @export var required_event: String = ""
 
@@ -36,17 +32,10 @@ enum FacingDirection {
 	UP
 }
 
-
-## Turn this on if Plum should face a specific direction
-## before the dialogue begins.
 @export var force_starting_facing: bool = false
 
-
-## Direction Plum faces when the trigger activates.
 @export var starting_facing: FacingDirection = FacingDirection.DOWN
 
-
-## Optional pause after Plum turns before dialogue starts.
 @export var starting_facing_pause: float = 0.0
 
 
@@ -58,14 +47,10 @@ enum FacingDirection {
 
 @export var start_delay: float = 0.0
 
-
-## Turn this off for a one-time trigger that SHOULD reset
-## when the room is re-entered.
+## Remember completed triggers between room visits.
 @export var remember_between_visits: bool = true
 
-
-## If enabled, Plum must leave this Area2D and then
-## enter it again before it can activate.
+## Plum must leave and re-enter the area before it activates.
 @export var require_exit_before_trigger: bool = false
 
 
@@ -79,6 +64,10 @@ var starting_dialogue: bool = false
 
 var trigger_armed: bool = true
 
+var _locked_body: Node2D = null
+var _restore_input: bool = false
+var _restore_physics: bool = false
+
 
 # ============================================================
 # READY
@@ -86,42 +75,27 @@ var trigger_armed: bool = true
 
 func _ready() -> void:
 
-	# --------------------------------------------------------
-	# RESTORE ONE-TIME EVENT STATE
-	# --------------------------------------------------------
-
 	if trigger_once and remember_between_visits:
 
 		has_triggered = GameState.was_event_seen(
 			GameState.get_event_id(self)
 		)
 
+	trigger_armed = not require_exit_before_trigger
 
-	# --------------------------------------------------------
-	# REQUIRE PLAYER TO LEAVE FIRST
-	# --------------------------------------------------------
+	body_entered.connect(_on_body_entered)
 
-	if require_exit_before_trigger:
-
-		trigger_armed = false
-
-	else:
-
-		trigger_armed = true
+	body_exited.connect(_on_body_exited)
 
 
-	# --------------------------------------------------------
-	# SIGNALS
-	# --------------------------------------------------------
+# ============================================================
+# CLEANUP
+# ============================================================
 
-	body_entered.connect(
-		_on_body_entered
-	)
+func _exit_tree() -> void:
 
-
-	body_exited.connect(
-		_on_body_exited
-	)
+	# Never leave Plum locked if this trigger is removed.
+	_unlock_player(_locked_body)
 
 
 # ============================================================
@@ -130,19 +104,12 @@ func _ready() -> void:
 
 func _condition_is_met() -> bool:
 
-	var event_name: String = (
-		required_event.strip_edges()
-	)
+	var event_name: String = required_event.strip_edges()
 
-
-	# Empty = no condition.
 	if event_name.is_empty():
 		return true
 
-
-	return GameState.was_event_seen(
-		event_name
-	)
+	return GameState.was_event_seen(event_name)
 
 
 # ============================================================
@@ -165,7 +132,6 @@ func _get_starting_direction() -> Vector2:
 		FacingDirection.UP:
 			return Vector2.UP
 
-
 	return Vector2.DOWN
 
 
@@ -173,168 +139,99 @@ func _get_starting_direction() -> Vector2:
 # LOCK PLAYER
 # ============================================================
 
-func _lock_player(
-	body: Node2D
-) -> void:
+func _lock_player(body: Node2D) -> void:
+
+	if not is_instance_valid(body):
+		return
+
+	_locked_body = body
+
+	# Remember which controls were already enabled.
+	# This avoids unlocking controls owned by another cutscene.
+	_restore_input = body.is_processing_input()
+	_restore_physics = body.is_physics_processing()
 
 	if body is CharacterBody2D:
 
-		var character: CharacterBody2D = (
-			body as CharacterBody2D
-		)
+		var character := body as CharacterBody2D
 
 		character.velocity = Vector2.ZERO
 
+	body.set_physics_process(false)
 
-	# Stop Character.gd from immediately changing
-	# the direction again.
-	body.set_physics_process(
-		false
-	)
-
-
-	body.set_process_input(
-		false
-	)
+	body.set_process_input(false)
 
 
 # ============================================================
 # UNLOCK PLAYER
 # ============================================================
 
-func _unlock_player(
-	body: Node2D
-) -> void:
+func _unlock_player(body: Node2D) -> void:
 
-	if not is_instance_valid(body):
-		return
+	if is_instance_valid(body) and body == _locked_body:
 
+		if _restore_physics:
+			body.set_physics_process(true)
 
-	body.set_physics_process(
-		true
-	)
+		if _restore_input:
+			body.set_process_input(true)
 
+	_locked_body = null
 
-	body.set_process_input(
-		true
-	)
+	_restore_input = false
+
+	_restore_physics = false
 
 
 # ============================================================
 # FORCE PLAYER FACING
 # ============================================================
 
-func _force_player_facing(
-	body: Node2D
-) -> void:
+func _force_player_facing(body: Node2D) -> void:
 
-	var direction: Vector2 = (
-		_get_starting_direction()
-	)
-
-
-	# --------------------------------------------------------
-	# STOP MOVEMENT
-	# --------------------------------------------------------
+	var direction: Vector2 = _get_starting_direction()
 
 	if body is CharacterBody2D:
 
-		var character: CharacterBody2D = (
-			body as CharacterBody2D
-		)
+		var character := body as CharacterBody2D
 
 		character.velocity = Vector2.ZERO
 
+	body.set("facing_dir", direction)
 
-	# --------------------------------------------------------
-	# CHANGE FACING
-	# --------------------------------------------------------
+	body.set("last_dir", Vector2.ZERO)
 
-	body.set(
-		"facing_dir",
-		direction
-	)
-
-
-	body.set(
-		"last_dir",
-		Vector2.ZERO
-	)
-
-
-	body.set(
-		"anim_timer",
-		0.0
-	)
-
-
-	# --------------------------------------------------------
-	# CHANGE SPRITE
-	# --------------------------------------------------------
+	body.set("anim_timer", 0.0)
 
 	var sprite: Sprite2D = (
-		body.get_node_or_null(
-			"Sprite2D"
-		) as Sprite2D
+		body.get_node_or_null("Sprite2D") as Sprite2D
 	)
 
-
-	if (
-		sprite != null
-		and body.has_method(
-			"get_anim_offset"
-		)
-	):
+	if sprite != null and body.has_method("get_anim_offset"):
 
 		sprite.frame = body.call(
 			"get_anim_offset",
 			direction
 		)
 
+	if body.has_method("update_interaction_ray"):
 
-	# --------------------------------------------------------
-	# UPDATE INTERACTION RAY
-	# --------------------------------------------------------
+		body.call("update_interaction_ray")
 
-	if body.has_method(
-		"update_interaction_ray"
-	):
+	if body.has_method("sync_follower_sprite"):
 
-		body.call(
-			"update_interaction_ray"
-		)
-
-
-	# --------------------------------------------------------
-	# UPDATE VINCENT
-	# --------------------------------------------------------
-
-	if body.has_method(
-		"sync_follower_sprite"
-	):
-
-		body.call(
-			"sync_follower_sprite",
-			0.0
-		)
+		body.call("sync_follower_sprite", 0.0)
 
 
 # ============================================================
 # BODY EXITED
 # ============================================================
 
-func _on_body_exited(
-	body: Node2D
-) -> void:
+func _on_body_exited(body: Node2D) -> void:
 
-	# Make sure this is Plum.
-	if not body.has_method(
-		"try_interact"
-	):
+	if not body.has_method("try_interact"):
 		return
 
-
-	# Plum has now left the Area2D.
 	trigger_armed = true
 
 
@@ -342,59 +239,31 @@ func _on_body_exited(
 # BODY ENTERED
 # ============================================================
 
-func _on_body_entered(
-	body: Node2D
-) -> void:
+func _on_body_entered(body: Node2D) -> void:
 
-	# --------------------------------------------------------
-	# MAKE SURE THIS IS PLUM
-	# --------------------------------------------------------
-
-	if not body.has_method(
-		"try_interact"
-	):
+	# Make sure this is Plum.
+	if not body.has_method("try_interact"):
 		return
 
-
-	# --------------------------------------------------------
-	# CHECK CONDITION
-	# --------------------------------------------------------
-
+	# Check required event.
 	if not _condition_is_met():
 		return
 
-
-	# --------------------------------------------------------
-	# REQUIRE EXIT FIRST
-	# --------------------------------------------------------
-
-	if (
-		require_exit_before_trigger
-		and not trigger_armed
-	):
+	# Require Plum to leave first, if enabled.
+	if require_exit_before_trigger and not trigger_armed:
 		return
 
-
-	# --------------------------------------------------------
-	# DON'T TRIGGER TWICE
-	# --------------------------------------------------------
-
+	# Prevent duplicate triggers.
 	if starting_dialogue:
 		return
-
 
 	if trigger_once and has_triggered:
 		return
 
-
 	if GameState.in_dialogue:
 		return
 
-
-	# --------------------------------------------------------
-	# VALIDATE DIALOGUE
-	# --------------------------------------------------------
-
+	# Validate dialogue resource.
 	if dialogue_resource == null:
 
 		push_warning(
@@ -403,15 +272,9 @@ func _on_body_entered(
 
 		return
 
-
-	# --------------------------------------------------------
-	# DISARM
-	# --------------------------------------------------------
-
 	if require_exit_before_trigger:
 
 		trigger_armed = false
-
 
 	starting_dialogue = true
 
@@ -420,36 +283,50 @@ func _on_body_entered(
 	# START DELAY
 	# ========================================================
 
+	# The timer now stops while the game is paused.
 	if start_delay > 0.0:
 
 		await get_tree().create_timer(
-			start_delay
+			start_delay,
+			false
 		).timeout
 
+	if not is_inside_tree():
+		return
+
+
+	# ========================================================
+	# WAIT FOR PAUSE / ROOM TRANSITION
+	# ========================================================
+
+	# Never start a dialogue while the pause menu is open
+	# or while another room is loading.
+
+	while get_tree().paused or GameState.room_transition_active:
+
+		await get_tree().process_frame
 
 		if not is_inside_tree():
+			return
+
+		if not is_instance_valid(body):
 
 			starting_dialogue = false
 
 			return
 
 
-		# Plum walked away during the delay.
-		if (
-			not is_instance_valid(body)
-			or not overlaps_body(body)
-		):
+	# ========================================================
+	# CHECK PLAYER IS STILL INSIDE
+	# ========================================================
 
-			starting_dialogue = false
+	if not is_instance_valid(body) or not overlaps_body(body):
 
-			return
+		starting_dialogue = false
 
+		return
 
-	# --------------------------------------------------------
-	# CHECK CONDITION AGAIN
-	# --------------------------------------------------------
-
-	if not _condition_is_met():
+	if not _condition_is_met() or GameState.in_dialogue:
 
 		starting_dialogue = false
 
@@ -457,97 +334,69 @@ func _on_body_entered(
 
 
 	# ========================================================
-	# FORCE DIRECTION
+	# FORCE STARTING DIRECTION
 	# ========================================================
 
 	if force_starting_facing:
 
-		# Freeze Plum first so Character.gd can't
-		# immediately turn her back.
-		_lock_player(
-			body
-		)
+		_lock_player(body)
 
-
-		_force_player_facing(
-			body
-		)
+		_force_player_facing(body)
 
 
 	# ========================================================
-	# OPTIONAL PAUSE AFTER TURNING
+	# OPTIONAL FACING PAUSE
 	# ========================================================
 
-	if (
-		force_starting_facing
-		and starting_facing_pause > 0.0
-	):
+	if force_starting_facing and starting_facing_pause > 0.0:
 
 		await get_tree().create_timer(
-			starting_facing_pause
+			starting_facing_pause,
+			false
 		).timeout
-
 
 		if not is_inside_tree():
 
-			_unlock_player(
-				body
-			)
+			_unlock_player(body)
 
 			return
-
 
 		if not is_instance_valid(body):
 
+			starting_dialogue = false
+
+			_unlock_player(body)
+
 			return
 
 
-	# --------------------------------------------------------
-	# CHECK CONDITION AGAIN
-	# --------------------------------------------------------
+	# ========================================================
+	# FINAL SAFETY CHECKS
+	# ========================================================
 
-	if not _condition_is_met():
-
-		starting_dialogue = false
-
-
-		if force_starting_facing:
-
-			_unlock_player(
-				body
-			)
-
-
-		return
-
-
-	# --------------------------------------------------------
-	# ANOTHER DIALOGUE STARTED
-	# --------------------------------------------------------
-
-	if GameState.in_dialogue:
+	if (
+		not _condition_is_met()
+		or GameState.in_dialogue
+		or GameState.room_transition_active
+		or get_tree().paused
+	):
 
 		starting_dialogue = false
 
-
 		if force_starting_facing:
 
-			_unlock_player(
-				body
-			)
-
+			_unlock_player(body)
 
 		return
 
 
 	# ========================================================
-	# MARK AS TRIGGERED
+	# REMEMBER TRIGGER
 	# ========================================================
 
 	has_triggered = true
 
 	starting_dialogue = false
-
 
 	if trigger_once and remember_between_visits:
 
@@ -560,6 +409,13 @@ func _on_body_entered(
 	# START DIALOGUE
 	# ========================================================
 
+	# Lock normal player input BEFORE Dialogue Manager
+	# creates the dialogue balloon.
+	# This prevents X from opening the pause menu
+	# during the short gap before dialogue appears.
+
+	GameState.in_dialogue = true
+
 	DialogueManager.show_dialogue_balloon(
 		dialogue_resource,
 		start_node
@@ -567,22 +423,12 @@ func _on_body_entered(
 
 
 	# ========================================================
-	# WAIT FOR DIALOGUE MODE TO TAKE OVER
+	# RETURN PLAYER CONTROL
 	# ========================================================
+
+	# GameState.in_dialogue now prevents normal movement,
+	# so we no longer need to wait several frames.
 
 	if force_starting_facing:
 
-		# Give DialogueManager a few frames to set
-		# GameState.in_dialogue before Character.gd resumes.
-		for i: int in range(5):
-
-			await get_tree().process_frame
-
-
-			if GameState.in_dialogue:
-				break
-
-
-		_unlock_player(
-			body
-		)
+		_unlock_player(body)

@@ -51,6 +51,7 @@ var loading_from_save: bool = false
 var skip_room_restore_path: String = ""
 
 func _ready() -> void:
+	get_tree().process_frame.connect(_debug_freeze)
 	if not DialogueManager.dialogue_started.is_connected(_on_dialogue_started):
 		DialogueManager.dialogue_started.connect(_on_dialogue_started)
 	if not DialogueManager.dialogue_ended.is_connected(_on_dialogue_ended):
@@ -63,6 +64,9 @@ func _process(delta: float) -> void:
 		total_playtime += delta
 
 func _on_dialogue_started(_resource = null) -> void:
+	if room_transition_active:
+		return
+
 	in_dialogue = true
 
 func _on_dialogue_ended(_resource = null) -> void:
@@ -449,3 +453,33 @@ func get_interaction_state(
 		return state
 
 	return {}
+var _last_debug_state: String = ""
+
+func _debug_freeze() -> void:
+	var tree := get_tree()
+	var scene := tree.current_scene
+
+	if scene == null:
+		return
+
+	var plum := scene.find_child("Plum", true, false)
+
+	var state: String = ""
+
+	state += "\nRoom: " + scene.scene_file_path
+	state += "\nTree paused: " + str(tree.paused)
+	state += "\nIn dialogue: " + str(in_dialogue)
+	state += "\nRoom transition: " + str(room_transition_active)
+	state += "\nX held: " + str(Input.is_action_pressed("cancel"))
+
+	if is_instance_valid(plum):
+		state += "\nPause menu: " + str(plum.get("is_paused"))
+		state += "\nPlayer input: " + str(plum.is_processing_input())
+		state += "\nPlayer physics: " + str(plum.is_physics_processing())
+
+	if state != _last_debug_state:
+		_last_debug_state = state
+
+		print("====================")
+		print(state)
+		print("====================")

@@ -213,13 +213,30 @@ func _input(event: InputEvent) -> void:
 	if not is_inside_tree():
 		return
 
+	if event.is_echo():
+		return
+
+	# Always allow X / Escape to close the pause menu,
+	# even if a dialogue or room transition has just started.
+	if event.is_action_pressed("cancel") and not save_menu_open:
+
+		if is_paused:
+			toggle_pause()
+			get_viewport().set_input_as_handled()
+			return
+
+		# Recover if the old room left the scene tree paused
+		# but this new player has no open pause menu.
+		if get_tree().paused:
+			_set_tree_paused(false)
+			get_viewport().set_input_as_handled()
+			return
+
+	# Never open the pause menu during a room transition.
 	if GameState.room_transition_active:
 		return
 
 	if GameState.in_dialogue:
-		return
-
-	if event.is_echo():
 		return
 
 
@@ -231,7 +248,9 @@ func _input(event: InputEvent) -> void:
 		"cancel"
 	):
 
-		toggle_pause()
+		if not save_menu_open:
+			toggle_pause()
+			get_viewport().set_input_as_handled()
 
 		return
 
