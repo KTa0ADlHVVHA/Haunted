@@ -29,6 +29,7 @@
 [ext_resource type="Resource" uid="uid://b2hd3wiiqpe2w" path="res://Chair 2.dialogue" id="20_n03kh"]
 [ext_resource type="Resource" uid="uid://dj3bxkwmq0d2p" path="res://Computer.dialogue" id="20_qkhx4"]
 [ext_resource type="Texture2D" uid="uid://xq11fxwn5leq" path="res://Piano seat .png" id="21_h30ar"]
+[ext_resource type="Texture2D" uid="uid://dgvthek14b5hn" path="res://Table normal.png" id="21_retgk"]
 [ext_resource type="Resource" uid="uid://q6eca344k8by" path="res://Piano.dialogue" id="22_f3mgq"]
 [ext_resource type="Resource" uid="uid://cmockivlkt04b" path="res://Worktomainhaul.dialogue" id="22_lhdtw"]
 [ext_resource type="Resource" uid="uid://c2usnhldnm0ql" path="res://real_plant_2.dialogue" id="22_wbtvw"]
@@ -269,12 +270,11 @@ shape = SubResource("RectangleShape2D_vxw22")
 
 [node name="Note" type="StaticBody2D" parent="." unique_id=551068896]
 y_sort_enabled = true
-position = Vector2(46, 32.405)
+position = Vector2(46, 35)
 collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_23t03")
 dialogue_resource = ExtResource("18_qc331")
-metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Note" unique_id=522046429]
 texture_filter = 1
@@ -291,16 +291,15 @@ collision_layer = 513
 collision_mask = 513
 script = ExtResource("11_23t03")
 dialogue_resource = ExtResource("19_rv0ow")
-metadata/_edit_group_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="Note/Cup" unique_id=668263759]
-texture_filter = 1
-texture = ExtResource("16_vxw22")
-offset = Vector2(0, 15.1)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Note/Cup" unique_id=1817998207]
 position = Vector2(0, 6.017502)
 shape = SubResource("RectangleShape2D_rv0ow")
+
+[node name="TableNormal" type="Sprite2D" parent="Note" unique_id=1538161577]
+visible = false
+position = Vector2(0, 15)
+texture = ExtResource("21_retgk")
 
 [node name="Computer" type="StaticBody2D" parent="." unique_id=163016049]
 y_sort_enabled = true
@@ -422,5 +421,6 @@ position = Vector2(9.25, 0.5)
 shape = SubResource("RectangleShape2D_f3mgq")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1492942585]
+visible = false
 color = Color(0.2509804, 0.2509804, 0.2509804, 1)
 script = ExtResource("33_08ykn")

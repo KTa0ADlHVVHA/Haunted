@@ -38,6 +38,13 @@
 [ext_resource type="Resource" uid="uid://dfl2dokvn2ti4" path="res://Telling_Dad_Rosie.dialogue" id="36_nrhgq"]
 [ext_resource type="Resource" uid="uid://bewuyub87pdm" path="res://Work_Room.dialogue" id="37_crtc7"]
 [ext_resource type="Resource" uid="uid://b6vvv4p05ck77" path="res://outside.dialogue" id="38_5waf1"]
+[ext_resource type="Texture2D" uid="uid://bqrdaqs6jvdfb" path="res://Oven.png" id="39_46ka0"]
+[ext_resource type="Texture2D" uid="uid://d210w5kj6i0tm" path="res://Fridge .png" id="40_hj1kk"]
+[ext_resource type="Texture2D" uid="uid://pgngqxw0krrc" path="res://Microwave.png" id="41_ltc08"]
+[ext_resource type="Texture2D" uid="uid://h7q7q0scpaf5" path="res://Table egg.png" id="42_w46eg"]
+[ext_resource type="Texture2D" uid="uid://db6js25slgh6l" path="res://Weird chair.png" id="43_57djy"]
+[ext_resource type="Texture2D" uid="uid://cje4nofpsrgkj" path="res://Sink.png" id="44_x0hk0"]
+[ext_resource type="Texture2D" uid="uid://coo1alo0w33vm" path="res://Trash.png" id="45_hj1kk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wsse3"]
 texture = ExtResource("2_tncnc")
@@ -167,6 +174,30 @@ size = Vector2(31, 40.839996)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5waf1"]
 size = Vector2(19.25, 16.499998)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n7kip"]
+size = Vector2(32, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kxgsi"]
+size = Vector2(16, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vvesj"]
+size = Vector2(16, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4pfy2"]
+size = Vector2(32, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a7a6q"]
+size = Vector2(16, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2mjmy"]
+size = Vector2(16, 17)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ltc08"]
+size = Vector2(27, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hj1kk"]
+size = Vector2(5.25, 32.5)
 
 [node name="Main hall" type="Node2D" unique_id=777225086]
 y_sort_enabled = true
@@ -526,5 +557,129 @@ offset = Vector2(0, -24.04)
 hframes = 8
 frame = 2
 
+[node name="Oven" type="StaticBody2D" parent="." unique_id=1813138810]
+position = Vector2(-354, 85.895)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("12_1fnan")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Oven" unique_id=2075433340]
+z_as_relative = false
+texture_filter = 1
+texture = ExtResource("39_46ka0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Oven" unique_id=1611506498]
+position = Vector2(0, 6.07)
+shape = SubResource("RectangleShape2D_n7kip")
+
+[node name="Fridge" type="StaticBody2D" parent="." unique_id=1466033881]
+position = Vector2(-421, 107)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("12_1fnan")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Fridge" unique_id=35921997]
+z_as_relative = false
+texture_filter = 1
+texture = ExtResource("40_hj1kk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fridge" unique_id=2023047289]
+position = Vector2(0, 8.08)
+shape = SubResource("RectangleShape2D_kxgsi")
+
+[node name="Microwave" type="StaticBody2D" parent="." unique_id=543426107]
+position = Vector2(-321, 150)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("12_1fnan")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Microwave" unique_id=1645589215]
+z_as_relative = false
+texture_filter = 1
+texture = ExtResource("41_ltc08")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Microwave" unique_id=1125933080]
+position = Vector2(0, 3.87)
+shape = SubResource("RectangleShape2D_vvesj")
+
+[node name="Table2" type="StaticBody2D" parent="." unique_id=496373719]
+position = Vector2(-386, 148)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("12_1fnan")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Table2" unique_id=1179737983]
+z_as_relative = false
+texture_filter = 1
+texture = ExtResource("42_w46eg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Table2" unique_id=762567005]
+position = Vector2(0, 6.575)
+shape = SubResource("RectangleShape2D_4pfy2")
+
+[node name="Weird chair" type="StaticBody2D" parent="." unique_id=560163429]
+position = Vector2(-359, 151)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("12_1fnan")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Weird chair" unique_id=2104313548]
+z_as_relative = false
+texture_filter = 1
+texture = ExtResource("43_57djy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Weird chair" unique_id=952660396]
+position = Vector2(0, 3.045)
+shape = SubResource("RectangleShape2D_a7a6q")
+
+[node name="Sink" type="StaticBody2D" parent="." unique_id=1935362860]
+position = Vector2(-330, 106)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("12_1fnan")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Sink" unique_id=1149581491]
+z_as_relative = false
+texture_filter = 1
+texture = ExtResource("44_x0hk0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sink" unique_id=771883366]
+position = Vector2(0, 7.65)
+shape = SubResource("RectangleShape2D_2mjmy")
+
+[node name="Trash" type="StaticBody2D" parent="." unique_id=238568240]
+position = Vector2(-374, 197)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("12_1fnan")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Trash" unique_id=686318513]
+z_as_relative = false
+texture_filter = 1
+texture = ExtResource("45_hj1kk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trash" unique_id=1295477599]
+position = Vector2(0.5, 9.175)
+shape = SubResource("RectangleShape2D_ltc08")
+
+[node name="Freezer" type="StaticBody2D" parent="." unique_id=387814889]
+position = Vector2(-474, 166)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("12_1fnan")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Freezer" unique_id=1617300880]
+position = Vector2(-6.625, -8.25)
+shape = SubResource("RectangleShape2D_hj1kk")
+
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1875098612]
+visible = false
 color = Color(0.2509804, 0.2509804, 0.2509804, 1)
